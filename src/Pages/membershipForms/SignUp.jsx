@@ -4,7 +4,6 @@ import { Checkbox } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  //   const terms = <Link>Terms & Coditions</Link>;
   return (
     <>
       <Input label={"Email"} type={"email"} id={"email"} />

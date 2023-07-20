@@ -7,9 +7,19 @@ import { FcGoogle } from "react-icons/fc";
 import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
 import SignUp from "./membershipForms/SignUp";
+import PageTitle from "../utils/PageTitle";
 
 const Membership = () => {
   const [SignUpForm, setSignUpForm] = useState(false);
+  const title = () => {
+    if (!SignUpForm) {
+      return "Jaiye - Sign In";
+    } else {
+      return "Jaiye - Sign Up";
+    }
+    // !SignUpForm ? "Jaiye - Sign Up" : "Jaiye - Sign In";
+  };
+  PageTitle(title());
 
   return (
     <div className="grid relative p-7 content-between h-screen">
