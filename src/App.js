@@ -1,11 +1,10 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Membership from './Pages/Membership';
-import('preline')
 
 
 function App() {
   return (
-    <div className="bg-[#F9F9F9] p-7">
+    <div className="bg-[#F9F9F9] min-h-screen">
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Membership />} />
