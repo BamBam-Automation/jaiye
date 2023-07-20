@@ -65,7 +65,7 @@ const Membership = () => {
         <p className="text-center text-lg">
           Don't have an account?{" "}
           <span
-            className="text-primary"
+            className="text-primary cursor-pointer"
             onClick={() => {
               setSignUpForm(!SignUpForm);
             }}
