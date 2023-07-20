@@ -1,10 +1,16 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Membership from './Pages/Membership';
 import('preline')
 
 
 function App() {
   return (
-    <div className="App">
-      <p className='text-4xl text-blue-600 font-extrabold'>New Project</p>
+    <div className="bg-[#F9F9F9] p-7">
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Membership />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
