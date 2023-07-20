@@ -1,3 +1,6 @@
+import('preline')
+
+
 function App() {
   return (
     <div className="App">
