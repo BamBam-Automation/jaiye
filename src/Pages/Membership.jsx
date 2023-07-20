@@ -2,6 +2,7 @@ import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SiginIn from "./membershipForms/SiginIn";
+import PrimaryButton from "../components/PrimaryButton";
 
 const Membership = () => {
   return (
@@ -15,7 +16,10 @@ const Membership = () => {
         Welcome <br />
         Back!
       </h3>
-      <SiginIn />
+      <form action="" className="grid mt-20 gap-5">
+        <SiginIn />
+        <PrimaryButton text={"Login"} />
+      </form>
     </div>
   );
 };
