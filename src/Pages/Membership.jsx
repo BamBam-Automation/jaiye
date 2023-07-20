@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
+import SignUp from "./membershipForms/SignUp";
 
 const Membership = () => {
   return (
@@ -21,7 +22,7 @@ const Membership = () => {
         Back!
       </h3>
       <form action="" className="grid gap-5">
-        <SiginIn />
+        <SignUp />
         <PrimaryButton text={"Login"} />
       </form>
       <div className="flex items-center gap-2">
