@@ -8,7 +8,7 @@ const SiginIn = () => {
       <Input label={"Email"} type={"email"} id={"email"} />
       <Input label={"Password"} type={"password"} id={"password"} />
       <div className="flex items-center justify-between">
-        <Checkbox className="bg-primary" label={"Remember Me"} />
+        <Checkbox className="text-primary" label={"Remember Me"} />
         <p className="text-primary">Forgot Password</p>
       </div>
     </>
