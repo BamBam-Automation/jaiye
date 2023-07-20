@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
-import SiginIn from "./membershipForms/SiginIn";
+import SignIn from "./membershipForms/SiginIn";
 import PrimaryButton from "../components/PrimaryButton";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
 import SignUp from "./membershipForms/SignUp";
 
 const Membership = () => {
+  const [SignUpForm, setSignUpForm] = useState(false);
+
   return (
     <div className="grid relative p-7 content-between h-screen">
       <div className="flex gap-6 items-center">
@@ -18,12 +19,24 @@ const Membership = () => {
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
       <h3 className="mt-9 text-primary font-bold text-3xl">
-        Welcome <br />
-        Back!
+        {!SignUpForm ? (
+          <>
+            Welcome
+            <br />
+            Back!
+          </>
+        ) : (
+          <>
+            Create
+            <br />
+            Account
+          </>
+        )}
       </h3>
       <form action="" className="grid gap-5">
-        <SignUp />
-        <PrimaryButton text={"Login"} />
+        {!SignUpForm && <SignIn />}
+        {SignUpForm && <SignUp />}
+        <PrimaryButton text={!SignUpForm ? "Login" : "Create Account"} />
       </form>
       <div className="flex items-center gap-2">
         <span className="h-[1px] bg-secondary w-full"></span>
@@ -50,7 +63,15 @@ const Membership = () => {
           Sign-up with Apple
         </Button>
         <p className="text-center text-lg">
-          Don't have an account? <Link className="text-primary">Sign Up</Link>
+          Don't have an account?{" "}
+          <span
+            className="text-primary"
+            onClick={() => {
+              setSignUpForm(!SignUpForm);
+            }}
+          >
+            {!SignUpForm ? "Sign Up" : "Sign In"}
+          </span>
         </p>
       </div>
     </div>
