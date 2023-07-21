@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Membership from './Pages/Membership';
+import Welcome from './Pages/Welcome';
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Membership />} />
+          <Route path="welcome" element={<Welcome />} />
         </Routes>
       </BrowserRouter>
     </div>
