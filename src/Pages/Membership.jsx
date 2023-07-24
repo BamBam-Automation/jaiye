@@ -17,7 +17,6 @@ const Membership = () => {
     } else {
       return "Jaiye - Sign Up";
     }
-    // !SignUpForm ? "Jaiye - Sign Up" : "Jaiye - Sign In";
   };
   PageTitle(title());
 

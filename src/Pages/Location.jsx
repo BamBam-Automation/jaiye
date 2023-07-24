@@ -62,7 +62,7 @@ const Location = () => {
       )}
       {search && (
         <div className="grid gap-3">
-          <div className="mb-5 sticky top-0 bg-">
+          <div className="mb-5 sticky top-0">
             <Input type="search" id="search" label="Search City" />
             <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />
           </div>

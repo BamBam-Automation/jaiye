@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Membership from './Pages/Membership';
 import Welcome from './Pages/Welcome';
 import Location from './Pages/Location';
+import Explore from './Pages/Explore';
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
           <Route path='/' element={<Membership />} />
           <Route path="welcome" element={<Welcome />} />
           <Route path='location' element={<Location />} />
+          <Route path='explore' element={<Explore />} />
         </Routes>
       </BrowserRouter>
     </div>
