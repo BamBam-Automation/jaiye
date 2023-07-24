@@ -31,10 +31,12 @@ const ClubCard = (props) => {
             <TfiStar className="h-5 w-5 text-primary" />
             <p>{props.rating}</p>
           </span>
-          <span className="flex">
-            <PiClockLight className="h-5 w-5 text-primary" />
-            <p>{props.time}</p>
-          </span>
+          {props.state && (
+            <span className="flex">
+              <PiClockLight className="h-5 w-5 text-primary" />
+              <p>{props.time}</p>
+            </span>
+          )}
         </CardFooter>
       </Card>
     </>
