@@ -25,7 +25,7 @@ const Membership = () => {
     <div className="grid relative p-7 content-between h-screen">
       <div className="flex gap-6 items-center">
         <IoIosArrowBack className="h-5 w-5 text-primary" />
-        <p className="font-medium">Login</p>
+        <p className="font-medium">{!SignUpForm ? "Login" : "Sign Up"}</p>
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
       <h3 className="mt-9 text-primary font-bold text-3xl">

@@ -1,6 +1,5 @@
 import React from "react";
 import Input from "../../components/Input";
-import { Checkbox } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
@@ -13,21 +12,24 @@ const SignUp = () => {
         type={"password"}
         id={"confirmPassword"}
       />
-      <Checkbox
-        className="text-primary"
-        label={
-          <>
-            I agree to the{" "}
-            <Link className="text-primary underline underline-offset-4">
-              Terms & Conditions
-            </Link>{" "}
-            <span>and</span>{" "}
-            <Link className="text-primary underline underline-offset-4">
-              Privacy Policy
-            </Link>
-          </>
-        }
-      />
+      <label className="flex items-center gap-2" htmlFor="rememberMe">
+        <input
+          className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
+          type="checkbox"
+          name=""
+          id=""
+        />
+        <p>
+          I agree to the{" "}
+          <Link className="text-primary underline underline-offset-4">
+            Terms & Conditions
+          </Link>{" "}
+          <span>and</span>{" "}
+          <Link className="text-primary underline underline-offset-4">
+            Privacy Policy
+          </Link>
+        </p>
+      </label>
     </>
   );
 };
