@@ -7,12 +7,18 @@ import ClubCard from "../components/ClubCard";
 import Club from "../images/Club.jpg";
 import Club2 from "../images/Club2.jpg";
 import Club3 from "../images/Club3.jpg";
-import { Button } from "@material-tailwind/react";
+import { Button, Drawer } from "@material-tailwind/react";
+import { PiCheck } from "react-icons/pi";
 
 const Explore = () => {
   // What's On  || Clubs || Bars
   const barType = ["What's On", "Clubs", "Bars"];
 
+  // Bar Categories
+  const categries = ["Clubs", "Bars", "Pubs", "Lounge"];
+  const [activeCategory, setActiveCategory] = useState("");
+
+  // Select Active barType
   const [activeTab, setActiveTab] = useState(barType[0]);
 
   // Get Current Date
@@ -20,6 +26,9 @@ const Explore = () => {
   const day = date.toLocaleDateString("en-US", { weekday: "long" });
   const dayDate = date.toLocaleDateString("en-US", { day: "numeric" });
   const month = date.toLocaleDateString("en-us", { month: "long" });
+
+  // Manage Filter Drawer
+  const [drawetState, setDrawerState] = useState(false);
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
       <div className="flex justify-between items-baseline">
@@ -28,7 +37,10 @@ const Explore = () => {
           <Input type="search" id="search" label="Search" />
           <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />
         </div>
-        <GoFilter className="h-5 w-5 text-primary" />
+        <GoFilter
+          className="h-5 w-5 text-primary"
+          onClick={() => setDrawerState(!drawetState)}
+        />
       </div>
       <div className="h-11 flex justify-around">
         {barType.map((bar) => (
@@ -46,6 +58,60 @@ const Explore = () => {
           </p>
         ))}
       </div>
+      <Drawer
+        placement="top"
+        open={drawetState}
+        onClose={() => setDrawerState(!drawetState)}
+        className={drawetState === true ? "block rounded-b-xl" : "hidden"}
+      >
+        <div className="p-7">
+          <div className="grid gap-5">
+            <h5 className="font-medium">Categories</h5>
+            <div className="flex justify-between">
+              {categries.map((category) => (
+                // <Chip
+                //   key={category}
+                //   onClick={(category) => setActiveCategory(category)}
+                //   value={category}
+                //   className={
+                //     activeCategory === category
+                //       ? "bg-primary text-white"
+                //       : "border-primary bg-transparent text-primary border rounded-full"
+                //   }
+                // />
+                <button
+                  key={category}
+                  onClick={() => setActiveCategory(category)}
+                  className={
+                    activeCategory === category
+                      ? "bg-primary text-white rounded-full px-3 py-1 flex gap-1 items-center transition-all ease-in-out duration-300"
+                      : "border-primary bg-transparent text-primary border rounded-full px-3 py-1"
+                  }
+                >
+                  {category}
+                  {activeCategory === category ? (
+                    <PiCheck className="text-white h-7" />
+                  ) : (
+                    ""
+                  )}
+                </button>
+              ))}
+            </div>
+            <label htmlFor="distance">
+              <h5 className="font-medium">Categories</h5>
+              <input
+                className="w-full h-[1px] cursor-pointer"
+                min={5}
+                max={200}
+                step={2}
+                type="range"
+                name="distance"
+                id="distance"
+              />
+            </label>
+          </div>
+        </div>
+      </Drawer>
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
       <ClubCard
         img={Club}
