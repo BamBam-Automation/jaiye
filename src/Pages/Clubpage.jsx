@@ -6,8 +6,10 @@ import { PiClockLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
 import { Button } from "@material-tailwind/react";
+import PageTitle from "../utils/PageTitle";
 
 const Clubpage = () => {
+  PageTitle("Jaiye - Club");
   return (
     <div className="p-7 grid gap-5 h-screen">
       <div className="flex font-semibold items-center justify-between">
