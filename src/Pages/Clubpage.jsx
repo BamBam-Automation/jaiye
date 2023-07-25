@@ -6,9 +6,26 @@ import { PiClockLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
 import { Button } from "@material-tailwind/react";
+import { MdOutlineTableBar } from "react-icons/md";
 import PageTitle from "../utils/PageTitle";
+import Accordion from "../components/Accordion";
 
 const Clubpage = () => {
+  const sections = [
+    {
+      header: "Section 1",
+      content: "Content of section 1 goes here.",
+    },
+    {
+      header: "Section 2",
+      content: "Content of section 2 goes here.",
+    },
+    {
+      header: "Section 3",
+      content: "Content of section 3 goes here.",
+    },
+  ];
+
   PageTitle("Jaiye - Club");
   return (
     <div className="p-7 grid gap-5 h-screen">
@@ -47,11 +64,11 @@ const Clubpage = () => {
           </div>
           <span className="flex">
             <HiPhone className="h-5 w-5 text-primary" />
-            <p>08012345678</p>
+            <p className="font-semibold">08012345678</p>
           </span>
         </div>
       </div>
-      <div>
+      {/* <div>
         <h4 className="font-bold">About</h4>
         <p className="text-justify">
           Welcome to our vibrant and electrifying nightclub, where the night
@@ -67,6 +84,9 @@ const Clubpage = () => {
           26, Lekki beach road, Lekki Phase 1, Lagos Nigeria
         </p>
         <div className="h-48 bg-secondary rounded-lg"></div>
+      </div> */}
+      <div>
+        <Accordion sections={sections} />
       </div>
       <Button className="self-end bg-primary">
         Select Table <span>&#8594;</span>
