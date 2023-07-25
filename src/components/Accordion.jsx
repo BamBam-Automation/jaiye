@@ -10,7 +10,7 @@ const Accordion = ({ sections }) => {
   return (
     <div>
       {sections.map((section, index) => (
-        <div key={index}>
+        <div className="border-b grid gap-3 p-2 " key={index}>
           <div
             className={`accordion-header ${
               activeIndex === index ? "active" : ""

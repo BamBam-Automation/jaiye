@@ -2,26 +2,78 @@ import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { FiMenu } from "react-icons/fi";
 import Club from "../images/Club.jpg";
-import { PiClockLight, PiWineLight } from "react-icons/pi";
+import { PiClockLight, PiUsersLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
 import { Button } from "@material-tailwind/react";
 import { MdOutlineTableBar } from "react-icons/md";
+import { BsTicketPerforated } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 
 const Clubpage = () => {
   const sections = [
     {
-      header: "Section 1",
+      header: (
+        <div className="space-y-3">
+          <div className="flex gap-3 items-center">
+            <MdOutlineTableBar className="text-primary h-5 w-5" />
+            <h6 className="font-semibold">VIP Table</h6>
+          </div>
+          <div className="flex items-center gap-5">
+            <div className="flex gap-3 items-center">
+              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
+              <p>2,000,000 Naira</p>
+            </div>
+            <div className="flex gap-3 items-center">
+              <PiUsersLight className="text-primary h-5 w-5" />
+              <p>5 Guests</p>
+            </div>
+          </div>
+        </div>
+      ),
       content: "Content of section 1 goes here.",
     },
     {
-      header: "Section 2",
+      header: (
+        <div className="space-y-3">
+          <div className="flex gap-3 items-center">
+            <MdOutlineTableBar className="text-primary h-5 w-5" />
+            <h6 className="font-semibold">Special Table</h6>
+          </div>
+          <div className="flex items-center gap-5">
+            <div className="flex gap-3 items-center">
+              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
+              <p>2,000,000 Naira</p>
+            </div>
+            <div className="flex gap-3 items-center">
+              <PiUsersLight className="text-primary h-5 w-5" />
+              <p>5 Guests</p>
+            </div>
+          </div>
+        </div>
+      ),
       content: "Content of section 2 goes here.",
     },
     {
-      header: "Section 3",
+      header: (
+        <div className="space-y-3">
+          <div className="flex gap-3 items-center">
+            <MdOutlineTableBar className="text-primary h-5 w-5" />
+            <h6 className="font-semibold">Regular Table</h6>
+          </div>
+          <div className="flex items-center gap-5">
+            <div className="flex gap-3 items-center">
+              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
+              <p>2,000,000 Naira</p>
+            </div>
+            <div className="flex gap-3 items-center">
+              <PiUsersLight className="text-primary h-5 w-5" />
+              <p>5 Guests</p>
+            </div>
+          </div>
+        </div>
+      ),
       content: "Content of section 3 goes here.",
     },
   ];
@@ -68,24 +120,8 @@ const Clubpage = () => {
           </span>
         </div>
       </div>
-      {/* <div>
-        <h4 className="font-bold">About</h4>
-        <p className="text-justify">
-          Welcome to our vibrant and electrifying nightclub, where the night
-          comes alive and unforgettable experiences await you at every turn. We
-          pride ourselves on creating an atmosphere that ignites the senses,
-          offering a unique fusion of music, dance, and entertainment that will
-          leave you craving for more.
-        </p>
-      </div>
-      <div>
-        <h4 className="font-bold">Location</h4>
-        <p className="text-justify">
-          26, Lekki beach road, Lekki Phase 1, Lagos Nigeria
-        </p>
-        <div className="h-48 bg-secondary rounded-lg"></div>
-      </div> */}
-      <div>
+      <div className="">
+        <h4 className="text-2xl font-bold">Choose Seat</h4>
         <Accordion sections={sections} />
       </div>
       <Button className="self-end bg-primary">
