@@ -165,7 +165,7 @@ const Explore = () => {
         distance={"4.2Km"}
         rating={"4.5(42)"}
         time={"07:00PM"}
-        state={activeTab.includes("Clubs")}
+        state={!activeTab.includes("Clubs")}
       />
       <ClubCard
         img={Club2}
@@ -174,7 +174,7 @@ const Explore = () => {
         distance={"4.2Km"}
         rating={"4.2(45)"}
         time={"07:00PM"}
-        state={activeTab.includes("Clubs")}
+        state={!activeTab.includes("Clubs")}
       />
       <ClubCard
         img={Club3}
@@ -183,7 +183,7 @@ const Explore = () => {
         distance={"4.2Km"}
         rating={"4.2(45)"}
         time={"07:00PM"}
-        state={activeTab.includes("Clubs")}
+        state={!activeTab.includes("Clubs")}
       />
       <Button
         variant="outlined"
