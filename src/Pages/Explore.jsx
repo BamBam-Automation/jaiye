@@ -9,17 +9,25 @@ import Club2 from "../images/Club2.jpg";
 import Club3 from "../images/Club3.jpg";
 import { Button, Drawer } from "@material-tailwind/react";
 import { PiCheck } from "react-icons/pi";
+import { RxStarFilled } from "react-icons/rx";
+import { GrClose } from "react-icons/gr";
+import PageTitle from "../utils/PageTitle";
 
 const Explore = () => {
+  // Page Title
+  PageTitle("Jaiye - Explore Clubs, Bars & Lounges");
+
   // What's On  || Clubs || Bars
   const barType = ["What's On", "Clubs", "Bars"];
+  // Select Active barType
+  const [activeTab, setActiveTab] = useState(barType[0]);
 
   // Bar Categories
   const categries = ["Clubs", "Bars", "Pubs", "Lounge"];
   const [activeCategory, setActiveCategory] = useState("");
 
-  // Select Active barType
-  const [activeTab, setActiveTab] = useState(barType[0]);
+  // Bar Ratings
+  const ratings = ["5 Stars", "4 Stars", "3 Stars", "2 Stars"];
 
   // Get Current Date
   const date = new Date();
@@ -28,7 +36,7 @@ const Explore = () => {
   const month = date.toLocaleDateString("en-us", { month: "long" });
 
   // Manage Filter Drawer
-  const [drawetState, setDrawerState] = useState(false);
+  const [drawerState, setDrawerState] = useState(false);
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
       <div className="flex justify-between items-baseline">
@@ -39,7 +47,7 @@ const Explore = () => {
         </div>
         <GoFilter
           className="h-5 w-5 text-primary"
-          onClick={() => setDrawerState(!drawetState)}
+          onClick={() => setDrawerState(!drawerState)}
         />
       </div>
       <div className="h-11 flex justify-around">
@@ -48,8 +56,7 @@ const Explore = () => {
             onClick={() => setActiveTab(bar)}
             className={
               activeTab === bar
-                ? // ? "border-b-4 p-3 border-primary text-primary"
-                  "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
+                ? "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
                 : "border-b p-3"
             }
             key={bar}
@@ -60,45 +67,41 @@ const Explore = () => {
       </div>
       <Drawer
         placement="top"
-        open={drawetState}
-        onClose={() => setDrawerState(!drawetState)}
-        className={drawetState === true ? "block rounded-b-xl" : "hidden"}
+        open={drawerState}
+        onClose={() => setDrawerState(!drawerState)}
+        className={drawerState === true ? "block" : "hidden"}
       >
-        <div className="p-7">
-          <div className="grid gap-5">
-            <h5 className="font-medium">Categories</h5>
-            <div className="flex justify-between">
-              {categries.map((category) => (
-                // <Chip
-                //   key={category}
-                //   onClick={(category) => setActiveCategory(category)}
-                //   value={category}
-                //   className={
-                //     activeCategory === category
-                //       ? "bg-primary text-white"
-                //       : "border-primary bg-transparent text-primary border rounded-full"
-                //   }
-                // />
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={
-                    activeCategory === category
-                      ? "bg-primary text-white rounded-full px-3 py-1 flex gap-1 items-center transition-all ease-in-out duration-300"
-                      : "border-primary bg-transparent text-primary border rounded-full px-3 py-1"
-                  }
-                >
-                  {category}
-                  {activeCategory === category ? (
-                    <PiCheck className="text-white h-7" />
-                  ) : (
-                    ""
-                  )}
-                </button>
-              ))}
+        <div className="p-7 bg-white grid gap-20 rounded-b-xl">
+          <div className="grid gap-10">
+            <GrClose
+              className="justify-self-end"
+              onClick={() => setDrawerState(!drawerState)}
+            />
+            <div className="grid gap-3">
+              <h5 className="font-medium">Categories</h5>
+              <div className="flex justify-between">
+                {categries.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => setActiveCategory(category)}
+                    className={
+                      activeCategory === category
+                        ? "bg-primary text-white rounded-full px-3 py-1 flex gap-1 items-center transition-all ease-in-out duration-300"
+                        : "border-primary bg-transparent text-primary border rounded-full px-3 py-1"
+                    }
+                  >
+                    {category}
+                    {activeCategory === category ? (
+                      <PiCheck className="text-white h-7" />
+                    ) : (
+                      ""
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
             <label htmlFor="distance">
-              <h5 className="font-medium">Categories</h5>
+              <h5 className="font-medium">Distance</h5>
               <input
                 className="w-full h-[1px] cursor-pointer"
                 min={5}
@@ -109,7 +112,45 @@ const Explore = () => {
                 id="distance"
               />
             </label>
+            <div className="grid gap-3">
+              <h6>Table Price</h6>
+              <div className="flex gap-3">
+                <label className="" htmlFor="minimum">
+                  <Input />
+                  <p className="text-center">Minimum</p>
+                </label>
+                <span className="w-6 h-[3px] mt-5 bg-primary"></span>
+                <label htmlFor="maximum">
+                  <Input />
+                  <p className="text-center">Maximum</p>
+                </label>
+              </div>
+            </div>
+            <div className="grid gap-3">
+              <h6>Rating</h6>
+              <div className="flex justify-between">
+                {ratings.map((rating) => (
+                  <button
+                    key={rating}
+                    onClick={() => setActiveCategory(rating)}
+                    className={
+                      activeCategory === rating
+                        ? "bg-primary text-white rounded-full px-3 py-1 flex gap-1 items-center transition-all ease-in-out duration-300"
+                        : "border-primary bg-transparent text-primary border rounded-full px-3 py-1"
+                    }
+                  >
+                    {activeCategory === rating ? (
+                      <RxStarFilled className="text-secondary h-7" />
+                    ) : (
+                      ""
+                    )}
+                    {rating}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
+          <Button className="bg-primary mx-auto">Save Filter</Button>
         </div>
       </Drawer>
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
