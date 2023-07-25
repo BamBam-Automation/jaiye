@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import { FiMenu } from "react-icons/fi";
 import Club from "../images/Club.jpg";
@@ -12,6 +12,7 @@ import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 
 const Clubpage = () => {
+  // Sections for Accordion Compoenent
   const sections = [
     {
       header: (
@@ -78,6 +79,46 @@ const Clubpage = () => {
     },
   ];
 
+  // State to manage steps to book seats
+  const [steps, setSteps] = useState(0);
+
+  const clubSummary = (
+    <div>
+      <div>
+        <h4 className="font-bold">About</h4>
+        <p className="text-justify">
+          Welcome to our vibrant and electrifying nightclub, where the night
+          comes alive and unforgettable experiences await you at every turn. We
+          pride ourselves on creating an atmosphere that ignites the senses,
+          offering a unique fusion of music, dance, and entertainment that will
+          leave you craving for more.
+        </p>
+      </div>
+      <div>
+        <h4 className="font-bold">Location</h4>
+        <p className="text-justify">
+          26, Lekki beach road, Lekki Phase 1, Lagos Nigeria
+        </p>
+        <div className="h-48 bg-secondary rounded-lg"></div>
+      </div>
+    </div>
+  );
+
+  const accordion = (
+    <div>
+      <h4 className="text-2xl font-bold">Choose Seat</h4>
+      <Accordion sections={sections} />
+    </div>
+  );
+
+  const activeStep = () => {
+    if (steps === 0) {
+      return clubSummary;
+    } else if (steps === 1) {
+      return accordion;
+    }
+  };
+
   PageTitle("Jaiye - Club");
   return (
     <div className="p-7 grid gap-5 h-screen">
@@ -120,12 +161,12 @@ const Clubpage = () => {
           </span>
         </div>
       </div>
-      <div className="">
-        <h4 className="text-2xl font-bold">Choose Seat</h4>
-        <Accordion sections={sections} />
-      </div>
-      <Button className="self-end bg-primary">
-        Select Table <span>&#8594;</span>
+      {activeStep()}
+      <Button
+        className="self-end bg-primary"
+        onClick={() => setSteps(steps + 1)}
+      >
+        {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>
       </Button>
     </div>
   );
