@@ -33,7 +33,29 @@ const Clubpage = () => {
           </div>
         </div>
       ),
-      content: "Content of section 1 goes here.",
+      content: (
+        <div className="space-y-3">
+          <p className="text-primary text-sm">See tables map</p>
+          <div className="relative space-y-7 pb-5">
+            <div className="flex items-center gap-7 justify-between">
+              <Button className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2 flex items-center gap-1">
+                <PiClockLight className="h-5 w-5 text-primary" />
+                Pick Time
+              </Button>
+              <Button className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2">
+                Select Table
+              </Button>
+            </div>
+            <div className="absolute w-1/2 h-40 rounded-lg shadow-lg -top-5 right-0 mx-auto"></div>
+            <div>
+              <p>Fast track entry</p>
+              <p>Bar spend as per minimum spend included.</p>
+              <p>Designated hostess service.</p>
+              <p>Our service has zero cost on client side.</p>
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       header: (
@@ -83,8 +105,8 @@ const Clubpage = () => {
   const [steps, setSteps] = useState(0);
 
   const clubSummary = (
-    <div>
-      <div>
+    <div className="grid gap-3">
+      <div className="">
         <h4 className="font-bold">About</h4>
         <p className="text-justify">
           Welcome to our vibrant and electrifying nightclub, where the night
@@ -94,7 +116,7 @@ const Clubpage = () => {
           leave you craving for more.
         </p>
       </div>
-      <div>
+      <div className="grid gap-3">
         <h4 className="font-bold">Location</h4>
         <p className="text-justify">
           26, Lekki beach road, Lekki Phase 1, Lagos Nigeria
@@ -105,7 +127,7 @@ const Clubpage = () => {
   );
 
   const accordion = (
-    <div>
+    <div className="mt-5">
       <h4 className="text-2xl font-bold">Choose Seat</h4>
       <Accordion sections={sections} />
     </div>
@@ -121,47 +143,49 @@ const Clubpage = () => {
 
   PageTitle("Jaiye - Club");
   return (
-    <div className="p-7 grid gap-5 h-screen">
-      <div className="flex font-semibold items-center justify-between">
-        <div className="flex gap-5 items-center">
-          <IoIosArrowBack className="h-5 w-5 text-primary" />
-          <h6>Book Table</h6>
+    <div className="p-7 grid gap-5 h-screen items-start pb-7">
+      <div className="grid gap-3 items-start">
+        <div className="self-start flex font-semibold items-center justify-between">
+          <div className="flex gap-5 items-center">
+            <IoIosArrowBack className="h-5 w-5 text-primary" />
+            <h6>Book Table</h6>
+          </div>
+          <FiMenu className="h-5 w-5 text-primary" />
         </div>
-        <FiMenu className="h-5 w-5 text-primary" />
-      </div>
-      <div className="grid gap-5">
-        <h4 className="text-2xl font-bold">Checker's Club</h4>
-        <img
-          className="w-full object-cover rounded-lg h-36"
-          src={Club}
-          alt="business banner"
-        />
-        <div className="grid gap-2">
-          <div className="flex justify-between">
+        <div className="grid gap-5">
+          <h4 className="text-2xl font-bold">Checker's Club</h4>
+          <img
+            className="w-full object-cover rounded-lg h-36"
+            src={Club}
+            alt="business banner"
+          />
+          <div className="grid gap-2">
+            <div className="flex justify-between">
+              <span className="flex">
+                <PiWineLight className="h-5 w-5 text-primary" />
+                <p>Club</p>
+              </span>
+              <span className="flex">
+                <TfiLocationArrow className="h-5 w-5 rotate-90 text-primary" />
+                <p>2.6Km</p>
+              </span>
+              <span className="flex">
+                <TfiStar className="h-5 w-5 text-primary" />
+                <p>4.1(64)</p>
+              </span>
+              <span className="flex">
+                <PiClockLight className="h-5 w-5 text-primary" />
+                <p>09:00PM</p>
+              </span>
+            </div>
             <span className="flex">
-              <PiWineLight className="h-5 w-5 text-primary" />
-              <p>Club</p>
-            </span>
-            <span className="flex">
-              <TfiLocationArrow className="h-5 w-5 rotate-90 text-primary" />
-              <p>2.6Km</p>
-            </span>
-            <span className="flex">
-              <TfiStar className="h-5 w-5 text-primary" />
-              <p>4.1(64)</p>
-            </span>
-            <span className="flex">
-              <PiClockLight className="h-5 w-5 text-primary" />
-              <p>09:00PM</p>
+              <HiPhone className="h-5 w-5 text-primary" />
+              <p className="font-semibold">08012345678</p>
             </span>
           </div>
-          <span className="flex">
-            <HiPhone className="h-5 w-5 text-primary" />
-            <p className="font-semibold">08012345678</p>
-          </span>
         </div>
+        {activeStep()}
       </div>
-      {activeStep()}
       <Button
         className="self-end bg-primary"
         onClick={() => setSteps(steps + 1)}
