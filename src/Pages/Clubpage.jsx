@@ -11,6 +11,7 @@ import { BsTicketPerforated } from "react-icons/bs";
 import { PiCheck } from "react-icons/pi";
 import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
+import TimePicker from "../components/Timpicker";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -22,8 +23,11 @@ const Clubpage = () => {
     setSelectedTable(e.target.value);
   };
 
-  // State to manage the visibility of the accordion
-  const [isOpen, setIsOpen] = useState(false);
+  // State to manage the visibility of the table dropdown
+  const [tableIsOpen, setTableIsOpen] = useState(false);
+
+  // State to manage the visibility of the time picker
+  const [timeIsOpen, setTimeIsOpen] = useState(false);
 
   // Sections for Accordion Component
   const sections = [
@@ -51,20 +55,32 @@ const Clubpage = () => {
           <p className="text-primary text-sm">See tables map</p>
           <div className="relative space-y-7 pb-5">
             <div className="flex items-center gap-7 justify-between">
-              <Button className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2 flex items-center gap-1">
+              <Button
+                className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2 flex items-center gap-1"
+                onClick={() => setTimeIsOpen(!timeIsOpen)}
+              >
                 <PiClockLight className="h-5 w-5 text-primary" />
                 Pick Time
               </Button>
               <Button
                 className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2"
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setTableIsOpen(!tableIsOpen)}
               >
                 Select Table
               </Button>
             </div>
             <div
+              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg overflow-y-scroll grid bg-white top-5 left-0 ${
+                timeIsOpen
+                  ? "transition ease-out duration-200 opacity-100 scale-100"
+                  : "transition ease-in duration-200 opacity-0 scale-90"
+              }`}
+            >
+              <TimePicker />
+            </div>
+            <div
               className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
-                isOpen
+                tableIsOpen
                   ? "transition ease-out duration-200 opacity-100 scale-100"
                   : "transition ease-in duration-200 opacity-0 scale-90"
               }`}
