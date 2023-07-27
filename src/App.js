@@ -8,7 +8,7 @@ import Clubpage from './Pages/Clubpage';
 
 function App() {
   return (
-    <div className="bg-[#F9F9F9] text-tertiary min-h-screen">
+    <div className="bg-[#F9F9F9] text-tertiary min-h-screen overflow-y-scroll">
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Membership />} />

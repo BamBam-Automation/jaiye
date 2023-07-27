@@ -12,6 +12,7 @@ import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 import TimePicker from "../components/Timpicker";
 import Tablepicker from "../components/Tablepicker";
+import Map from "../images/Map.svg";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -22,6 +23,9 @@ const Clubpage = () => {
 
   // State to manage the visibility of the time picker
   const [timeIsOpen, setTimeIsOpen] = useState(false);
+
+  // State to manage map visibility
+  const [mapVisible, setMapVisible] = useState(false);
 
   // Sections for Accordion Component
   const sections = [
@@ -46,7 +50,12 @@ const Clubpage = () => {
       ),
       content: (
         <div className="space-y-3">
-          <p className="text-primary text-sm">See tables map</p>
+          <button
+            className="text-primary text-sm"
+            onClick={() => setMapVisible(!mapVisible)}
+          >
+            See tables map
+          </button>
           <div className="relative space-y-7 pb-5">
             <div className="flex items-center gap-7 justify-between">
               <Button
@@ -87,6 +96,7 @@ const Clubpage = () => {
               <p>Designated hostess service.</p>
               <p>Our service has zero cost on client side.</p>
             </div>
+            {mapVisible && <img className="mx-auto" src={Map} alt="" />}
           </div>
         </div>
       ),
