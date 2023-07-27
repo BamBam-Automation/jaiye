@@ -8,11 +8,24 @@ import { HiPhone } from "react-icons/hi";
 import { Button } from "@material-tailwind/react";
 import { MdOutlineTableBar } from "react-icons/md";
 import { BsTicketPerforated } from "react-icons/bs";
+import { PiCheck } from "react-icons/pi";
 import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 
 const Clubpage = () => {
-  // Sections for Accordion Compoenent
+  // State to manage steps to book seats
+  const [steps, setSteps] = useState(0);
+  const [selectedTable, setSelectedTable] = useState(null); // Keep track of the selected table
+
+  // Function to handle changes in the radio input
+  const handleRadioChange = (e) => {
+    setSelectedTable(e.target.value);
+  };
+
+  // State to manage the visibility of the accordion
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Sections for Accordion Component
   const sections = [
     {
       header: (
@@ -42,11 +55,71 @@ const Clubpage = () => {
                 <PiClockLight className="h-5 w-5 text-primary" />
                 Pick Time
               </Button>
-              <Button className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2">
+              <Button
+                className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2"
+                onClick={() => setIsOpen(!isOpen)}
+              >
                 Select Table
               </Button>
             </div>
-            <div className="absolute w-1/2 h-40 rounded-lg shadow-lg -top-5 right-0 mx-auto"></div>
+            <div
+              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
+                isOpen
+                  ? "transition ease-out duration-200 opacity-100 scale-100"
+                  : "transition ease-in duration-200 opacity-0 scale-90"
+              }`}
+            >
+              <ul className="px-3">
+                <li className="flex justify-between">
+                  <input
+                    type="radio"
+                    id="table5"
+                    name="tables"
+                    value="Table 5"
+                    onChange={handleRadioChange}
+                    className="hidden peer"
+                    required
+                  />
+                  <label
+                    htmlFor="table5"
+                    className={`inline-flex items-center justify-between w-full py-2 cursor-pointer font-semibold ${
+                      selectedTable === "Table 5"
+                        ? "peer-checked:text-primary"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center w-full justify-between">
+                      <p>Table 5</p>
+                      {selectedTable === "Table 5" && <PiCheck />}
+                    </div>
+                  </label>
+                </li>
+                <li className="flex justify-between">
+                  <input
+                    type="radio"
+                    id="table6"
+                    name="tables"
+                    value="Table 6"
+                    onChange={handleRadioChange}
+                    className="hidden peer"
+                    required
+                  />
+                  <label
+                    htmlFor="table6"
+                    className={`inline-flex items-center justify-between w-full py-2 cursor-pointer font-semibold ${
+                      selectedTable === "Table 6"
+                        ? "peer-checked:text-primary"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center w-full justify-between">
+                      <p>Table 6</p>
+                      {selectedTable === "Table 6" && <PiCheck />}
+                    </div>
+                  </label>
+                </li>
+              </ul>
+            </div>
             <div>
               <p>Fast track entry</p>
               <p>Bar spend as per minimum spend included.</p>
@@ -100,9 +173,6 @@ const Clubpage = () => {
       content: "Content of section 3 goes here.",
     },
   ];
-
-  // State to manage steps to book seats
-  const [steps, setSteps] = useState(0);
 
   const clubSummary = (
     <div className="grid gap-3">
