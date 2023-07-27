@@ -8,20 +8,14 @@ import { HiPhone } from "react-icons/hi";
 import { Button } from "@material-tailwind/react";
 import { MdOutlineTableBar } from "react-icons/md";
 import { BsTicketPerforated } from "react-icons/bs";
-import { PiCheck } from "react-icons/pi";
 import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 import TimePicker from "../components/Timpicker";
+import Tablepicker from "../components/Tablepicker";
 
 const Clubpage = () => {
   // State to manage steps to book seats
   const [steps, setSteps] = useState(0);
-  const [selectedTable, setSelectedTable] = useState(null); // Keep track of the selected table
-
-  // Function to handle changes in the radio input
-  const handleRadioChange = (e) => {
-    setSelectedTable(e.target.value);
-  };
 
   // State to manage the visibility of the table dropdown
   const [tableIsOpen, setTableIsOpen] = useState(false);
@@ -85,56 +79,7 @@ const Clubpage = () => {
                   : "transition ease-in duration-200 opacity-0 scale-90"
               }`}
             >
-              <ul className="px-3">
-                <li className="flex justify-between">
-                  <input
-                    type="radio"
-                    id="table5"
-                    name="tables"
-                    value="Table 5"
-                    onChange={handleRadioChange}
-                    className="hidden peer"
-                    required
-                  />
-                  <label
-                    htmlFor="table5"
-                    className={`inline-flex items-center justify-between w-full py-2 cursor-pointer font-semibold ${
-                      selectedTable === "Table 5"
-                        ? "peer-checked:text-primary"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex items-center w-full justify-between">
-                      <p>Table 5</p>
-                      {selectedTable === "Table 5" && <PiCheck />}
-                    </div>
-                  </label>
-                </li>
-                <li className="flex justify-between">
-                  <input
-                    type="radio"
-                    id="table6"
-                    name="tables"
-                    value="Table 6"
-                    onChange={handleRadioChange}
-                    className="hidden peer"
-                    required
-                  />
-                  <label
-                    htmlFor="table6"
-                    className={`inline-flex items-center justify-between w-full py-2 cursor-pointer font-semibold ${
-                      selectedTable === "Table 6"
-                        ? "peer-checked:text-primary"
-                        : ""
-                    }`}
-                  >
-                    <div className="flex items-center w-full justify-between">
-                      <p>Table 6</p>
-                      {selectedTable === "Table 6" && <PiCheck />}
-                    </div>
-                  </label>
-                </li>
-              </ul>
+              <Tablepicker />
             </div>
             <div>
               <p>Fast track entry</p>
