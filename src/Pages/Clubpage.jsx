@@ -179,12 +179,13 @@ const Clubpage = () => {
       return clubSummary;
     } else if (steps === 1) {
       return accordion;
+    } else if (steps === 2) {
     }
   };
 
   PageTitle("Jaiye - Club");
   return (
-    <div className="p-7 grid gap-5 h-screen items-start pb-7">
+    <div className="p-7 grid gap-5 h-screen items-start mb-7">
       <div className="grid gap-3 items-start">
         <div className="self-start flex font-semibold items-center justify-between">
           <div className="flex gap-5 items-center">
