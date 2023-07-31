@@ -179,13 +179,12 @@ const Clubpage = () => {
       return clubSummary;
     } else if (steps === 1) {
       return accordion;
-    } else if (steps === 2) {
     }
   };
 
   PageTitle("Jaiye - Club");
   return (
-    <div className="p-7 grid gap-5 h-screen items-start mb-7">
+    <div className="p-7 grid gap-5 h-screen items-start">
       <div className="grid gap-3 items-start">
         <div className="self-start flex font-semibold items-center justify-between">
           <div className="flex gap-5 items-center">
@@ -229,7 +228,7 @@ const Clubpage = () => {
         {activeStep()}
       </div>
       <Button
-        className="self-end bg-primary"
+        className="self-end bg-primary !mb-36"
         onClick={() => setSteps(steps + 1)}
       >
         {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>

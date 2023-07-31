@@ -4,6 +4,7 @@ import Welcome from './Pages/Welcome';
 import Location from './Pages/Location';
 import Explore from './Pages/Explore';
 import Clubpage from './Pages/Clubpage';
+import Ticket from './Pages/Ticket';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path='location' element={<Location />} />
           <Route path='explore' element={<Explore />} />
           <Route path="club" element={<Clubpage />} />
+          <Route path="ticket" element={<Ticket />} />
         </Routes>
       </BrowserRouter>
     </div>
