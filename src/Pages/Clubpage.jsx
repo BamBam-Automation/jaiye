@@ -186,13 +186,6 @@ const Clubpage = () => {
     <div className="p-7 grid gap-5 h-screen items-start">
       <div className="grid gap-3 items-start">
         <NavBar title={"Book Table"} />
-        {/* <div className="self-start flex font-semibold items-center justify-between">
-          <div className="flex gap-5 items-center">
-            <IoIosArrowBack className="h-5 w-5 text-primary" />
-            <h6>Book Table</h6>
-          </div>
-          <FiMenu className="h-5 w-5 text-primary" />
-        </div> */}
         <div className="grid gap-5">
           <h4 className="text-2xl font-bold">Checker's Club</h4>
           <img
