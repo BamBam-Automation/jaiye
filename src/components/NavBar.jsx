@@ -1,10 +1,13 @@
 import { Drawer, IconButton } from "@material-tailwind/react";
 import React, { useState } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiPower } from "react-icons/fi";
 import Jaiye from "../images/Jaiye.svg";
 import Profile from "../images/Profile.svg";
 import { IoIosArrowBack, IoIosHome } from "react-icons/io";
 import NavigationItem from "./NavigationItem";
+import { FaCompass, FaUser } from "react-icons/fa";
+import { MdCastConnected } from "react-icons/md";
+import { GoHistory } from "react-icons/go";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
@@ -16,12 +19,12 @@ const NavBar = (props) => {
       </div>
       <FiMenu className="h-5 w-5 text-primary" onClick={() => setOpen(true)} />
       <Drawer
-        className="p-10 grid gap-10"
+        className="p-10 grid items-start gap-10 rounded-l-xl"
         open={open}
         placement="right"
         onClose={() => setOpen(false)}
       >
-        <div className="flex items-center justify-between self-start">
+        <div className="flex items-center justify-between">
           <img className="h-10" src={Jaiye} alt="logo" />
           <IconButton
             variant="text"
@@ -52,10 +55,33 @@ const NavBar = (props) => {
           />
           <h4 className="font-bold text-xl">Emmanuel Adegbola</h4>
         </div>
-        <div className="space-y-8">
+        <div className="grid gap-4">
           <NavigationItem>
-            <IoIosHome className="h-6 w-6 p-[2px]" /> Home
+            <IoIosHome className="h-6 w-6 p-[2px]" />
+            <p>Home</p>
           </NavigationItem>
+          <NavigationItem>
+            <FaCompass className="h-6 w-6 p-[2px]" />
+            <p>Explore</p>
+          </NavigationItem>
+          <NavigationItem>
+            <MdCastConnected className="h-6 w-6 p-[2px]" />
+            <p>Scan Ticket</p>
+          </NavigationItem>
+          <NavigationItem>
+            <GoHistory className="h-6 w-6 p-[2px]" />
+            <p>History</p>
+          </NavigationItem>
+          <NavigationItem>
+            <FaUser className="h-6 w-6 p-[2px]" />
+            <p>Profile</p>
+          </NavigationItem>
+        </div>
+        <div>
+          <div className="text-[#848484] flex items-center self-end gap-3">
+            <FiPower className="h-8 w-8 p-[2px]" />
+            <p>Sign Out</p>
+          </div>
         </div>
       </Drawer>
     </div>
