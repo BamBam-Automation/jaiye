@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
-import { FiMenu } from "react-icons/fi";
 import Club from "../images/Club.jpg";
 import { PiClockLight, PiUsersLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
@@ -13,6 +11,7 @@ import Accordion from "../components/Accordion";
 import TimePicker from "../components/Timpicker";
 import Tablepicker from "../components/Tablepicker";
 import Map from "../images/Map.svg";
+import NavBar from "../components/NavBar";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -186,13 +185,14 @@ const Clubpage = () => {
   return (
     <div className="p-7 grid gap-5 h-screen items-start">
       <div className="grid gap-3 items-start">
-        <div className="self-start flex font-semibold items-center justify-between">
+        <NavBar title={"Book Table"} />
+        {/* <div className="self-start flex font-semibold items-center justify-between">
           <div className="flex gap-5 items-center">
             <IoIosArrowBack className="h-5 w-5 text-primary" />
             <h6>Book Table</h6>
           </div>
           <FiMenu className="h-5 w-5 text-primary" />
-        </div>
+        </div> */}
         <div className="grid gap-5">
           <h4 className="text-2xl font-bold">Checker's Club</h4>
           <img
