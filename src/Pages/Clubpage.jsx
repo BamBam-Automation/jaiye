@@ -221,7 +221,7 @@ const Clubpage = () => {
         {activeStep()}
       </div>
       <Button
-        className="self-end bg-primary !mb-36"
+        className="!self-end bg-primary !mb-36"
         onClick={() => setSteps(steps + 1)}
       >
         {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>
