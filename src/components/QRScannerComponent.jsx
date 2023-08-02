@@ -45,7 +45,7 @@ const QRScannerComponent = () => {
         <Slider
           size="sm"
           className="text-primary"
-          defaultValue={zoomLevel}
+          value={zoomLevel}
           onChange={handleZoomChange}
         />
       </div>
