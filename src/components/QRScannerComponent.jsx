@@ -17,10 +17,11 @@ const QRScannerComponent = () => {
 
   const scannerStyle = {
     width: "100%",
+    height: "auto",
     borderRadius: "12px",
   };
 
-  const [zoomLevel, setZoomLevel] = useState(1);
+  const [zoomLevel, setZoomLevel] = useState(90);
 
   const handleZoomChange = (event) => {
     const { value } = event.target;
@@ -45,7 +46,7 @@ const QRScannerComponent = () => {
         <Slider
           size="sm"
           className="text-primary"
-          value={zoomLevel}
+          value={zoomLevel.toString()}
           onChange={handleZoomChange}
         />
       </div>
