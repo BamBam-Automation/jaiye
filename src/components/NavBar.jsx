@@ -56,19 +56,19 @@ const NavBar = (props) => {
           <h4 className="font-bold text-xl">Emmanuel Adegbola</h4>
         </div>
         <div className="grid gap-4">
-          <NavigationItem>
+          <NavigationItem link={"/dashboard"}>
             <IoIosHome className="h-6 w-6 p-[2px]" />
             <p>Home</p>
           </NavigationItem>
-          <NavigationItem>
+          <NavigationItem link={"/explore"}>
             <FaCompass className="h-6 w-6 p-[2px]" />
             <p>Explore</p>
           </NavigationItem>
-          <NavigationItem>
+          <NavigationItem link={"/scan"}>
             <MdCastConnected className="h-6 w-6 p-[2px]" />
             <p>Scan Ticket</p>
           </NavigationItem>
-          <NavigationItem>
+          <NavigationItem link={"/history"}>
             <GoHistory className="h-6 w-6 p-[2px]" />
             <p>History</p>
           </NavigationItem>
