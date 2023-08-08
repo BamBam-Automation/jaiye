@@ -12,8 +12,15 @@ import { PiCheck } from "react-icons/pi";
 import { RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
 import PageTitle from "../utils/PageTitle";
+import { useNavigate } from "react-router-dom";
 
 const Explore = () => {
+  const navigate = useNavigate();
+
+  const previousPage = (e) => {
+    navigate(-1);
+  };
+
   // Page Title
   PageTitle("Jaiye - Explore Clubs, Bars & Lounges");
 
@@ -40,7 +47,10 @@ const Explore = () => {
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
       <div className="flex justify-between items-baseline">
-        <IoIosArrowBack className="h-5 w-5 text-primary" />
+        <IoIosArrowBack
+          className="h-5 w-5 text-primary"
+          onClick={previousPage}
+        />
         <div className="mb-5 sticky top-0">
           <Input type="search" id="search" label="Search" />
           <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />

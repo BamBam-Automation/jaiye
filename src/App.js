@@ -8,6 +8,7 @@ import Ticket from './Pages/Ticket';
 import QRCode from './Pages/QRCode';
 import History from './Pages/History';
 import Home from './Pages/Home';
+import Profile from './Pages/Profile';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="ticket" element={<Ticket />} />
           <Route path='scan' element={<QRCode />} />
           <Route path='history' element={<History />} />
+          <Route path='profile' element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

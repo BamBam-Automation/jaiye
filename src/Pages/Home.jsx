@@ -7,9 +7,12 @@ import ClubCard from "../components/ClubCard";
 import Club from "../images/Club.jpg";
 import Club2 from "../images/Club2.jpg";
 import { Carousel } from "@material-tailwind/react";
+import PageTitle from "../utils/PageTitle";
 // import Club3 from "../images/Club3.jpg";
 
 const Home = () => {
+  // Page Title
+  PageTitle("Jaiye - Your Dashboard");
   return (
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"Home"} />

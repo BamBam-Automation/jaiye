@@ -8,13 +8,22 @@ import NavigationItem from "./NavigationItem";
 import { FaCompass, FaUser } from "react-icons/fa";
 import { MdCastConnected } from "react-icons/md";
 import { GoHistory } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const previousPage = (e) => {
+    navigate(-1);
+  };
   return (
     <div className="self-start flex font-semibold items-center justify-between">
       <div className="flex gap-5 items-center">
-        <IoIosArrowBack className="h-5 w-5 text-primary" />
+        <IoIosArrowBack
+          className="h-5 w-5 text-primary"
+          onClick={previousPage}
+        />
         <h6>{props.title}</h6>
       </div>
       <FiMenu className="h-5 w-5 text-primary" onClick={() => setOpen(true)} />
@@ -53,7 +62,7 @@ const NavBar = (props) => {
             src={Profile}
             alt="profile"
           />
-          <h4 className="font-bold text-xl">Emmanuel Adegbola</h4>
+          <h4 className="font-bold text-xl text-primary">Emmanuel Adegbola</h4>
         </div>
         <div className="grid gap-4">
           <NavigationItem link={"/dashboard"}>
@@ -72,7 +81,7 @@ const NavBar = (props) => {
             <GoHistory className="h-6 w-6 p-[2px]" />
             <p>History</p>
           </NavigationItem>
-          <NavigationItem>
+          <NavigationItem link={"/profile"}>
             <FaUser className="h-6 w-6 p-[2px]" />
             <p>Profile</p>
           </NavigationItem>
