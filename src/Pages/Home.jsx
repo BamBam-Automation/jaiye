@@ -3,6 +3,11 @@ import NavBar from "../components/NavBar";
 import Input from "../components/Input";
 import { CiSearch } from "react-icons/ci";
 import HistoryCard from "../components/HistoryCard";
+import ClubCard from "../components/ClubCard";
+import Club from "../images/Club.jpg";
+import Club2 from "../images/Club2.jpg";
+import { Carousel } from "@material-tailwind/react";
+// import Club3 from "../images/Club3.jpg";
 
 const Home = () => {
   return (
@@ -25,6 +30,26 @@ const Home = () => {
         <p className="font-semibold text-lg">Popular Places</p>
         <p className="text-primary">View All</p>
       </div>
+      <Carousel transition={{ duration: 2 }} className="rounded-xl">
+        <ClubCard
+          img={Club}
+          name={"Checkers Clubs"}
+          type={"Club"}
+          distance={"4.2Km"}
+          rating={"4.5(42)"}
+          time={"07:00PM"}
+          //   state={!activeTab.includes("Clubs")}
+        />
+        <ClubCard
+          img={Club2}
+          name={"204's Place"}
+          type={"Lounge"}
+          distance={"4.2Km"}
+          rating={"4.2(45)"}
+          time={"07:00PM"}
+          //   state={!activeTab.includes("Clubs")}
+        />
+      </Carousel>
     </div>
   );
 };
