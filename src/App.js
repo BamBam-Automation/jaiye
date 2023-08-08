@@ -6,6 +6,7 @@ import Explore from './Pages/Explore';
 import Clubpage from './Pages/Clubpage';
 import Ticket from './Pages/Ticket';
 import QRCode from './Pages/QRCode';
+import History from './Pages/History';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="club" element={<Clubpage />} />
           <Route path="ticket" element={<Ticket />} />
           <Route path='scan' element={<QRCode />} />
+          <Route path='history' element={<History />} />
         </Routes>
       </BrowserRouter>
     </div>
