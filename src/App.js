@@ -7,6 +7,7 @@ import Clubpage from './Pages/Clubpage';
 import Ticket from './Pages/Ticket';
 import QRCode from './Pages/QRCode';
 import History from './Pages/History';
+import Home from './Pages/Home';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path='/' element={<Membership />} />
           <Route path="welcome" element={<Welcome />} />
           <Route path='location' element={<Location />} />
+          <Route path='dashboard' element={<Home />} />
           <Route path='explore' element={<Explore />} />
           <Route path="club" element={<Clubpage />} />
           <Route path="ticket" element={<Ticket />} />
