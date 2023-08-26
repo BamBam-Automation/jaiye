@@ -9,8 +9,6 @@ import QRCode from './Pages/QRCode';
 import History from './Pages/History';
 import Home from './Pages/Home';
 import Profile from './Pages/Profile';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-// import {ReactQueryDevtools} from "@tanstack/react-query/devtools"
 
 
 function App() {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SignIn from "./membershipForms/SiginIn";
-import PrimaryButton from "../components/PrimaryButton";
 import { FcGoogle } from "react-icons/fc";
 import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
@@ -10,25 +9,30 @@ import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 
 const Membership = () => {
-  const [SignUpForm, setSignUpForm] = useState(false);
+  // State for Visible Form
+  const [signUpForm, setSignUpForm] = useState(false);
+
+  // Handle Visible Page Title
   const title = () => {
-    if (!SignUpForm) {
+    if (!signUpForm) {
       return "Jaiye - Sign In";
     } else {
       return "Jaiye - Sign Up";
     }
   };
+
+  // Page Title Handler
   PageTitle(title());
 
   return (
     <div className="grid relative p-7 content-between h-screen">
       <div className="flex gap-6 items-center">
         <IoIosArrowBack className="h-5 w-5 text-primary" />
-        <p className="font-medium">{!SignUpForm ? "Login" : "Sign Up"}</p>
+        <p className="font-medium">{!signUpForm ? "Login" : "Sign Up"}</p>
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
       <h3 className="mt-9 text-primary font-bold text-3xl">
-        {!SignUpForm ? (
+        {!signUpForm ? (
           <>
             Welcome
             <br />
@@ -42,11 +46,10 @@ const Membership = () => {
           </>
         )}
       </h3>
-      <form action="" className="grid gap-5">
-        {!SignUpForm && <SignIn />}
-        {SignUpForm && <SignUp />}
-        <PrimaryButton text={!SignUpForm ? "Login" : "Create Account"} />
-      </form>
+      <>
+        {!signUpForm && <SignIn />}
+        {signUpForm && <SignUp />}
+      </>
       <div className="flex items-center gap-2">
         <span className="h-[1px] bg-secondary w-full"></span>
         <p>or</p>
@@ -76,10 +79,10 @@ const Membership = () => {
           <span
             className="text-primary cursor-pointer"
             onClick={() => {
-              setSignUpForm(!SignUpForm);
+              setSignUpForm(!signUpForm);
             }}
           >
-            {!SignUpForm ? "Sign Up" : "Sign In"}
+            {!signUpForm ? "Sign Up" : "Sign In"}
           </span>
         </p>
       </div>
