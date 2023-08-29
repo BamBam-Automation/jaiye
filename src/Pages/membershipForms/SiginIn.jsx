@@ -24,6 +24,7 @@ const SiginIn = () => {
       .post("/login", data)
       .then((res) => {
         setLoading(false);
+        console.log(res);
         setResponse(res.data.message + ". Redirecting!");
         navigate("/dashboard");
       })
