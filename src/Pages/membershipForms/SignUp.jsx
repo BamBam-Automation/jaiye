@@ -12,6 +12,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(false);
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -34,9 +35,19 @@ const SignUp = () => {
       .then((res) => {
         setLoading(false);
         console.log(res);
+        setResponse(res.data.message);
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err.data);
+        if (
+          err.message === "timeout of 2000ms exceeded" ||
+          "Request failed with status code 500"
+        ) {
+          setResponse("Request failed. please try again.");
+        } else {
+          setResponse(err.data.message);
+        }
         console.log(err);
       });
   };
@@ -105,6 +116,7 @@ const SignUp = () => {
       ) : (
         ""
       )}
+      {response}
     </form>
   );
 };

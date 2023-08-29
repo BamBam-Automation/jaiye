@@ -2,7 +2,7 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "https://jaiye.axle-cartage.com/api/",
-  timeout: 2000,
+  timeout: 10000,
   headers: {
     accept: "*/*",
     "Content-Type": "application/json",
