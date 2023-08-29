@@ -1,50 +1,53 @@
 import React from "react";
 import Input from "../../components/Input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../components/PrimaryButton";
 import axiosInstance from "../../utils/axios/axios";
 import LoadingSkeleton from "react-loading-skeleton";
 import { useState } from "react";
 
 const SiginIn = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
 
   const data = {
-    email,
+    username,
     password,
   };
 
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
-    console.log(data);
     axiosInstance
-      .post("/registration", data)
+      .post("/login", data)
       .then((res) => {
         setLoading(false);
-        console.log(res);
+        setResponse(res.data.message + ". Redirecting!");
+        navigate("/dashboard");
       })
       .catch((err) => {
         setLoading(false);
         if (
-          err.message === "timeout of 2000ms exceeded" ||
+          err.message === "timeout of 10000ms exceeded" ||
           "Request failed with status code 500"
         ) {
           setResponse("Request failed. please try again.");
+        } else {
+          setResponse(err.data.message);
         }
-        console.log(err);
       });
   };
   return (
     <form action="" className="grid gap-5">
       <Input
-        label={"Email"}
-        type={"email"}
-        id={"email"}
-        value={email}
+        label={"Username"}
+        type={"text"}
+        id={"username"}
+        value={username}
         onChange={(e) => {
-          setEmail(e.target.value);
+          setUsername(e.target.value);
         }}
       />
       <Input

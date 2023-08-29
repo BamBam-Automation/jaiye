@@ -29,26 +29,22 @@ const SignUp = () => {
     password,
   };
   const handleSubmit = () => {
-    console.log(data);
     axiosInstance
       .post("/registration", data)
       .then((res) => {
         setLoading(false);
-        console.log(res);
         setResponse(res.data.message);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err.data);
         if (
-          err.message === "timeout of 2000ms exceeded" ||
+          err.message === "timeout of 10000ms exceeded" ||
           "Request failed with status code 500"
         ) {
           setResponse("Request failed. please try again.");
         } else {
           setResponse(err.data.message);
         }
-        console.log(err);
       });
   };
 
