@@ -5,6 +5,8 @@ import PrimaryButton from "../../components/PrimaryButton";
 import axiosInstance from "../../utils/axios/axios";
 import LoadingSkeleton from "react-loading-skeleton";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../utils/app/userSlice";
 
 const SiginIn = () => {
   const [username, setUsername] = useState("");
@@ -18,6 +20,7 @@ const SiginIn = () => {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     axiosInstance
@@ -26,7 +29,10 @@ const SiginIn = () => {
         setLoading(false);
         console.log(res);
         setResponse(res.data.message + ". Redirecting!");
-        navigate("/dashboard");
+        dispatch(login(res.data));
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
       })
       .catch((err) => {
         setLoading(false);
