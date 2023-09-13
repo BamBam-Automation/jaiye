@@ -77,7 +77,12 @@ const Home = () => {
           View All
         </Link>
       </div>
-      <Carousel transition={{ duration: 2 }} className="rounded-xl">
+      <Carousel
+        autoplay={true}
+        loop={true}
+        transition={{ duration: 2 }}
+        className="rounded-xl"
+      >
         {clubs.map((club) => (
           <ClubCard
             key={club.$id}
@@ -88,6 +93,7 @@ const Home = () => {
             rating={"4.5(42)"}
             time={"07:00PM"}
             //   state={!activeTab.includes("Clubs")}
+            onClick={""}
           />
         ))}
       </Carousel>

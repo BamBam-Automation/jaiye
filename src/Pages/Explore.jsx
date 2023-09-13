@@ -4,15 +4,14 @@ import Input from "../components/Input";
 import { CiSearch } from "react-icons/ci";
 import { GoFilter } from "react-icons/go";
 import ClubCard from "../components/ClubCard";
-import Club from "../images/Club.jpg";
-import Club2 from "../images/Club2.jpg";
-import Club3 from "../images/Club3.jpg";
 import { Button, Drawer } from "@material-tailwind/react";
 import { PiCheck } from "react-icons/pi";
 import { RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
 import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axiosInstance from "../utils/axios/axios";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -44,6 +43,56 @@ const Explore = () => {
 
   // Manage Filter Drawer
   const [drawerState, setDrawerState] = useState(false);
+
+  const [clubs, setClubs] = useState([]);
+  const [pageIndex, setPageIndex] = useState(1);
+  const pageSize = 10;
+  useEffect(() => {
+    const fetchClubs = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `/establishments?pageIndex=${pageIndex}&pageSize=${pageSize}`
+        );
+        const newClubs = response.data.$values;
+        console.log(newClubs);
+        // Append the new clubs to the existing list
+        setClubs((prevClubs) => [...prevClubs, ...newClubs]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchClubs();
+  }, [pageIndex]);
+
+  // Function to load more clubs when the "See More" button is clicked
+  const loadMoreClubs = () => {
+    setPageIndex(pageIndex + 1);
+  };
+
+  const clubType = (clubNumber) => {
+    if (clubNumber === 1) {
+      return "Unknown";
+    } else if (clubNumber === 2) {
+      return "Club";
+    } else if (clubNumber === 3) {
+      return "Bar";
+    } else {
+      return "Lounge";
+    }
+  };
+
+  const getSingleClub = (arg) => {
+    console.log(arg);
+    axiosInstance
+      .get(`/establishments/${arg}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
       <div className="flex justify-between items-baseline">
@@ -168,39 +217,40 @@ const Explore = () => {
         </div>
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      <ClubCard
-        img={Club}
-        name={"Checkers Clubs"}
-        type={"Club"}
-        distance={"4.2Km"}
-        rating={"4.5(42)"}
-        time={"07:00PM"}
-        state={!activeTab.includes("Clubs")}
-      />
-      <ClubCard
-        img={Club2}
-        name={"204's Place"}
-        type={"Lounge"}
-        distance={"4.2Km"}
-        rating={"4.2(45)"}
-        time={"07:00PM"}
-        state={!activeTab.includes("Clubs")}
-      />
-      <ClubCard
-        img={Club3}
-        name={"204's Place"}
-        type={"Lounge"}
-        distance={"4.2Km"}
-        rating={"4.2(45)"}
-        time={"07:00PM"}
-        state={!activeTab.includes("Clubs")}
-      />
-      <Button
+      {clubs
+        .filter((club) => {
+          if (activeTab === "What's On") {
+            // Display all clubs when "What's On" is selected.
+            return true;
+          } else {
+            // Display clubs of the selected type (activeTab).
+            return club.type === activeTab;
+          }
+        })
+        .map((club) => (
+          <ClubCard
+            key={club.$id}
+            img={club.imageUrl}
+            name={club.name}
+            type={clubType(club.establishmentType)}
+            distance={"4.2Km"}
+            rating={"4.5(42)"}
+            time={"07:00PM"}
+            state={
+              activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
+            }
+            onClick={() => {
+              getSingleClub(club.$id);
+            }}
+          />
+        ))}
+      <button
         variant="outlined"
-        className="text-primary h-full border border-primary mx-auto"
+        className={`text-primary h-full border border-primary mx-auto rounded-md py-3 px-4`}
+        onClick={loadMoreClubs}
       >
         See More <span>&#8594;</span>
-      </Button>
+      </button>
     </div>
   );
 };

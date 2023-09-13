@@ -10,7 +10,7 @@ import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 
 const ClubCard = (props) => {
   return (
-    <Card className="w-full h-fit">
+    <Card className="w-full h-fit" onClick={props.onClick}>
       <CardHeader floated={false} className="m-0 rounded-b-none">
         <img className="w-full object-cover h-36" src={props.img} alt="" />
       </CardHeader>
