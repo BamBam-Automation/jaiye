@@ -13,6 +13,8 @@ import { useNavigate } from "react-router-dom";
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
+  // const location = useLocation();
+  // console.log(location.pathname(-1));
 
   const previousPage = (e) => {
     navigate(-1);
