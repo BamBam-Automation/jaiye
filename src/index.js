@@ -9,12 +9,12 @@ import store from './utils/app/store';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-  <React.StrictMode>
+    {/* <React.StrictMode> */}
       <ThemeProvider>
         <App />
       </ThemeProvider>
-    </React.StrictMode>
-    </Provider>
+    {/* </React.StrictMode> */}
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

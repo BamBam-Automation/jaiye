@@ -8,39 +8,44 @@ import { Carousel } from "@material-tailwind/react";
 import PageTitle from "../utils/PageTitle";
 import axiosInstance from "../utils/axios/axios";
 import { Link } from "react-router-dom";
+import TimeConverter from "../components/TimeConverter";
+import DateConverter from "../components/DateConverter";
 
 const Home = () => {
   // Page Title
   PageTitle("Jaiye - Your Dashboard");
 
+  // Get Current Username
   let username = sessionStorage.getItem("username");
 
+  // Get the top 5 user booked events
   const [events, setEvents] = useState([]);
   useEffect(() => {
     axiosInstance
       .get(`/upcoming-events?pageIndex=1&pageSize=5`)
       .then((res) => {
-        console.log(res.data.$values);
-        // setEvents(res.data.$values);
+        setEvents(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  // Get top 5 clubs
   const [clubs, setClubs] = useState([]);
   useEffect(() => {
     axiosInstance
-      .get(`/establishments?pageIndex=1&pageSize=5`)
+      .get(`/establishments?pageIndex=1&pageSize=10`)
       .then((res) => {
-        console.log(res.data.$values);
-        setClubs(res.data.$values);
+        console.log(res.data);
+        setClubs(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  // Handle type of event place
   const clubType = (clubNumber) => {
     if (clubNumber === 1) {
       return "Unknown";
@@ -51,6 +56,19 @@ const Home = () => {
     } else {
       return "Lounge";
     }
+  };
+
+  // Get details of single event place for customer booking
+  const getSingleClub = (arg) => {
+    console.log(arg);
+    axiosInstance
+      .get(`/establishment/${arg}`)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -70,30 +88,37 @@ const Home = () => {
           View All
         </Link>
       </div>
-      <HistoryCard />
+      <Carousel loop={true} transition={{ duration: 2 }} className="rounded-xl">
+        {events.map((event) => (
+          <HistoryCard
+            key={event.id}
+            owner={event.owner}
+            guests={event.numberOfGuest}
+            date={DateConverter(event.dateOfEvent)}
+            time={TimeConverter(event.timeOfEvent)}
+            table={event.tableNumber}
+            price={event.eventPrice}
+          />
+        ))}
+      </Carousel>
       <div className="flex justify-between items-center">
         <p className="font-semibold text-lg">Popular Places</p>
         <Link to={"/explore"} className="text-primary">
           View All
         </Link>
       </div>
-      <Carousel
-        autoplay={true}
-        loop={true}
-        transition={{ duration: 2 }}
-        className="rounded-xl"
-      >
+      <Carousel autoplay={true} loop={true} className="rounded-xl">
         {clubs.map((club) => (
           <ClubCard
-            key={club.$id}
+            key={club.id}
             img={club.imageUrl}
             name={club.name}
             type={clubType(club.establishmentType)}
             distance={"4.2Km"}
             rating={"4.5(42)"}
-            time={"07:00PM"}
+            time={TimeConverter(club.openingTime)}
             //   state={!activeTab.includes("Clubs")}
-            onClick={""}
+            onClick={() => getSingleClub(club.id)}
           />
         ))}
       </Carousel>
