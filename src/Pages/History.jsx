@@ -8,7 +8,7 @@ import DateConverter from "../components/DateConverter";
 import TimeConverter from "../components/TimeConverter";
 
 const History = () => {
-  const pageIndex = 1;
+  const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 10;
   const [events, setEvents] = useState([]);
 
@@ -29,6 +29,10 @@ const History = () => {
     fetchClubs();
   }, [pageIndex]);
 
+  const moreHistory = () => {
+    setPageIndex(pageIndex + 1);
+  };
+
   return (
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"History"} />
@@ -45,6 +49,13 @@ const History = () => {
           />
         ))}
       </div>
+      <button
+        // variant="outlined"
+        className={`text-primary h-full border border-primary mx-auto rounded-md py-3 px-4`}
+        onClick={moreHistory}
+      >
+        See More <span>&#8594;</span>
+      </button>
     </div>
   );
 };
