@@ -9,10 +9,11 @@ import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 import TimePicker from "../components/Timpicker";
 import Tablepicker from "../components/Tablepicker";
-import Map from "../images/Map.svg";
+import BarMap from "../images/Map.svg";
 import NavBar from "../components/NavBar";
 import { useLocation } from "react-router-dom";
 import TimeConverter from "../components/TimeConverter";
+import { Map, Marker } from "pigeon-maps";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -100,7 +101,7 @@ const Clubpage = () => {
               <p>Designated hostess service.</p>
               <p>Our service has zero cost on client side.</p>
             </div>
-            {mapVisible && <img className="mx-auto" src={Map} alt="" />}
+            {mapVisible && <img className="mx-auto" src={BarMap} alt="" />}
           </div>
         </div>
       ),
@@ -158,7 +159,18 @@ const Clubpage = () => {
       <div className="grid gap-3">
         <h4 className="font-bold">Location</h4>
         <p className="text-justify">{`${summary?.address}, ${summary?.state}, Nigeria`}</p>
-        <div className="h-48 bg-secondary rounded-lg"></div>
+        <div className="h-48 rounded-lg">
+          <Map
+            height={192}
+            defaultCenter={[summary?.longitude, summary?.latitude]}
+            defaultZoom={11}
+          >
+            <Marker
+              width={50}
+              anchor={[summary?.longitude, summary?.latitude]}
+            />
+          </Map>
+        </div>
       </div>
     </div>
   );
@@ -191,7 +203,7 @@ const Clubpage = () => {
     }
   };
 
-  PageTitle("Jaiye - Club");
+  PageTitle("Jaiye - Book Table");
   return (
     <div className="p-7 grid gap-5 h-screen items-start">
       <div className="grid gap-3 items-start">
