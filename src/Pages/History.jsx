@@ -19,7 +19,6 @@ const History = () => {
           `/upcoming-events?pageIndex=${pageIndex}&pageSize=${pageSize}`
         );
         const newEvents = response.data;
-        console.log(newEvents);
         // Append the new clubs to the existing list
         setEvents((prevEvents) => [...prevEvents, ...newEvents]);
       } catch (error) {

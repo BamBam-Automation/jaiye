@@ -229,7 +229,7 @@ const Explore = () => {
         })
         .map((club) => (
           <ClubCard
-            key={club.$id}
+            key={club.id}
             img={club.imageUrl}
             name={club.name}
             type={clubType(club.establishmentType)}

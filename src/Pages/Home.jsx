@@ -37,7 +37,6 @@ const Home = () => {
     axiosInstance
       .get(`/establishments?pageIndex=1&pageSize=10`)
       .then((res) => {
-        console.log(res.data);
         setClubs(res.data);
       })
       .catch((err) => {
