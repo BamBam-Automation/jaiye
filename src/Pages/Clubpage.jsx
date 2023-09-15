@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Club from "../images/Club.jpg";
 import { PiClockLight, PiUsersLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
@@ -12,6 +11,8 @@ import TimePicker from "../components/Timpicker";
 import Tablepicker from "../components/Tablepicker";
 import Map from "../images/Map.svg";
 import NavBar from "../components/NavBar";
+import { useLocation } from "react-router-dom";
+import TimeConverter from "../components/TimeConverter";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -25,6 +26,10 @@ const Clubpage = () => {
 
   // State to manage map visibility
   const [mapVisible, setMapVisible] = useState(false);
+
+  const location = useLocation();
+  console.log(location);
+  const summary = location?.state?.club;
 
   // Sections for Accordion Component
   const sections = [
@@ -148,19 +153,11 @@ const Clubpage = () => {
     <div className="grid gap-3">
       <div className="">
         <h4 className="font-bold">About</h4>
-        <p className="text-justify">
-          Welcome to our vibrant and electrifying nightclub, where the night
-          comes alive and unforgettable experiences await you at every turn. We
-          pride ourselves on creating an atmosphere that ignites the senses,
-          offering a unique fusion of music, dance, and entertainment that will
-          leave you craving for more.
-        </p>
+        <p className="text-justify">{summary?.description}</p>
       </div>
       <div className="grid gap-3">
         <h4 className="font-bold">Location</h4>
-        <p className="text-justify">
-          26, Lekki beach road, Lekki Phase 1, Lagos Nigeria
-        </p>
+        <p className="text-justify">{`${summary?.address}, ${summary?.state}, Nigeria`}</p>
         <div className="h-48 bg-secondary rounded-lg"></div>
       </div>
     </div>
@@ -181,23 +178,36 @@ const Clubpage = () => {
     }
   };
 
+  // Handle type of event place
+  const clubType = (clubNumber) => {
+    if (clubNumber === 1) {
+      return "Unknown";
+    } else if (clubNumber === 2) {
+      return "Club";
+    } else if (clubNumber === 3) {
+      return "Bar";
+    } else {
+      return "Lounge";
+    }
+  };
+
   PageTitle("Jaiye - Club");
   return (
     <div className="p-7 grid gap-5 h-screen items-start">
       <div className="grid gap-3 items-start">
         <NavBar title={"Book Table"} />
         <div className="grid gap-5">
-          <h4 className="text-2xl font-bold">Checker's Club</h4>
+          <h4 className="text-2xl font-bold">{summary?.name}</h4>
           <img
             className="w-full object-cover rounded-lg h-36"
-            src={Club}
+            src={summary?.imageUrl}
             alt="business banner"
           />
           <div className="grid gap-2">
             <div className="flex justify-between">
               <span className="flex">
                 <PiWineLight className="h-5 w-5 text-primary" />
-                <p>Club</p>
+                <p>{clubType(summary?.establishmentType)}</p>
               </span>
               <span className="flex">
                 <TfiLocationArrow className="h-5 w-5 rotate-90 text-primary" />
@@ -209,12 +219,12 @@ const Clubpage = () => {
               </span>
               <span className="flex">
                 <PiClockLight className="h-5 w-5 text-primary" />
-                <p>09:00PM</p>
+                <p>{TimeConverter(summary?.openingTime)}</p>
               </span>
             </div>
             <span className="flex">
               <HiPhone className="h-5 w-5 text-primary" />
-              <p className="font-semibold">08012345678</p>
+              <p className="font-semibold">{summary?.contactPhone}</p>
             </span>
           </div>
         </div>

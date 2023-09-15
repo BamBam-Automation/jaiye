@@ -7,7 +7,7 @@ import ClubCard from "../components/ClubCard";
 import { Carousel } from "@material-tailwind/react";
 import PageTitle from "../utils/PageTitle";
 import axiosInstance from "../utils/axios/axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TimeConverter from "../components/TimeConverter";
 import DateConverter from "../components/DateConverter";
 
@@ -58,17 +58,21 @@ const Home = () => {
   };
 
   // Get details of single event place for customer booking
+  const navigate = useNavigate();
   const getSingleClub = (arg) => {
     console.log(arg);
     axiosInstance
       .get(`/establishment/${arg}`)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
+        navigate("/club", { state: { club: res.data } });
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  // const [eventCenter, setEventCenter] = useState({});
 
   return (
     <div className="p-7 grid gap-5 items-start">
