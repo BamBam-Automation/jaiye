@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PiClockLight, PiUsersLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
@@ -14,6 +14,7 @@ import NavBar from "../components/NavBar";
 import { useLocation } from "react-router-dom";
 import TimeConverter from "../components/TimeConverter";
 import { Map, Marker } from "pigeon-maps";
+import axiosInstance from "../utils/axios/axios";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -29,126 +30,94 @@ const Clubpage = () => {
   const [mapVisible, setMapVisible] = useState(false);
 
   const location = useLocation();
-  console.log(location);
   const summary = location?.state?.club;
 
+  const [seats, setSeats] = useState([]);
+  useEffect(() => {
+    axiosInstance
+      .get("/tables?pageIndex=1&pageSize=10")
+      .then((res) => {
+        console.log(res);
+        setSeats(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   // Sections for Accordion Component
-  const sections = [
-    {
-      header: (
-        <div className="space-y-3">
+  const sections = seats.map((seat, index) => ({
+    header: (
+      <div className="space-y-3">
+        <div className="flex gap-3 items-center">
+          <MdOutlineTableBar className="text-primary h-5 w-5" />
+          <h6 className="font-semibold">{seat.name}</h6>
+        </div>
+        <div className="flex items-center gap-5">
           <div className="flex gap-3 items-center">
-            <MdOutlineTableBar className="text-primary h-5 w-5" />
-            <h6 className="font-semibold">VIP Table</h6>
+            <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
+            <p>{`${seat.price} Naira`}</p>
           </div>
-          <div className="flex items-center gap-5">
-            <div className="flex gap-3 items-center">
-              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
-              <p>2,000,000 Naira</p>
-            </div>
-            <div className="flex gap-3 items-center">
-              <PiUsersLight className="text-primary h-5 w-5" />
-              <p>5 Guests</p>
-            </div>
+          <div className="flex gap-3 items-center">
+            <PiUsersLight className="text-primary h-5 w-5" />
+            <p>{`${seat.numberOfSeat} Seats Available`}</p>
           </div>
         </div>
-      ),
-      content: (
-        <div className="space-y-3">
-          <button
-            className="text-primary text-sm"
-            onClick={() => setMapVisible(!mapVisible)}
+      </div>
+    ),
+    content: (
+      <div className="space-y-3">
+        <button
+          className="text-primary text-sm"
+          onClick={() => setMapVisible(!mapVisible)}
+        >
+          See tables map
+        </button>
+        <div className="relative space-y-7 pb-5">
+          <div className="flex items-center gap-7 justify-between">
+            <Button
+              className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2 flex items-center gap-1"
+              onClick={() => setTimeIsOpen(!timeIsOpen)}
+            >
+              <PiClockLight className="h-5 w-5 text-primary" />
+              Pick Time
+            </Button>
+            <Button
+              className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2"
+              onClick={() => setTableIsOpen(!tableIsOpen)}
+            >
+              Select Table
+            </Button>
+          </div>
+          <div
+            className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg overflow-y-scroll grid bg-white top-5 left-0 ${
+              timeIsOpen
+                ? "transition ease-out duration-200 opacity-100 scale-100"
+                : "transition ease-in duration-200 opacity-0 scale-90"
+            }`}
           >
-            See tables map
-          </button>
-          <div className="relative space-y-7 pb-5">
-            <div className="flex items-center gap-7 justify-between">
-              <Button
-                className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2 flex items-center gap-1"
-                onClick={() => setTimeIsOpen(!timeIsOpen)}
-              >
-                <PiClockLight className="h-5 w-5 text-primary" />
-                Pick Time
-              </Button>
-              <Button
-                className="border-primary border-2 text-primary outline-none bg-transparent basis-1/2"
-                onClick={() => setTableIsOpen(!tableIsOpen)}
-              >
-                Select Table
-              </Button>
-            </div>
-            <div
-              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg overflow-y-scroll grid bg-white top-5 left-0 ${
-                timeIsOpen
-                  ? "transition ease-out duration-200 opacity-100 scale-100"
-                  : "transition ease-in duration-200 opacity-0 scale-90"
-              }`}
-            >
-              <TimePicker />
-            </div>
-            <div
-              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
-                tableIsOpen
-                  ? "transition ease-out duration-200 opacity-100 scale-100"
-                  : "transition ease-in duration-200 opacity-0 scale-90"
-              }`}
-            >
-              <Tablepicker />
-            </div>
-            <div>
-              <p>Fast track entry</p>
-              <p>Bar spend as per minimum spend included.</p>
-              <p>Designated hostess service.</p>
-              <p>Our service has zero cost on client side.</p>
-            </div>
-            {mapVisible && <img className="mx-auto" src={BarMap} alt="" />}
+            <TimePicker />
           </div>
+          <div
+            className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
+              tableIsOpen
+                ? "transition ease-out duration-200 opacity-100 scale-100"
+                : "transition ease-in duration-200 opacity-0 scale-90"
+            }`}
+          >
+            <Tablepicker />
+          </div>
+          <div>
+            <p>Fast track entry</p>
+            <p>Bar spend as per minimum spend included.</p>
+            <p>Designated hostess service.</p>
+            <p>Our service has zero cost on client side.</p>
+          </div>
+          {mapVisible && <img className="mx-auto" src={BarMap} alt="" />}
         </div>
-      ),
-    },
-    {
-      header: (
-        <div className="space-y-3">
-          <div className="flex gap-3 items-center">
-            <MdOutlineTableBar className="text-primary h-5 w-5" />
-            <h6 className="font-semibold">Special Table</h6>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="flex gap-3 items-center">
-              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
-              <p>2,000,000 Naira</p>
-            </div>
-            <div className="flex gap-3 items-center">
-              <PiUsersLight className="text-primary h-5 w-5" />
-              <p>5 Guests</p>
-            </div>
-          </div>
-        </div>
-      ),
-      content: "Content of section 2 goes here.",
-    },
-    {
-      header: (
-        <div className="space-y-3">
-          <div className="flex gap-3 items-center">
-            <MdOutlineTableBar className="text-primary h-5 w-5" />
-            <h6 className="font-semibold">Regular Table</h6>
-          </div>
-          <div className="flex items-center gap-5">
-            <div className="flex gap-3 items-center">
-              <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
-              <p>2,000,000 Naira</p>
-            </div>
-            <div className="flex gap-3 items-center">
-              <PiUsersLight className="text-primary h-5 w-5" />
-              <p>5 Guests</p>
-            </div>
-          </div>
-        </div>
-      ),
-      content: "Content of section 3 goes here.",
-    },
-  ];
+      </div>
+    ),
+  }));
 
   const clubSummary = (
     <div className="grid gap-3">
@@ -163,10 +132,10 @@ const Clubpage = () => {
           <Map
             height={192}
             defaultCenter={[summary?.longitude, summary?.latitude]}
-            defaultZoom={11}
+            defaultZoom={10}
           >
             <Marker
-              width={50}
+              width={30}
               anchor={[summary?.longitude, summary?.latitude]}
             />
           </Map>
@@ -243,7 +212,7 @@ const Clubpage = () => {
         {activeStep()}
       </div>
       <Button
-        className="!self-end bg-primary !mb-36"
+        className="!self-end bg-primary !mb-40"
         onClick={() => setSteps(steps + 1)}
       >
         {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>

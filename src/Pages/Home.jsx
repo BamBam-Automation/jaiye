@@ -60,11 +60,9 @@ const Home = () => {
   // Get details of single event place for customer booking
   const navigate = useNavigate();
   const getSingleClub = (arg) => {
-    console.log(arg);
     axiosInstance
       .get(`/establishment/${arg}`)
       .then((res) => {
-        console.log(res.data);
         navigate("/club", { state: { club: res.data } });
       })
       .catch((err) => {
