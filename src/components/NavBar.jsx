@@ -9,6 +9,8 @@ import { FaCompass, FaUser } from "react-icons/fa";
 import { MdCastConnected } from "react-icons/md";
 import { GoHistory } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../utils/app/userSlice";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
@@ -19,6 +21,12 @@ const NavBar = (props) => {
   const previousPage = (e) => {
     navigate(-1);
   };
+
+  const dispatch = useDispatch();
+  const userLogOut = () => {
+    dispatch(logout());
+  };
+
   return (
     <div className="self-start flex font-semibold items-center justify-between">
       <div className="flex gap-5 items-center">
@@ -88,11 +96,11 @@ const NavBar = (props) => {
             <p>Profile</p>
           </NavigationItem>
         </div>
-        <div>
-          <div className="text-[#848484] flex items-center self-end gap-3">
+        <div onClick={userLogOut}>
+          <button className="text-[#848484] flex items-center self-end gap-3">
             <FiPower className="h-8 w-8 p-[2px]" />
             <p>Sign Out</p>
-          </div>
+          </button>
         </div>
       </Drawer>
     </div>
