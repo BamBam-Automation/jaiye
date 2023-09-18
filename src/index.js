@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import { ThemeProvider } from '@material-tailwind/react';
 import { Provider } from 'react-redux';
-// import store from './utils/app/store';
 import {store, persistor} from "./utils/app/store"
 import { PersistGate } from 'redux-persist/integration/react';
 

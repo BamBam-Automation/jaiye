@@ -84,9 +84,10 @@ const Explore = () => {
   const getSingleClub = (arg) => {
     console.log(arg);
     axiosInstance
-      .get(`/establishments/${arg}`)
+      .get(`/establishment/${arg}`)
       .then((res) => {
         console.log(res);
+        navigate("/club", { state: { club: res.data } });
       })
       .catch((err) => {
         console.log(err);
@@ -240,7 +241,7 @@ const Explore = () => {
               activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
             }
             onClick={() => {
-              getSingleClub(club.$id);
+              getSingleClub(club.id);
             }}
           />
         ))}
