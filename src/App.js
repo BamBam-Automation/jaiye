@@ -14,7 +14,7 @@ import Home from './Pages/Home';
 import Profile from './Pages/Profile';
 
 function App() {
-  // Access the isAuthenticated state from your Redux store
+  // Access the isAuthenticated state from Redux store
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
   return (
