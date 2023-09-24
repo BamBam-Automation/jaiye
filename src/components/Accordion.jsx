@@ -1,10 +1,27 @@
 import React, { useState } from "react";
 
-const Accordion = ({ sections }) => {
+const Accordion = ({
+  sections,
+  tableIsOpen,
+  setTableIsOpen,
+  timeIsOpen,
+  setTimeIsOpen,
+  mapVisible,
+  setMapVisible,
+}) => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const handleAccordionClick = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
+    if (tableIsOpen === true) {
+      setTableIsOpen(!tableIsOpen);
+    }
+    if (timeIsOpen === true) {
+      setTimeIsOpen(!timeIsOpen);
+    }
+    if (mapVisible === true) {
+      setMapVisible(!mapVisible);
+    }
   };
 
   return (

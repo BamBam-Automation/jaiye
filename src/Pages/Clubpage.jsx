@@ -32,35 +32,46 @@ const Clubpage = () => {
   const location = useLocation();
   const summary = location?.state?.club;
 
-  const [seats, setSeats] = useState([]);
+  const [tableTypes, setTableTypes] = useState([]);
   useEffect(() => {
     axiosInstance
-      .get("/tables?pageIndex=1&pageSize=10")
+      .get("/tableTypes?pageIndex=1&pageSize=10")
       .then((res) => {
-        console.log(res);
-        setSeats(res.data);
+        console.log(res.data);
+        setTableTypes(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  const [formData, setFormData] = useState({
+    numberOfGuest: "",
+    dateOfEvent: "",
+    timeOfEvent: "",
+    tableNumber: "",
+    eventPrice: {},
+    tableId: "",
+    patronId: "",
+    isBooked: 1,
+  });
+
   // Sections for Accordion Component
-  const sections = seats.map((seat, index) => ({
+  const sections = tableTypes.map((tableType, index) => ({
     header: (
       <div className="space-y-3">
         <div className="flex gap-3 items-center">
           <MdOutlineTableBar className="text-primary h-5 w-5" />
-          <h6 className="font-semibold">{seat.name}</h6>
+          <h6 className="font-semibold">{tableType.name}</h6>
         </div>
         <div className="flex items-center gap-5">
           <div className="flex gap-3 items-center">
             <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
-            <p>{`${seat.price} Naira`}</p>
+            <p>{`${tableType.price} Naira`}</p>
           </div>
           <div className="flex gap-3 items-center">
             <PiUsersLight className="text-primary h-5 w-5" />
-            <p>{`${seat.numberOfSeat} Seats Available`}</p>
+            <p>{`${tableType.numberOfSeat} Seats Available`}</p>
           </div>
         </div>
       </div>
@@ -105,7 +116,7 @@ const Clubpage = () => {
                 : "transition ease-in duration-200 opacity-0 scale-90"
             }`}
           >
-            <Tablepicker />
+            <Tablepicker formData={formData} setFormData={setFormData} />
           </div>
           <div>
             <p>Fast track entry</p>
@@ -147,7 +158,15 @@ const Clubpage = () => {
   const accordion = (
     <div className="mt-5">
       <h4 className="text-2xl font-bold">Choose Seat</h4>
-      <Accordion sections={sections} />
+      <Accordion
+        sections={sections}
+        tableIsOpen={tableIsOpen}
+        setTableIsOpen={setTableIsOpen}
+        mapVisible={mapVisible}
+        setMapVisible={setMapVisible}
+        timeIsOpen={timeIsOpen}
+        setTimeIsOpen={setTimeIsOpen}
+      />
     </div>
   );
 
@@ -156,6 +175,8 @@ const Clubpage = () => {
       return clubSummary;
     } else if (steps === 1) {
       return accordion;
+    } else {
+      console.log(formData);
     }
   };
 

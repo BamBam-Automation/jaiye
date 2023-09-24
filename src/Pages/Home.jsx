@@ -84,7 +84,7 @@ const Home = () => {
         </div>
       </div>
       <div className="flex justify-between items-center">
-        <p className="font-semibold text-lg">Upcoming</p>
+        <p className="font-semibold text-lg">Reservations</p>
         <Link to={"/history"} className="text-primary">
           View All
         </Link>
