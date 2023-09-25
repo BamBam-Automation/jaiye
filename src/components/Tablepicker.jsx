@@ -4,15 +4,12 @@ import { PiCheck } from "react-icons/pi";
 import axiosInstance from "../utils/axios/axios";
 
 const Tablepicker = ({ formData, setFormData }) => {
-  // Keep track of the selected table
-  const [selectedTable, setSelectedTable] = useState(null);
-
   // Function to handle changes in the radio input
   const handleRadioChange = (e) => {
     // setFormData({ ...formData, tableNumber: +e.table.name });
     setFormData({ ...formData, tableId: e.target.value });
-    setSelectedTable(e.target.value);
-    console.log(selectedTable);
+    // setSelectedTable(e.target.value);
+    console.log(formData.tableId);
   };
 
   const [tables, setTables] = useState([]);
@@ -44,12 +41,12 @@ const Tablepicker = ({ formData, setFormData }) => {
           <label
             htmlFor={table.id}
             className={`inline-flex items-center justify-between w-full py-2 cursor-pointer font-semibold ${
-              selectedTable === table.id ? "peer-checked:text-primary" : ""
+              formData.tableId === table.id ? "peer-checked:text-primary" : ""
             }`}
           >
             <div className="flex items-center w-full justify-between">
               <p>{table.name}</p>
-              {selectedTable === table.id && <PiCheck />}
+              {formData.tableId === table.id && <PiCheck />}
             </div>
           </label>
         </li>

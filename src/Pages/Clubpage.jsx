@@ -46,11 +46,7 @@ const Clubpage = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    numberOfGuest: "",
     dateOfEvent: "",
-    timeOfEvent: "",
-    tableNumber: "",
-    eventPrice: {},
     tableId: "",
     patronId: "",
   });
@@ -106,7 +102,7 @@ const Clubpage = () => {
                 : "transition ease-in duration-200 opacity-0 scale-90"
             }`}
           >
-            <TimePicker />
+            <TimePicker formData={formData} setFormData={setFormData} />
           </div>
           <div
             className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${

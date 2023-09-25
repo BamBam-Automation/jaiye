@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const TimePicker = (props) => {
+const TimePicker = ({ formData, setFormData }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [step, setStep] = useState(0);
@@ -24,7 +24,14 @@ const TimePicker = (props) => {
   };
 
   const handleTimeChange = (time) => {
-    setSelectedTime(time);
+    setSelectedTime(time); // Update the selected time
+
+    if (selectedDate) {
+      const formattedDateTime = formatDateTime(selectedDate, time);
+      if (formattedDateTime) {
+        setFormData({ ...formData, dateOfEvent: formattedDateTime });
+      }
+    }
   };
 
   const formatDateTime = (date, time) => {
@@ -73,6 +80,7 @@ const TimePicker = (props) => {
   };
 
   const formattedDateTime = formatDateTime(selectedDate, selectedTime);
+  // setFormData({ ...formData, dateOfEvent: formatDateTime });
   console.log(formattedDateTime); // Output will be in the format: 2023-09-24T11:56:26.825Z
 
   return (
