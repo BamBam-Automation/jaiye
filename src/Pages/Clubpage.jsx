@@ -53,7 +53,6 @@ const Clubpage = () => {
     eventPrice: {},
     tableId: "",
     patronId: "",
-    isBooked: 1,
   });
 
   // Sections for Accordion Component

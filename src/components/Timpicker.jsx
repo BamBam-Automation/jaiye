@@ -28,15 +28,48 @@ const TimePicker = (props) => {
   };
 
   const formatDateTime = (date, time) => {
+    // Check if both date and time are provided
+    if (date && time) {
+      // Create a new Date object with the provided date and time
+      const dateTime = new Date(`${date}T${time}:00`);
+
+      // Adjust for the local time zone offset
+      const offset = dateTime.getTimezoneOffset(); // Get the time zone offset in minutes
+      dateTime.setMinutes(dateTime.getMinutes() - offset); // Subtract the offset
+
+      return dateTime.toISOString();
+    }
+
+    // If only date is provided, set time to midnight in the local time zone
+    if (date && !time) {
+      const midnight = new Date(`${date}T00:00:00`);
+
+      // Adjust for the local time zone offset
+      const offset = midnight.getTimezoneOffset(); // Get the time zone offset in minutes
+      midnight.setMinutes(midnight.getMinutes() - offset); // Subtract the offset
+
+      return midnight.toISOString();
+    }
+
+    // If only time is provided, set date to today in the local time zone
     if (!date && time) {
       const today = new Date();
       const year = today.getFullYear();
       const month = String(today.getMonth() + 1).padStart(2, "0");
       const day = String(today.getDate()).padStart(2, "0");
-      return new Date(`${year}-${month}-${day}T${time}:00`).toISOString();
+
+      // Create a new Date object with today's date and the provided time
+      const dateTime = new Date(`${year}-${month}-${day}T${time}:00`);
+
+      // Adjust for the local time zone offset
+      const offset = dateTime.getTimezoneOffset(); // Get the time zone offset in minutes
+      dateTime.setMinutes(dateTime.getMinutes() - offset); // Subtract the offset
+
+      return dateTime.toISOString();
     }
-    const formattedDate = new Date(`${date}T${time}:00`).toISOString();
-    return formattedDate;
+
+    // If neither date nor time is provided, return null or handle it as needed
+    return null; // or any other appropriate handling
   };
 
   const formattedDateTime = formatDateTime(selectedDate, selectedTime);

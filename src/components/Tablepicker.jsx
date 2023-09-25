@@ -12,6 +12,7 @@ const Tablepicker = ({ formData, setFormData }) => {
     // setFormData({ ...formData, tableNumber: +e.table.name });
     setFormData({ ...formData, tableId: e.target.value });
     setSelectedTable(e.target.value);
+    console.log(selectedTable);
   };
 
   const [tables, setTables] = useState([]);
