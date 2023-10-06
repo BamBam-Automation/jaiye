@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { PiClockLight, PiUsersLight, PiWineLight } from "react-icons/pi";
 import { TfiLocationArrow, TfiStar } from "react-icons/tfi";
 import { HiPhone } from "react-icons/hi";
-import { Button } from "@material-tailwind/react";
+import { Alert, Button } from "@material-tailwind/react";
 import { MdOutlineTableBar } from "react-icons/md";
-import { BsTicketPerforated } from "react-icons/bs";
+import { BsPatchCheck, BsTicketPerforated } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import Accordion from "../components/Accordion";
 import TimePicker from "../components/Timpicker";
@@ -15,6 +15,7 @@ import { useLocation } from "react-router-dom";
 import TimeConverter from "../components/TimeConverter";
 import { Map, Marker } from "pigeon-maps";
 import axiosInstance from "../utils/axios/axios";
+import { CiWarning } from "react-icons/ci";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -31,7 +32,6 @@ const Clubpage = () => {
 
   const location = useLocation();
   const summary = location?.state?.club;
-  console.log(summary);
 
   const [tableTypes, setTableTypes] = useState([]);
   useEffect(() => {
@@ -47,10 +47,55 @@ const Clubpage = () => {
   }, []);
 
   const [formData, setFormData] = useState({
-    dateOfEvent: "",
-    tableId: "",
-    patronId: "",
+    establishmentId: summary?.id,
+    isActive: summary?.isActive,
+    orderItems: [
+      {
+        orderedTableId: "",
+        lineItems: null,
+        //   [
+        //   {
+        //     numberOfItems: 0,
+        //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        //   },
+        // ],
+      },
+    ],
   });
+
+  const [response, setResponse] = useState("");
+  const [alert, setAlert] = useState(false);
+  const [bgcolor, setBgColor] = useState("");
+  const [icon, setIcon] = useState("");
+
+  const handleSubmit = () => {
+    if (steps !== 1) {
+      setSteps((step) => step + 1);
+    } else {
+      axiosInstance
+        .post("Order", formData)
+        .then((res) => {
+          console.log(res);
+          setAlert(!alert);
+          setBgColor("green");
+          setResponse(res.data.message);
+          setIcon(<BsPatchCheck />);
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlert(!alert);
+          setResponse("Request failed, please try again");
+          setBgColor("red");
+          setIcon(<CiWarning />);
+        });
+    }
+  };
+
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
 
   // Sections for Accordion Component
   const sections = tableTypes.map((tableType, index) => ({
@@ -173,10 +218,8 @@ const Clubpage = () => {
   const activeStep = () => {
     if (steps === 0) {
       return clubSummary;
-    } else if (steps === 1) {
-      return accordion;
     } else {
-      console.log(formData);
+      return accordion;
     }
   };
 
@@ -232,10 +275,20 @@ const Clubpage = () => {
         </div>
         {activeStep()}
       </div>
-      <Button
-        className="!self-end bg-primary !mb-40"
-        onClick={() => setSteps(steps + 1)}
-      >
+      {alert && (
+        <Alert
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 100 },
+          }}
+          color={bgcolor}
+          icon={icon}
+          className="absolute w-11/12 right-5 h-12 top-8"
+        >
+          {response}
+        </Alert>
+      )}
+      <Button className="!self-end bg-primary !mb-40" onClick={handleSubmit}>
         {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>
       </Button>
     </div>

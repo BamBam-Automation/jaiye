@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Your Bearer token (optional)
-// const authToken = sessionStorage.getItem("token");
+const authToken = sessionStorage.getItem("token");
 
 const axiosInstance = axios.create({
   baseURL: "https://jaiye.axle-cartage.com/api/",
@@ -26,15 +26,15 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-// const addBearerToken = (token) => {
-//   if (token) {
-//     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-//     console.log(token);
-//   } else {
-//     delete axiosInstance.defaults.headers.common["Authorization"];
-//   }
-// };
+const addBearerToken = (token) => {
+  if (token) {
+    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    console.log(token);
+  } else {
+    delete axiosInstance.defaults.headers.common["Authorization"];
+  }
+};
 
-// addBearerToken(authToken);
+addBearerToken(authToken);
 
 export default axiosInstance;

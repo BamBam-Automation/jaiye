@@ -81,6 +81,19 @@ const Explore = () => {
     }
   };
 
+  const mapSingularToPlural = (singularType) => {
+    switch (singularType) {
+      case "Club":
+        return "Clubs";
+      case "Lounge":
+        return "Lounges";
+      case "Bar":
+        return "Bars";
+      default:
+        return singularType;
+    }
+  };
+
   const getSingleClub = (arg) => {
     console.log(arg);
     axiosInstance
@@ -92,6 +105,23 @@ const Explore = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const [filteredClubs, setFilteredClubs] = useState([]);
+  useEffect(() => {
+    // Filter clubs based on the selected tab
+    if (activeTab === "What's On") {
+      setFilteredClubs(clubs); // Display all clubs
+    } else {
+      // Filter by tab and map singular to plural
+      setFilteredClubs(
+        clubs.filter((club) => club.type === mapSingularToPlural(activeTab))
+      );
+    }
+  }, [clubs, activeTab]);
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
   };
 
   return (
@@ -113,7 +143,7 @@ const Explore = () => {
       <div className="h-11 flex justify-around">
         {barType.map((bar) => (
           <p
-            onClick={() => setActiveTab(bar)}
+            onClick={() => handleTabClick()}
             className={
               activeTab === bar
                 ? "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
@@ -225,7 +255,7 @@ const Explore = () => {
             return true;
           } else {
             // Display clubs of the selected type (activeTab).
-            return club.type === activeTab;
+            return club.type === mapSingularToPlural(activeTab);
           }
         })
         .map((club) => (
@@ -233,7 +263,7 @@ const Explore = () => {
             key={club.id}
             img={club.imageUrl}
             name={club.name}
-            type={clubType(club.establishmentType)}
+            type={mapSingularToPlural(clubType(club.establishmentType))}
             distance={"4.2Km"}
             rating={"4.5(42)"}
             time={"07:00PM"}

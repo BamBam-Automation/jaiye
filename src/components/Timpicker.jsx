@@ -79,9 +79,9 @@ const TimePicker = ({ formData, setFormData }) => {
     return null; // or any other appropriate handling
   };
 
-  const formattedDateTime = formatDateTime(selectedDate, selectedTime);
+  // const formattedDateTime = formatDateTime(selectedDate, selectedTime);
   // setFormData({ ...formData, dateOfEvent: formatDateTime });
-  console.log(formattedDateTime); // Output will be in the format: 2023-09-24T11:56:26.825Z
+  // console.log(formattedDateTime); // Output will be in the format: 2023-09-24T11:56:26.825Z
 
   return (
     <div>
