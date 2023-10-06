@@ -16,7 +16,7 @@ const History = () => {
     const fetchClubs = async () => {
       try {
         const response = await axiosInstance.get(
-          `/upcoming-events?pageIndex=${pageIndex}&pageSize=${pageSize}`
+          `/upcoming-event?pageIndex=${pageIndex}&pageSize=${pageSize}`
         );
         const newEvents = response.data;
         // Append the new clubs to the existing list

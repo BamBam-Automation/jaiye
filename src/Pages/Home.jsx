@@ -22,7 +22,7 @@ const Home = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
     axiosInstance
-      .get(`/upcoming-events?pageIndex=1&pageSize=5`)
+      .get(`/upcoming-event?pageIndex=1&pageSize=5`)
       .then((res) => {
         setEvents(res.data);
       })

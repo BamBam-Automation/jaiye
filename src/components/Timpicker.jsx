@@ -99,7 +99,7 @@ const TimePicker = ({ formData, setFormData }) => {
       )}
 
       {step === 1 && (
-        <div className="my-4">
+        <div className="mt-10">
           <label>Time:</label>
           <div className="flex flex-wrap gap-2 mx-auto">
             {generateTimeOptions().map((time, index) => (
@@ -118,11 +118,6 @@ const TimePicker = ({ formData, setFormData }) => {
           </div>
         </div>
       )}
-
-      <div className="my-4">
-        <p>Selected Date: {selectedDate}</p>
-        {step === 1 && <p>Selected Time: {selectedTime}</p>}
-      </div>
     </div>
   );
 };

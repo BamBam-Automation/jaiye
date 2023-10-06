@@ -31,14 +31,15 @@ const Clubpage = () => {
 
   const location = useLocation();
   const summary = location?.state?.club;
+  console.log(summary);
 
   const [tableTypes, setTableTypes] = useState([]);
   useEffect(() => {
     axiosInstance
-      .get("/tableTypes?pageIndex=1&pageSize=10")
+      .get(`/tableType?establishmentId=${summary.id}`)
       .then((res) => {
         console.log(res.data);
-        setTableTypes(res.data);
+        setTableTypes(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -111,7 +112,11 @@ const Clubpage = () => {
                 : "transition ease-in duration-200 opacity-0 scale-90"
             }`}
           >
-            <Tablepicker formData={formData} setFormData={setFormData} />
+            <Tablepicker
+              tables={tableType.tables}
+              formData={formData}
+              setFormData={setFormData}
+            />
           </div>
           <div>
             <p>Fast track entry</p>

@@ -36,15 +36,9 @@ const SiginIn = () => {
       })
       .catch((err) => {
         console.log(err);
+        console.log(err.response.data.errors);
         setLoading(false);
-        if (
-          err.message === "timeout of 10000ms exceeded" ||
-          "Request failed with status code 500"
-        ) {
-          setResponse(err.response.data.errors);
-        } else {
-          setResponse(err.data.message);
-        }
+        setResponse(err.response.data.errors || err.message);
       });
   };
   return (
