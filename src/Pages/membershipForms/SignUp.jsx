@@ -21,6 +21,7 @@ const SignUp = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     validateEmail(email);
+    e.target.blur();
   };
 
   const data = {
@@ -28,24 +29,35 @@ const SignUp = () => {
     email,
     password,
   };
+
   const handleSubmit = () => {
-    axiosInstance
-      .post("/registration", data)
-      .then((res) => {
-        setLoading(false);
-        setResponse(res.data.message);
-      })
-      .catch((err) => {
-        setLoading(false);
-        if (
-          err.message === "timeout of 10000ms exceeded" ||
-          "Request failed with status code 500"
-        ) {
-          setResponse(err.response.data.errors);
-        } else {
-          setResponse(err.data.message);
-        }
-      });
+    // Check if the password meets the regex pattern
+    if (/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/.test(password)) {
+      // Password is valid, proceed with registration
+      axiosInstance
+        .post("/registration", data)
+        .then((res) => {
+          setLoading(false);
+          setResponse(res.data.message);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        })
+        .catch((err) => {
+          setLoading(false);
+          if (
+            err.message === "timeout of 10000ms exceeded" ||
+            err.response.status === 500
+          ) {
+            setResponse(err.response.data.errors);
+          } else {
+            setResponse(err.data.message);
+          }
+        });
+    } else {
+      // Password is not valid
+      setResponse("Password does not meet the criteria.");
+    }
   };
 
   return (
