@@ -74,7 +74,7 @@ const Explore = () => {
   const clubType = (clubNumber) => {
     switch (clubNumber) {
       case 1:
-        return "Unknown";
+        return "Pubs";
       case 2:
         return "Club";
       case 3:
@@ -115,6 +115,53 @@ const Explore = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // Collect Data for Drawer dropdown
+  const [filterData, setFilterData] = useState({
+    category: activeCategory,
+    minPrice: "",
+    maxPrice: "",
+  });
+
+  // Converting activeCategory for filter use
+  const estType = (arg) => {
+    switch (arg) {
+      case "Pubs":
+        return 1;
+      case "Clubs":
+        return 2;
+      case "Bars":
+        return 3;
+      case "Lounge":
+        return 4;
+    }
+  };
+
+  // Update filterData.category when activeCategory changes
+  useEffect(() => {
+    setFilterData((prevFilterData) => ({
+      ...prevFilterData,
+      category: estType(activeCategory),
+    }));
+  }, [activeCategory]);
+
+  // const [dropFilter, setDropFilter] = useState(clubs);
+  const [filterButton, setFilterButton] = useState("Save Filter");
+  const drawerFilter = () => {
+    let result;
+    if (filterButton === "Save Filter") {
+      result = clubs.filter(
+        (club) => club.establishmentType === filterData.category
+      );
+      setFilteredClubs(result);
+      setFilterButton("Clear Filter");
+    } else {
+      setActiveCategory("");
+      setFilterData({ category: "", minPrice: "", maxPrice: "" });
+      setFilteredClubs(clubs);
+      setFilterButton("Save Filter");
+    }
   };
 
   return (
@@ -166,22 +213,31 @@ const Explore = () => {
                   <h5 className="font-medium">Categories</h5>
                   <div className="flex justify-between">
                     {categries.map((category) => (
-                      <button
+                      <label
                         key={category}
-                        onClick={() => setActiveCategory(category)}
-                        className={
-                          activeCategory === category
-                            ? "bg-primary text-white rounded-full px-3 py-1 flex gap-1 items-center transition-all ease-in-out duration-300"
-                            : "border-primary bg-transparent text-primary border rounded-full px-3 py-1"
-                        }
+                        className="flex items-center space-x-1"
                       >
-                        {category}
-                        {activeCategory === category ? (
-                          <PiCheck className="text-white h-7" />
-                        ) : (
-                          ""
-                        )}
-                      </button>
+                        <input
+                          type="radio"
+                          name="category"
+                          value={activeCategory}
+                          checked={activeCategory === category}
+                          onChange={() => setActiveCategory(category)}
+                          className="sr-only" // Hide the default radio button
+                        />
+                        <div
+                          className={`cursor-pointer rounded-full px-3 py-1 flex items-center ${
+                            activeCategory === category
+                              ? "bg-primary text-white"
+                              : "border-primary bg-transparent text-primary border"
+                          }`}
+                        >
+                          {category}
+                          {activeCategory === category && (
+                            <PiCheck className="text-white h-7 ml-2" />
+                          )}{" "}
+                        </div>
+                      </label>
                     ))}
                   </div>
                 </div>
@@ -201,12 +257,28 @@ const Explore = () => {
                   <h6>Table Price</h6>
                   <div className="flex gap-3">
                     <label className="" htmlFor="minimum">
-                      <Input />
+                      <Input
+                        value={filterData.minPrice}
+                        onChange={(e) =>
+                          setFilterData({
+                            ...filterData,
+                            minPrice: e.target.value,
+                          })
+                        }
+                      />
                       <p className="text-center">Minimum</p>
                     </label>
                     <span className="w-6 h-[3px] mt-5 bg-primary"></span>
                     <label htmlFor="maximum">
-                      <Input />
+                      <Input
+                        value={filterData.maxPrice}
+                        onChange={(e) =>
+                          setFilterData({
+                            ...filterData,
+                            maxPrice: e.target.value,
+                          })
+                        }
+                      />
                       <p className="text-center">Maximum</p>
                     </label>
                   </div>
@@ -235,7 +307,9 @@ const Explore = () => {
                   </div>
                 </div>
               </div>
-              <Button className="bg-primary mx-auto">Save Filter</Button>
+              <Button onClick={drawerFilter} className="bg-primary mx-auto">
+                {filterButton}
+              </Button>
             </div>
           </Drawer>
         </div>
