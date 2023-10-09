@@ -13,7 +13,7 @@ const History = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    const fetchClubs = async () => {
+    const fetchEvents = async () => {
       try {
         const response = await axiosInstance.get(
           `/upcoming-event?pageIndex=${pageIndex}&pageSize=${pageSize}`
@@ -25,7 +25,7 @@ const History = () => {
         console.log(error);
       }
     };
-    fetchClubs();
+    fetchEvents();
   }, [pageIndex]);
 
   const moreHistory = () => {

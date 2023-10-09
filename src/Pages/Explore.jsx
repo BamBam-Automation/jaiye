@@ -44,6 +44,7 @@ const Explore = () => {
   // Manage Filter Drawer
   const [drawerState, setDrawerState] = useState(false);
 
+  // Collect and show summaries of Event Places and their types
   const [clubs, setClubs] = useState([]);
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 10;
@@ -69,33 +70,42 @@ const Explore = () => {
     setPageIndex(pageIndex + 1);
   };
 
+  // Convert Establishment type from Number to Text
   const clubType = (clubNumber) => {
-    if (clubNumber === 1) {
-      return "Unknown";
-    } else if (clubNumber === 2) {
-      return "Club";
-    } else if (clubNumber === 3) {
-      return "Bar";
+    switch (clubNumber) {
+      case 1:
+        return "Unknown";
+      case 2:
+        return "Club";
+      case 3:
+        return "Bar";
+      case 4:
+        return "Lounge";
+    }
+  };
+
+  // Filter "clubs" state based on establismentType on ActiveBar
+  const [filteredClubs, setFilteredClubs] = useState(clubs);
+  useEffect(() => {
+    let clubsToDisplay;
+
+    if (activeTab === "What's On") {
+      // Return all clubs, no filtering needed
+      clubsToDisplay = clubs;
+    } else if (activeTab === "Clubs") {
+      // Filter clubs with establishmentType === 2 (assuming 2 represents Clubs)
+      clubsToDisplay = clubs.filter((club) => club.establishmentType === 2);
     } else {
-      return "Lounge";
+      // Filter clubs with establishmentType === 3 (assuming 3 represents Bars)
+      clubsToDisplay = clubs.filter((club) => club.establishmentType === 3);
     }
-  };
 
-  const mapSingularToPlural = (singularType) => {
-    switch (singularType) {
-      case "Club":
-        return "Clubs";
-      case "Lounge":
-        return "Lounges";
-      case "Bar":
-        return "Bars";
-      default:
-        return singularType;
-    }
-  };
+    // Update the clubs state with the filtered result
+    setFilteredClubs(clubsToDisplay);
+  }, [activeTab, clubs]);
 
+  // Request more information about a single Event center and pass the values for table booking
   const getSingleClub = (arg) => {
-    console.log(arg);
     axiosInstance
       .get(`/establishment/${arg}`)
       .then((res) => {
@@ -105,23 +115,6 @@ const Explore = () => {
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const [filteredClubs, setFilteredClubs] = useState([]);
-  useEffect(() => {
-    // Filter clubs based on the selected tab
-    if (activeTab === "What's On") {
-      setFilteredClubs(clubs); // Display all clubs
-    } else {
-      // Filter by tab and map singular to plural
-      setFilteredClubs(
-        clubs.filter((club) => club.type === mapSingularToPlural(activeTab))
-      );
-    }
-  }, [clubs, activeTab]);
-
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
   };
 
   return (
@@ -143,7 +136,7 @@ const Explore = () => {
       <div className="h-11 flex justify-around">
         {barType.map((bar) => (
           <p
-            onClick={() => handleTabClick()}
+            onClick={() => setActiveTab(bar)}
             className={
               activeTab === bar
                 ? "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
@@ -248,33 +241,21 @@ const Explore = () => {
         </div>
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      {clubs
-        .filter((club) => {
-          if (activeTab === "What's On") {
-            // Display all clubs when "What's On" is selected.
-            return true;
-          } else {
-            // Display clubs of the selected type (activeTab).
-            return club.type === mapSingularToPlural(activeTab);
-          }
-        })
-        .map((club) => (
-          <ClubCard
-            key={club.id}
-            img={club.imageUrl}
-            name={club.name}
-            type={mapSingularToPlural(clubType(club.establishmentType))}
-            distance={"4.2Km"}
-            rating={"4.5(42)"}
-            time={"07:00PM"}
-            state={
-              activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
-            }
-            onClick={() => {
-              getSingleClub(club.id);
-            }}
-          />
-        ))}
+      {filteredClubs.map((club) => (
+        <ClubCard
+          key={club.id}
+          img={club.imageUrl}
+          name={club.name}
+          type={clubType(club.establishmentType)}
+          distance={"4.2Km"}
+          rating={"4.5(42)"}
+          time={"07:00PM"}
+          state={activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""}
+          onClick={() => {
+            getSingleClub(club.id);
+          }}
+        />
+      ))}
       <button
         variant="outlined"
         className={`text-primary h-full border border-primary mx-auto rounded-md py-3 px-4`}
