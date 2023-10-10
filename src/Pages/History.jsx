@@ -36,17 +36,23 @@ const History = () => {
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"History"} />
       <div className="mt-10 grid gap-5">
-        {events.map((event) => (
-          <HistoryCard
-            key={event.id}
-            owner={event.owner}
-            guests={event.numberOfGuest}
-            date={DateConverter(event.dateOfEvent)}
-            time={TimeConverter(event.timeOfEvent)}
-            table={event.tableNumber}
-            price={event.eventPrice}
-          />
-        ))}
+        {events.length === 0 ? (
+          <p className="mx-auto text-center text-2xl font-semibold text-primary">
+            You have no active reservations
+          </p>
+        ) : (
+          events.map((event) => (
+            <HistoryCard
+              key={event.id}
+              owner={event.owner}
+              guests={event.numberOfGuest}
+              date={DateConverter(event.dateOfEvent)}
+              time={TimeConverter(event.timeOfEvent)}
+              table={event.tableNumber}
+              price={event.eventPrice}
+            />
+          ))
+        )}
       </div>
       <button
         // variant="outlined"
