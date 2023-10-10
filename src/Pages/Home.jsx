@@ -89,19 +89,29 @@ const Home = () => {
           View All
         </Link>
       </div>
-      <Carousel loop={true} transition={{ duration: 2 }} className="rounded-xl">
-        {events.map((event) => (
-          <HistoryCard
-            key={event.id}
-            owner={event.owner}
-            guests={event.numberOfGuest}
-            date={DateConverter(event.dateOfEvent)}
-            time={TimeConverter(event.timeOfEvent)}
-            table={event.tableNumber}
-            price={event.eventPrice}
-          />
-        ))}
-      </Carousel>
+      {events.length === 0 ? (
+        <p className="mx-auto text-center text-2xl font-semibold text-primary">
+          You have no active reservations
+        </p>
+      ) : (
+        <Carousel
+          loop={true}
+          transition={{ duration: 2 }}
+          className="rounded-xl"
+        >
+          {events.map((event) => (
+            <HistoryCard
+              key={event.id}
+              owner={event.owner}
+              guests={event.numberOfGuest}
+              date={DateConverter(event.dateOfEvent)}
+              time={TimeConverter(event.timeOfEvent)}
+              table={event.tableNumber}
+              price={event.eventPrice}
+            />
+          ))}
+        </Carousel>
+      )}
       <div className="flex justify-between items-center">
         <p className="font-semibold text-lg">Popular Places</p>
         <Link to={"/explore"} className="text-primary">

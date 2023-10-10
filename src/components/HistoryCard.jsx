@@ -26,7 +26,7 @@ const HistoryCard = (props) => {
 
   return (
     <div>
-      <div className="relative">
+      <div className="relative h-full">
         <img className="w-full" src={History} alt="" />
         <div className="absolute top-0 w-full px-7 pt-8">
           <div className="font-semibold flex items-center justify-between text-[#848484]">

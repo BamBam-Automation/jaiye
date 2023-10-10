@@ -56,7 +56,9 @@ const SignUp = () => {
         });
     } else {
       // Password is not valid
-      setResponse("Password does not meet the criteria.");
+      setResponse(
+        "Password must be 8 characters long and must include, at least, one uppercase one special character"
+      );
     }
   };
 
