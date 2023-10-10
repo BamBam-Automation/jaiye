@@ -11,6 +11,7 @@ const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
 
@@ -21,7 +22,6 @@ const SignUp = () => {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     validateEmail(email);
-    e.target.blur();
   };
 
   const data = {
@@ -63,7 +63,7 @@ const SignUp = () => {
   return (
     <form action="" className="grid gap-5">
       <Input
-        autoComplete={false}
+        autoComplete={"off"}
         label={"Email"}
         type={"email"}
         id={"email"}
@@ -97,7 +97,11 @@ const SignUp = () => {
           type="checkbox"
           name=""
           id=""
-          // value={props.toggle}
+          value={agree}
+          onChange={(e) => {
+            setAgree((prevAgree) => !prevAgree);
+            console.log(agree);
+          }}
         />
         <p>
           I agree to the{" "}
@@ -111,7 +115,13 @@ const SignUp = () => {
         </p>
       </label>
       <PrimaryButton
-        disabled={password !== confirmPassword}
+        disabled={
+          password !== confirmPassword ||
+          agree === false ||
+          password === "" ||
+          confirmPassword === "" ||
+          email === ""
+        }
         onClick={handleSubmit}
         text={loading ? <LoadingSkeleton width={150} /> : "Create Account"}
       />
