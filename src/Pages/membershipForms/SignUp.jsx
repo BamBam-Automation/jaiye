@@ -128,13 +128,11 @@ const SignUp = () => {
       {!isEmailValid && (
         <p className="text-primary">Please enter a valid email address.</p>
       )}
-      {password !== confirmPassword ? (
-        <p className="text-primary">
-          Password and Confirm Password do not match. Please try again.
-        </p>
-      ) : (
-        ""
-      )}
+      {password !== confirmPassword
+        ? setResponse(
+            "Password and Confirm Password do not match. Please try again."
+          )
+        : ""}
       {response}
     </form>
   );
