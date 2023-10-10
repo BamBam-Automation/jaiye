@@ -12,34 +12,41 @@ const SiginIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState(false);
-
-  const data = {
-    username,
-    password,
-  };
+  const [response, setResponse] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSubmit = () => {
-    axiosInstance
-      .post("/login", data)
-      .then((res) => {
-        setLoading(false);
-        console.log(res);
-        setResponse(res.data.message + ". Redirecting!");
-        dispatch(login(res.data));
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log(err);
-        console.log(err.response.data.errors);
-        setLoading(false);
-        setResponse(err.response.data.errors || err.message);
-      });
+    const data = {
+      username,
+      password,
+    };
+    if (username && password !== "") {
+      axiosInstance
+        .post("/login", data)
+        .then((res) => {
+          setLoading(false);
+          console.log(res);
+          setResponse(res.data.message + ". Redirecting!");
+          dispatch(login(res.data));
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(err.response.data.errors);
+          setLoading(false);
+          setResponse(err.response.data.errors || err.message);
+        });
+    } else if (password === "" && username !== "") {
+      setResponse("The password field is required");
+    } else if (username === "" && password !== "") {
+      setResponse("The username field is required");
+    } else {
+      setResponse("Please enter your login details");
+    }
   };
   return (
     <form action="" className="grid gap-5">

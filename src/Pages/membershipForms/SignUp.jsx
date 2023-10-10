@@ -17,11 +17,13 @@ const SignUp = () => {
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    setIsEmailValid(emailPattern.test(email));
+    return emailPattern.test(email);
   };
+
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    validateEmail(email);
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    setIsEmailValid(validateEmail(newEmail));
   };
 
   const data = {
@@ -102,7 +104,6 @@ const SignUp = () => {
           value={agree}
           onChange={(e) => {
             setAgree((prevAgree) => !prevAgree);
-            console.log(agree);
           }}
         />
         <p>
@@ -130,11 +131,10 @@ const SignUp = () => {
       {!isEmailValid && (
         <p className="text-primary">Please enter a valid email address.</p>
       )}
-      {password !== confirmPassword
-        ? setResponse(
-            "Password and Confirm Password do not match. Please try again."
-          )
-        : ""}
+      {password !== confirmPassword && (
+        <p> Password and Confirm Password do not match. Please try again. </p>
+      )}
+
       {response}
     </form>
   );
