@@ -3,6 +3,7 @@ const Input = (props) => {
     <div className="bg-gradient-to-b rounded-lg relative from-[#EB7C4C] to-[#A03484] p-0.5">
       <input
         className="focus:outline-none focus:border-none focus:ring-0 placeholder-transparent peer bg-[#F9F9F9] w-full h-10 px-4 py-3 rounded"
+        autoComplete={props.autoComplete}
         type={props.type}
         name=""
         id={props.id}

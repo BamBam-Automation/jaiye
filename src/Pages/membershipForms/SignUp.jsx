@@ -63,6 +63,7 @@ const SignUp = () => {
   return (
     <form action="" className="grid gap-5">
       <Input
+        autoComplete={false}
         label={"Email"}
         type={"email"}
         id={"email"}

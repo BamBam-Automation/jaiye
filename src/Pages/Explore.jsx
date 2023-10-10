@@ -315,23 +315,27 @@ const Explore = () => {
         </div>
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      {filteredClubs.map((club) => (
-        <ClubCard
-          key={club.id}
-          img={club.imageUrl}
-          name={club.name}
-          type={clubType(club.establishmentType)}
-          distance={"4.2Km"}
-          rating={"4.5(42)"}
-          time={"07:00PM"}
-          state={activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""}
-          onClick={() => {
-            getSingleClub(club.id);
-          }}
-        />
-      ))}
+      <div className="mt-10 grid gap-5">
+        {filteredClubs.map((club) => (
+          <ClubCard
+            key={club.id}
+            img={club.imageUrl}
+            name={club.name}
+            type={clubType(club.establishmentType)}
+            distance={"4.2Km"}
+            rating={"4.5(42)"}
+            time={"07:00PM"}
+            state={
+              activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
+            }
+            onClick={() => {
+              getSingleClub(club.id);
+            }}
+          />
+        ))}
+      </div>
       <button
-        variant="outlined"
+        // variant="outlined"
         className={`text-primary h-full border border-primary mx-auto rounded-md py-3 px-4`}
         onClick={loadMoreClubs}
       >
