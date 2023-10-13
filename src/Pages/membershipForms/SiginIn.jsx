@@ -7,22 +7,36 @@ import LoadingSkeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../utils/app/userSlice";
+import { useEffect } from "react";
 
 const SiginIn = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const storedPass = localStorage.getItem("pass");
+
+    if (storedUser && storedPass) {
+      setUsername(storedUser);
+      setPassword(storedPass);
+    }
+  }, []);
 
   const handleSubmit = () => {
     const data = {
       username,
       password,
     };
-    if (username && password !== "") {
+    if (username && password !== "" && rememberMe) {
+      localStorage.setItem("user", username);
+      localStorage.setItem("pass", password);
       axiosInstance
         .post("/login", data)
         .then((res) => {
@@ -74,6 +88,11 @@ const SiginIn = () => {
             className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
             type="checkbox"
             name=""
+            value={rememberMe}
+            onChange={() => {
+              setRememberMe(!rememberMe);
+              console.log(rememberMe);
+            }}
             id=""
           />
           Remember Me
