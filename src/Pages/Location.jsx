@@ -5,30 +5,115 @@ import AllStates from "../utils/statesAndCities.json";
 import { Button } from "@material-tailwind/react";
 import Input from "../components/Input";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 const Location = () => {
   const [search, setSearch] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCities, setFilteredCities] = useState([]);
+
+  // const handleChange = (e) => {
+  //   setSearch(!search);
+  //   const selectedState = e.target.value;
+  //   setSelectedCities(selectedState);
+
+  //   // Find the selected states from AllStates data
+  //   const stateData = AllStates.find((state) => state.name === selectedState);
+
+  //   // Update the selectedCities with the cities of the selected state
+  //   setSelectedCities(stateData?.cities || []);
+  // };
+
+  // // Function to handle search input change
+  // const handleSearchChange = (e) => {
+  //   const query = e.target.value;
+  //   setSearchQuery(query);
+
+  //   // Filter the selectedCities based on the search query
+  //   const filtered = selectedCities.filter((city) =>
+  //     city.toLowerCase().includes(query.toLowerCase())
+  //   );
+
+  //   setFilteredCities(filtered);
+  // };
+
+  // const handleChange = (e) => {
+  //   setSearch(!search);
+  //   const selectedState = e.target.value;
+  //   setSelectedCities(selectedState);
+
+  //   // Find the selected states from AllStates data
+  //   const stateData = AllStates.find((state) => state.name === selectedState);
+
+  //   // Update the selectedCities with the cities of the selected state
+  //   setSelectedCities(stateData?.cities || []);
+
+  //   // Initialize filteredCities with selectedCities
+  //   setFilteredCities(stateData?.cities || []);
+  // };
+
+  // const handleSearchChange = (e) => {
+  //   const query = e.target.value;
+  //   setSearchQuery(query);
+
+  //   // Filter the selectedCities based on the search query
+  //   const filtered = selectedCities.filter((city) =>
+  //     city.toLowerCase().includes(query.toLowerCase())
+  //   );
+
+  //   setFilteredCities(filtered);
+  // };
 
   const handleChange = (e) => {
     setSearch(!search);
     const selectedState = e.target.value;
-    console.log(selectedState);
     setSelectedCities(selectedState);
-
-    // Find the selected states from AllStates data
     const stateData = AllStates.find((state) => state.name === selectedState);
-
-    // Update the selectedCities with the cities of the selected state
-    setSelectedCities(stateData?.cities || []);
-    console.log(selectedCities);
+    setFilteredCities(stateData?.cities || []);
   };
+
+  const handleSearchChange = (e) => {
+    const input = e.target.value;
+    setSearchQuery(input);
+    const filtered = selectedCities.filter((city) =>
+      city.toLowerCase().includes(input.toLowerCase())
+    );
+    setFilteredCities(filtered);
+  };
+
+  const navigate = useNavigate();
+  const [eventCity, setEventCity] = useState("");
+  const handleCityClick = (city) => {
+    console.log("Selecte City:", city);
+    setEventCity(city);
+  };
+
+  // Navigate to "Explore" page and filter with the vale of eventCity
+  const viewEvents = () => {
+    if (eventCity !== "") {
+      navigate("/explore", { state: { city: eventCity } });
+    } else {
+      return;
+    }
+  };
+
   return (
     <div className="grid relative p-7 h-screen overflow-y-scroll">
       {!search && (
-        <img className="absolute left-0 bottom-12" src={Img} alt="" />
+        <img
+          className="absolute left-0 bottom-12 animate-bounce"
+          src={Img}
+          alt=""
+        />
       )}
-      {search && <img className="fixed right-0 top-1/4" src={ImgTwo} alt="" />}
+      {search && (
+        <img
+          className="fixed right-0 top-1/4 animate-bounce"
+          src={ImgTwo}
+          alt=""
+        />
+      )}
       {!search && (
         <div className="grid">
           <div className="flex flex-col items-center mt-56">
@@ -63,17 +148,28 @@ const Location = () => {
       {search && (
         <div className="grid gap-3">
           <div className="mb-5 sticky top-0">
-            <Input type="search" id="search" label="Search City" />
+            <Input
+              type="search"
+              id="search"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              label="Search City"
+            />
             <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />
           </div>
-          {selectedCities.map((city) => (
-            <p
-              key={city}
-              className="h-12 border-l-4 flex items-center px-4 py-3 hover:text-primary hover:border-secondary font-semibold"
-            >
-              {city}
-            </p>
-          ))}
+          {filteredCities.map(
+            (
+              city // Use filteredCities instead of selectedCities
+            ) => (
+              <p
+                key={city}
+                className="h-12 border-l-4 flex items-center px-4 py-3 hover:text-primary hover:border-secondary font-semibold"
+                onClick={() => handleCityClick(city)}
+              >
+                {city}
+              </p>
+            )
+          )}
         </div>
       )}
       <div className="self-end flex w-full sticky bottom-0">
@@ -85,7 +181,14 @@ const Location = () => {
             <span>&#8592;</span> Back
           </Button>
         )}
-        <Button className="bg-primary mx-auto self-end">
+        <Button
+          className={
+            search
+              ? `bg-primary mx-auto self-end`
+              : `bg-primary w-full self-end`
+          }
+          onClick={viewEvents}
+        >
           Next <span>&#8594;</span>
         </Button>
       </div>

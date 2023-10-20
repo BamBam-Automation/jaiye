@@ -23,19 +23,22 @@ function App() {
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="join" element={<Membership />} />
+          <Route
+            path="location"
+            element={<Location />}
+            // element={isAuthenticated ? <Location /> : <Membership />}
+          />
+
+          <Route
+            path="explore"
+            element={<Explore />}
+            // element={isAuthenticated ? <Explore /> : <Membership />}
+          />
 
           {/* Protected routes */}
           <Route
             path="dashboard"
             element={isAuthenticated ? <Home /> : <Membership />}
-          />
-          <Route
-            path="location"
-            element={isAuthenticated ? <Location /> : <Membership />}
-          />
-          <Route
-            path="explore"
-            element={isAuthenticated ? <Explore /> : <Membership />}
           />
           <Route
             path="club"

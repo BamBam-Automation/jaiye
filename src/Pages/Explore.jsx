@@ -9,12 +9,15 @@ import { PiCheck } from "react-icons/pi";
 import { RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
 import PageTitle from "../utils/PageTitle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../utils/axios/axios";
 
 const Explore = () => {
   const navigate = useNavigate();
+
+  const location = useLocation();
+  console.log(location);
 
   const previousPage = (e) => {
     navigate(-1);
