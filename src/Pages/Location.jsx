@@ -6,64 +6,13 @@ import { Button } from "@material-tailwind/react";
 import Input from "../components/Input";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import PaystackPop from "@paystack/inline-js";
 
 const Location = () => {
   const [search, setSearch] = useState(false);
   const [selectedCities, setSelectedCities] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredCities, setFilteredCities] = useState([]);
-
-  // const handleChange = (e) => {
-  //   setSearch(!search);
-  //   const selectedState = e.target.value;
-  //   setSelectedCities(selectedState);
-
-  //   // Find the selected states from AllStates data
-  //   const stateData = AllStates.find((state) => state.name === selectedState);
-
-  //   // Update the selectedCities with the cities of the selected state
-  //   setSelectedCities(stateData?.cities || []);
-  // };
-
-  // // Function to handle search input change
-  // const handleSearchChange = (e) => {
-  //   const query = e.target.value;
-  //   setSearchQuery(query);
-
-  //   // Filter the selectedCities based on the search query
-  //   const filtered = selectedCities.filter((city) =>
-  //     city.toLowerCase().includes(query.toLowerCase())
-  //   );
-
-  //   setFilteredCities(filtered);
-  // };
-
-  // const handleChange = (e) => {
-  //   setSearch(!search);
-  //   const selectedState = e.target.value;
-  //   setSelectedCities(selectedState);
-
-  //   // Find the selected states from AllStates data
-  //   const stateData = AllStates.find((state) => state.name === selectedState);
-
-  //   // Update the selectedCities with the cities of the selected state
-  //   setSelectedCities(stateData?.cities || []);
-
-  //   // Initialize filteredCities with selectedCities
-  //   setFilteredCities(stateData?.cities || []);
-  // };
-
-  // const handleSearchChange = (e) => {
-  //   const query = e.target.value;
-  //   setSearchQuery(query);
-
-  //   // Filter the selectedCities based on the search query
-  //   const filtered = selectedCities.filter((city) =>
-  //     city.toLowerCase().includes(query.toLowerCase())
-  //   );
-
-  //   setFilteredCities(filtered);
-  // };
 
   const handleChange = (e) => {
     setSearch(!search);
@@ -85,13 +34,29 @@ const Location = () => {
   const navigate = useNavigate();
   const [eventCity, setEventCity] = useState("");
   const handleCityClick = (city) => {
-    console.log("Selecte City:", city);
+    // console.log("Selecte City:", city);
     setEventCity(city);
   };
 
   // Navigate to "Explore" page and filter with the vale of eventCity
   const viewEvents = () => {
     if (eventCity !== "") {
+      // const paystack = new PaystackPop();
+      // paystack.newTransaction({
+      //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+      //   amount: "500",
+      //   email: "a@a.com",
+      //   firstname: "testing",
+      //   lastname: "more",
+      //   onSuccess(transaction) {
+      //     console.log(transaction);
+      //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
+      //     alert(message);
+      //   },
+      //   onCancel() {
+      //     alert("Transanction Cancelled");
+      //   },
+      // });
       navigate("/explore", { state: { city: eventCity } });
     } else {
       return;

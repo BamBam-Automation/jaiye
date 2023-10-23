@@ -84,6 +84,8 @@ const Explore = () => {
         return "Bar";
       case 4:
         return "Lounge";
+      default:
+        "";
     }
   };
 
@@ -138,6 +140,8 @@ const Explore = () => {
         return 3;
       case "Lounge":
         return 4;
+      default:
+        "";
     }
   };
 
