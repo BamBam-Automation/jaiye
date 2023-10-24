@@ -40,7 +40,7 @@ const NavBar = (props) => {
         />
         <h6>{props.title}</h6>
       </div>
-      <FiMenu className="h-5 w-5 text-primary" onClick={() => setOpen(true)} />
+      <FiMenu className="h-5 w-5 text-primary" onClick={() => setOpen(!open)} />
       <Drawer
         className="p-10 grid items-start gap-10 rounded-l-xl"
         open={false}
