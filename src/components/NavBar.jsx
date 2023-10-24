@@ -79,7 +79,7 @@ const NavBar = (props) => {
             <IoIosHome className="h-6 w-6 p-[2px]" />
             <p>Home</p>
           </NavigationItem>
-          <NavigationItem link={"/explore"}>
+          <NavigationItem link={"/"}>
             <FaCompass className="h-6 w-6 p-[2px]" />
             <p>Explore</p>
           </NavigationItem>

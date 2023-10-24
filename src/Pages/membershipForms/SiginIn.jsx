@@ -67,7 +67,7 @@ const SiginIn = () => {
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/");
           }, 2000);
         })
         .catch((err) => {

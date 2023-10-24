@@ -7,6 +7,7 @@ import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
+import { useNavigate } from "react-router-dom";
 
 const Membership = () => {
   // State for Visible Form
@@ -24,10 +25,15 @@ const Membership = () => {
   // Page Title Handler
   PageTitle(title());
 
+  const navigate = useNavigate();
+
   return (
     <div className="grid relative p-7 content-between h-screen">
       <div className="flex gap-6 items-center">
-        <IoIosArrowBack className="h-5 w-5 text-primary" />
+        <IoIosArrowBack
+          className="h-5 w-5 text-primary"
+          onClick={() => navigate(-1)}
+        />
         <p className="font-medium">{!signUpForm ? "Login" : "Sign Up"}</p>
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />

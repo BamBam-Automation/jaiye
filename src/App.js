@@ -3,8 +3,8 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux"; // Import useSelector to access Redux state
 import Membership from "./Pages/Membership";
-import Welcome from "./Pages/Welcome";
-import Location from "./Pages/Location";
+// import Welcome from "./Pages/Welcome";
+// import Location from "./Pages/Location";
 import Explore from "./Pages/Explore";
 import Clubpage from "./Pages/Clubpage";
 import Ticket from "./Pages/Ticket";
@@ -21,16 +21,16 @@ function App() {
     <div className="bg-[#F9F9F9] text-tertiary min-h-screen overflow-y-scroll">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Welcome />} />
           <Route path="join" element={<Membership />} />
+          {/* <Route path="/" element={<Welcome />} />
           <Route
             path="location"
             element={<Location />}
             // element={isAuthenticated ? <Location /> : <Membership />}
-          />
+          /> */}
 
           <Route
-            path="explore"
+            path="/"
             element={<Explore />}
             // element={isAuthenticated ? <Explore /> : <Membership />}
           />
