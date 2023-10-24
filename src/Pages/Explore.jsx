@@ -90,7 +90,7 @@ const Explore = () => {
       case 4:
         return "Lounge";
       default:
-        null;
+        return null;
     }
   };
 
@@ -145,7 +145,7 @@ const Explore = () => {
       case "Lounge":
         return 4;
       default:
-        null;
+        return null;
     }
   };
 
