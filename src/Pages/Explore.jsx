@@ -19,6 +19,7 @@ import { MdCastConnected } from "react-icons/md";
 import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
+import Jaiye from "../images/Jaiye.svg";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -118,7 +119,6 @@ const Explore = () => {
     axiosInstance
       .get(`/establishment/${arg}`)
       .then((res) => {
-        console.log(res);
         navigate("/club", { state: { club: res.data } });
       })
       .catch((err) => {
@@ -184,6 +184,7 @@ const Explore = () => {
   const dispatch = useDispatch();
   const userLogOut = () => {
     dispatch(logout());
+    navigate("/");
   };
 
   return (
@@ -210,12 +211,12 @@ const Explore = () => {
         {menu && (
           <Drawer
             className="p-10 grid items-start gap-10 rounded-l-xl"
-            open={open}
+            open={true}
             placement="right"
             onClose={() => setMenu(false)}
           >
             <div className="flex items-center justify-between">
-              {/* <img className="h-10" src={Jaiye} alt="logo" /> */}
+              <img className="h-10" src={Jaiye} alt="logo" />
               <IconButton
                 variant="text"
                 color="blue-gray"

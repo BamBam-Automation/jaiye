@@ -42,7 +42,8 @@ function App() {
           />
           <Route
             path="club"
-            element={isAuthenticated ? <Clubpage /> : <Membership />}
+            element={<Clubpage />}
+            // element={isAuthenticated ? <Clubpage /> : <Membership />}
           />
           <Route
             path="ticket"

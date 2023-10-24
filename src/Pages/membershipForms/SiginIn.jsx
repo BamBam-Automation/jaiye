@@ -34,6 +34,8 @@ const SiginIn = () => {
       username,
       password,
     };
+
+    const previousPage = sessionStorage.getItem("previousPage");
     if (username && password !== "" && rememberMe) {
       localStorage.setItem("user", username);
       localStorage.setItem("pass", password);
@@ -67,7 +69,11 @@ const SiginIn = () => {
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
-            navigate("/");
+            if (previousPage) {
+              window.location.href = previousPage;
+            } else {
+              navigate("/");
+            }
           }, 2000);
         })
         .catch((err) => {

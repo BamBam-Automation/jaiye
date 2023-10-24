@@ -25,7 +25,11 @@ const NavBar = (props) => {
   const dispatch = useDispatch();
   const userLogOut = () => {
     dispatch(logout());
+    navigate("/");
   };
+
+  // Check if token exists
+  const token = sessionStorage.getItem("token");
 
   return (
     <div className="self-start flex font-semibold items-center justify-between">
@@ -39,7 +43,7 @@ const NavBar = (props) => {
       <FiMenu className="h-5 w-5 text-primary" onClick={() => setOpen(true)} />
       <Drawer
         className="p-10 grid items-start gap-10 rounded-l-xl"
-        open={open}
+        open={false}
         placement="right"
         onClose={() => setOpen(false)}
       >
@@ -66,14 +70,20 @@ const NavBar = (props) => {
             </svg>
           </IconButton>
         </div>
-        <div className="flex items-center gap-3">
-          <img
-            className="h-10 w-10 rounded-full object-contain"
-            src={Profile}
-            alt="profile"
-          />
-          <h4 className="font-bold text-xl text-primary">Emmanuel Adegbola</h4>
-        </div>
+        {token ? (
+          <div className="flex items-center gap-3">
+            <img
+              className="h-10 w-10 rounded-full object-contain"
+              src={Profile}
+              alt="profile"
+            />
+            <h4 className="font-bold text-xl text-primary">
+              Emmanuel Adegbola
+            </h4>
+          </div>
+        ) : (
+          ""
+        )}
         <div className="grid gap-4">
           <NavigationItem link={"/dashboard"}>
             <IoIosHome className="h-6 w-6 p-[2px]" />
@@ -96,12 +106,16 @@ const NavBar = (props) => {
             <p>Profile</p>
           </NavigationItem>
         </div>
-        <div onClick={userLogOut}>
-          <button className="text-[#848484] flex items-center self-end gap-3">
-            <FiPower className="h-8 w-8 p-[2px]" />
-            <p>Sign Out</p>
-          </button>
-        </div>
+        {token ? (
+          <div onClick={userLogOut}>
+            <button className="text-[#848484] flex items-center self-end gap-3">
+              <FiPower className="h-8 w-8 p-[2px]" />
+              <p>Sign Out</p>
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </Drawer>
     </div>
   );

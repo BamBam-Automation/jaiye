@@ -11,11 +11,12 @@ import TimePicker from "../components/Timpicker";
 import Tablepicker from "../components/Tablepicker";
 import BarMap from "../images/Map.svg";
 import NavBar from "../components/NavBar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import TimeConverter from "../components/TimeConverter";
 import { Map, Marker } from "pigeon-maps";
 import axiosInstance from "../utils/axios/axios";
 import { CiWarning } from "react-icons/ci";
+import PaystackPop from "@paystack/inline-js";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -31,14 +32,16 @@ const Clubpage = () => {
   const [mapVisible, setMapVisible] = useState(false);
 
   const location = useLocation();
-  const summary = location?.state?.club;
+  console.log(location.state);
+  const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
+  console.log(prevSummary);
+  const summary = prevSummary?.club || location?.state?.club;
 
   const [tableTypes, setTableTypes] = useState([]);
   useEffect(() => {
     axiosInstance
       .get(`/tableType?establishmentId=${summary.id}`)
       .then((res) => {
-        console.log(res.data);
         setTableTypes(res.data.data);
       })
       .catch((err) => {
@@ -46,48 +49,117 @@ const Clubpage = () => {
       });
   }, []);
 
-  const [formData, setFormData] = useState({
-    establishmentId: summary?.id,
-    isActive: summary?.isActive,
-    orderItems: [
-      {
-        orderedTableId: "",
-        lineItems: null,
-        //   [
-        //   {
-        //     numberOfItems: 0,
-        //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        //   },
-        // ],
-      },
-    ],
-  });
+  // const passedFormData = sessionStorage.getItem("prevFormData")
+  //   ? JSON.parse(sessionStorage.getItem("prevFormData"))
+  //   : {
+  //       establishmentId: summary?.id,
+  //       isActive: summary?.isActive,
+  //       orderItems: [
+  //         {
+  //           orderedTableId: "",
+  //           lineItems: null,
+  //           //   [
+  //           //   {
+  //           //     numberOfItems: 0,
+  //           //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+  //           //   },
+  //           // ],
+  //         },
+  //       ],
+  //     };
+
+  // const [formData, setFormData] = useState(passedFormData);
+
+  const passedFormData = sessionStorage.getItem("prevFormData");
+  let initialFormData;
+
+  try {
+    initialFormData = passedFormData ? JSON.parse(passedFormData) : null;
+  } catch (error) {
+    console.error("Error parsing prevFormData:", error);
+    initialFormData = null;
+  }
+
+  if (!initialFormData) {
+    initialFormData = {
+      establishmentId: summary?.id,
+      isActive: summary?.isActive,
+      orderItems: [
+        {
+          orderedTableId: "",
+          lineItems: null,
+          //   [
+          //   {
+          //     numberOfItems: 0,
+          //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          //   },
+          // ],
+        },
+      ],
+    };
+  }
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [response, setResponse] = useState("");
   const [alert, setAlert] = useState(false);
   const [bgcolor, setBgColor] = useState("");
   const [icon, setIcon] = useState("");
 
+  // Check if user is logged in
+  const token = sessionStorage.getItem("token");
+
+  const navigate = useNavigate();
+
   const handleSubmit = () => {
     if (steps !== 1) {
       setSteps((step) => step + 1);
-    } else {
+    } else if (token) {
+      console.log(formData);
+
       axiosInstance
         .post("Order", formData)
         .then((res) => {
           console.log(res);
+          // const paystack = new PaystackPop();
+          // paystack.newTransaction({
+          //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+          //   amount: "500",
+          //   email: "a@a.com",
+          //   firstname: "testing",
+          //   lastname: "more",
+          //   onSuccess(transaction) {
+          //     console.log(transaction);
+          //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
+          //     setAlert(!alert);
+          //     setBgColor("green");
+          //     setResponse(message);
+          //     setIcon(<BsPatchCheck />);
+          //   },
+          //   onCancel() {
+          //     setAlert(!alert);
+          //     setResponse("Request failed, please try again");
+          //     setBgColor("red");
+          //     setIcon(<CiWarning />);
+          //   },
+          // });
           setAlert(!alert);
           setBgColor("green");
           setResponse(res.data.message);
           setIcon(<BsPatchCheck />);
         })
         .catch((err) => {
-          console.log(err);
           setAlert(!alert);
           setResponse("Request failed, please try again");
           setBgColor("red");
           setIcon(<CiWarning />);
         });
+    } else {
+      const formDataJSON = JSON.stringify(formData);
+      sessionStorage.setItem("prevFormData", formDataJSON);
+      sessionStorage.setItem("previousPage", window.location.href);
+      sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
+      navigate("/join");
     }
   };
 
