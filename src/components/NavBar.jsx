@@ -31,6 +31,9 @@ const NavBar = (props) => {
   // Check if token exists
   const token = sessionStorage.getItem("token");
 
+  // Get Current Username
+  let username = sessionStorage.getItem("username");
+
   return (
     <div className="self-start flex font-semibold items-center justify-between">
       <div className="flex gap-5 items-center">
@@ -84,9 +87,7 @@ const NavBar = (props) => {
                 src={Profile}
                 alt="profile"
               />
-              <h4 className="font-bold text-xl text-primary">
-                Emmanuel Adegbola
-              </h4>
+              <h4 className="font-bold text-xl text-primary">{username}</h4>
             </div>
           ) : (
             ""

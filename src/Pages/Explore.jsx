@@ -264,9 +264,7 @@ const Explore = () => {
                   src={Profile}
                   alt="profile"
                 />
-                <h4 className="font-bold text-xl text-primary">
-                  Emmanuel Adegbola
-                </h4>
+                <h4 className="font-bold text-xl text-primary">{username}</h4>
               </div>
             ) : (
               ""

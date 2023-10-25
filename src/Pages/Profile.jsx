@@ -6,6 +6,9 @@ import { BiEditAlt } from "react-icons/bi";
 import { IoIosArrowForward, IoMdKey } from "react-icons/io";
 
 const Profile = () => {
+  // Get Current Username
+  let username = sessionStorage.getItem("username");
+
   return (
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"Profile"} />
@@ -13,7 +16,7 @@ const Profile = () => {
         <h5 className="text-2xl font-medium">Profile</h5>
         <Avatar src={ProfileImg} size="xxl" />
         <BiEditAlt className="text-xl w-10 h-10 p-2 rounded-full bg-[#f8f8f8] shadow-xl absolute bottom-[25%] right-[30%]" />
-        <h5 className="text-2xl font-semibold">Emmanuel Adegbola</h5>
+        <h5 className="text-2xl font-semibold">{username}</h5>
       </div>
       <div className="space-y-5">
         <h4 className="font-semibold text-lg">Account</h4>
