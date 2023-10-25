@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import { CiSearch } from "react-icons/ci";
 import { GoFilter, GoHistory } from "react-icons/go";
 import ClubCard from "../components/ClubCard";
-import { Button, Drawer, IconButton } from "@material-tailwind/react";
+import { Button, Carousel, Drawer, IconButton } from "@material-tailwind/react";
 import { PiCheck, PiUserCircleLight } from "react-icons/pi";
 import { RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
@@ -20,6 +20,9 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
+import HistoryCard from "../components/HistoryCard";
+import TimeConverter from "../components/TimeConverter";
+import DateConverter from "../components/DateConverter";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -186,6 +189,22 @@ const Explore = () => {
     dispatch(logout());
     navigate("/");
   };
+
+  // Get Current Username
+  let username = sessionStorage.getItem("username");
+
+  // Get the top 5 user booked events
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    axiosInstance
+      .get(`/upcoming-event?pageIndex=1&pageSize=5`)
+      .then((res) => {
+        setEvents(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
@@ -422,7 +441,26 @@ const Explore = () => {
         </div>
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      <div className="mt-10 grid gap-5">
+      <div>
+        <Carousel
+          loop={true}
+          transition={{ duration: 2 }}
+          className="rounded-xl"
+        >
+          {events.map((event) => (
+            <HistoryCard
+              key={event.id}
+              owner={event.owner}
+              guests={event.numberOfGuest}
+              date={DateConverter(event.dateOfEvent)}
+              time={TimeConverter(event.timeOfEvent)}
+              table={event.tableNumber}
+              price={event.eventPrice}
+            />
+          ))}
+        </Carousel>
+      </div>
+      <div className="mt-5 grid gap-5">
         {filteredClubs.map((club) => (
           <ClubCard
             key={club.id}
