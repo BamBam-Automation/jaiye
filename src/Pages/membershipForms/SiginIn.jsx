@@ -78,9 +78,9 @@ const SiginIn = () => {
         })
         .catch((err) => {
           console.log(err);
-          console.log(err.response.data.errors);
+          // console.log(err.response.data.errors || );
           setLoading(false);
-          setResponse(err.response.data.errors || err.message);
+          setResponse(err?.response?.data?.errors || err?.message);
         });
     }
   };

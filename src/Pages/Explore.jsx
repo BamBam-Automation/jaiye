@@ -20,9 +20,11 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
-import HistoryCard from "../components/HistoryCard";
-import TimeConverter from "../components/TimeConverter";
-import DateConverter from "../components/DateConverter";
+// import HistoryCard from "../components/HistoryCard";
+// import TimeConverter from "../components/TimeConverter";
+// import DateConverter from "../components/DateConverter";
+import Coco from "../images/Cocofest - 1.jpeg";
+import Cocofest from "../images/Cocfest - 2.jpeg";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -445,7 +447,17 @@ const Explore = () => {
           transition={{ duration: 2 }}
           className="rounded-xl"
         >
-          {events.map((event) => (
+          <img
+            src={Coco}
+            alt="cocofest-image-1"
+            className="h-full w-full object-cover"
+          />
+          <img
+            src={Cocofest}
+            alt="cocofest-image-2"
+            className="h-full w-full object-cover"
+          />
+          {/* {events.map((event) => (
             <HistoryCard
               key={event.id}
               owner={event.owner}
@@ -455,7 +467,7 @@ const Explore = () => {
               table={event.tableNumber}
               price={event.eventPrice}
             />
-          ))}
+          ))} */}
         </Carousel>
       </div>
       <div className="mt-5 grid gap-5">
