@@ -8,7 +8,7 @@ import { Button, Carousel, Drawer, IconButton } from "@material-tailwind/react";
 import { PiCheck, PiUserCircleLight } from "react-icons/pi";
 import { RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
-import PageTitle from "../utils/PageTitle";
+// import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../utils/axios/axios";
@@ -32,7 +32,7 @@ const Explore = () => {
   };
 
   // Page Title
-  PageTitle("Jaiye - Explore Clubs, Bars & Lounges");
+  // PageTitle("Jaiye - Explore Clubs, Bars & Lounges");
 
   // What's On  || Clubs || Bars
   const barType = ["What's On", "Clubs", "Bars"];
