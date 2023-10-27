@@ -42,6 +42,7 @@ const Clubpage = () => {
     axiosInstance
       .get(`/tableType?establishmentId=${summary.id}`)
       .then((res) => {
+        console.log(res.data.data);
         setTableTypes(res.data.data);
       })
       .catch((err) => {

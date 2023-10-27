@@ -65,7 +65,7 @@ const SiginIn = () => {
         .post("/login", data)
         .then((res) => {
           setLoading(false);
-          console.log(res);
+          // console.log(res);
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
@@ -80,7 +80,11 @@ const SiginIn = () => {
           console.log(err);
           // console.log(err.response.data.errors || );
           setLoading(false);
-          setResponse(err?.response?.data?.errors || err?.message);
+          if (err.message === "timeout of 10000ms exceeded") {
+            setResponse("Request timeout. Try again");
+          } else {
+            setResponse(err?.response?.data?.errors || err?.message);
+          }
         });
     }
   };

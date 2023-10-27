@@ -25,6 +25,7 @@ import Jaiye from "../images/Jaiye.svg";
 // import DateConverter from "../components/DateConverter";
 import Coco from "../images/Cocofest - 1.jpeg";
 import Cocofest from "../images/Cocfest - 2.jpeg";
+import CooFest from "../images/CooFest.png";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -454,6 +455,11 @@ const Explore = () => {
           />
           <img
             src={Cocofest}
+            alt="cocofest-image-2"
+            className="h-full w-full object-cover"
+          />
+          <img
+            src={CooFest}
             alt="cocofest-image-2"
             className="h-full w-full object-cover"
           />

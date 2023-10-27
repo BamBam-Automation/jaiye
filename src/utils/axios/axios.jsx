@@ -29,7 +29,6 @@ axiosInstance.interceptors.request.use(
 const addBearerToken = (token) => {
   if (token) {
     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    console.log(token);
   } else {
     delete axiosInstance.defaults.headers.common["Authorization"];
   }

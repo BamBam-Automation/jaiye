@@ -46,7 +46,6 @@ const NavBar = (props) => {
       <FiMenu
         className="h-5 w-5 text-primary"
         onClick={() => {
-          console.log("first");
           setOpen(true);
         }}
       />
