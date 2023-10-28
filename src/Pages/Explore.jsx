@@ -20,9 +20,9 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
-// import HistoryCard from "../components/HistoryCard";
-// import TimeConverter from "../components/TimeConverter";
-// import DateConverter from "../components/DateConverter";
+import HistoryCard from "../components/HistoryCard";
+import TimeConverter from "../components/TimeConverter";
+import DateConverter from "../components/DateConverter";
 import Coco from "../images/Cocofest - 1.jpeg";
 import Cocofest from "../images/Cocfest - 2.jpeg";
 import CooFest from "../images/CooFest.png";
@@ -83,6 +83,31 @@ const Explore = () => {
   const loadMoreClubs = () => {
     setPageIndex(pageIndex + 1);
   };
+
+  const [events, setEvents] = useState([]);
+  useEffect(() => {
+    axiosInstance
+      .get("events?pageNumber=1&pageSize=10")
+      .then((res) => {
+        console.log(res.data.data);
+        setEvents(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // const fecthEvents = async () => {
+    //   try {
+    //     const response = await axiosInstance.get(
+    //       "events?pageNumber=1&pageSize=10"
+    //     );
+    //     console.log(response);
+    //     const newEvents = response.data;
+    //     setEvents((prevEvents) => [...prevEvents, ...newEvents]);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // };
+  }, []);
 
   // Convert Establishment type from Number to Text
   const clubType = (clubNumber) => {
@@ -196,18 +221,18 @@ const Explore = () => {
   // Get Current Username
   let username = sessionStorage.getItem("username");
 
-  // Get the top 5 user booked events place
-  const [place, setPlace] = useState([]);
-  useEffect(() => {
-    axiosInstance
-      .get(`/upcoming-event?pageIndex=1&pageSize=5`)
-      .then((res) => {
-        setPlace(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // // Get the top 5 user booked events place
+  // const [place, setPlace] = useState([]);
+  // useEffect(() => {
+  //   axiosInstance
+  //     .get(`/upcoming-event?pageIndex=1&pageSize=5`)
+  //     .then((res) => {
+  //       setPlace(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
@@ -463,20 +488,23 @@ const Explore = () => {
             alt="cocofest-image-2"
             className="h-full w-full object-cover"
           />
-          {/* {events.map((event) => (
-            <HistoryCard
-              key={event.id}
-              owner={event.owner}
-              guests={event.numberOfGuest}
-              date={DateConverter(event.dateOfEvent)}
-              time={TimeConverter(event.timeOfEvent)}
-              table={event.tableNumber}
-              price={event.eventPrice}
-            />
-          ))} */}
         </Carousel>
       </div>
       <div className="mt-5 grid gap-5">
+        {events.map((event) => (
+          <HistoryCard
+            key={event.id}
+            owner={event.establishmentName}
+            guests={event.venue}
+            // date={DateConverter(event.dateOfEvent)}
+            date={event.startDate}
+            // time={TimeConverter(event.timeOfEvent)}
+            time={event.time}
+            table={event.tableNumber}
+            price={event.eventPrice}
+          />
+        ))}
+
         {filteredClubs.map((club) => (
           <ClubCard
             key={club.id}
