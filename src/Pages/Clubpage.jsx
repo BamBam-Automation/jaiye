@@ -17,6 +17,7 @@ import { Map, Marker } from "pigeon-maps";
 import axiosInstance from "../utils/axios/axios";
 import { CiWarning } from "react-icons/ci";
 import PaystackPop from "@paystack/inline-js";
+import DrinkOptions from "../components/DrinkOptions";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -50,27 +51,6 @@ const Clubpage = () => {
       });
   }, []);
 
-  // const passedFormData = sessionStorage.getItem("prevFormData")
-  //   ? JSON.parse(sessionStorage.getItem("prevFormData"))
-  //   : {
-  //       establishmentId: summary?.id,
-  //       isActive: summary?.isActive,
-  //       orderItems: [
-  //         {
-  //           orderedTableId: "",
-  //           lineItems: null,
-  //           //   [
-  //           //   {
-  //           //     numberOfItems: 0,
-  //           //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  //           //   },
-  //           // ],
-  //         },
-  //       ],
-  //     };
-
-  // const [formData, setFormData] = useState(passedFormData);
-
   const passedFormData = sessionStorage.getItem("prevFormData");
   let initialFormData;
 
@@ -88,13 +68,12 @@ const Clubpage = () => {
       orderItems: [
         {
           orderedTableId: "",
-          lineItems: null,
-          //   [
-          //   {
-          //     numberOfItems: 0,
-          //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          //   },
-          // ],
+          lineItems: [
+            {
+              numberOfItems: 0,
+              drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            },
+          ],
         },
       ],
     };
@@ -236,11 +215,21 @@ const Clubpage = () => {
               setFormData={setFormData}
             />
           </div>
+          {/* {tableType.tables.map((table, index) => (
+            <DrinkOptions
+              key={index}
+              drinks={table.drinkOptions}
+              formData={formData}
+              setFormData={setFormData}
+            />
+          ))} */}
           <div>
-            <p>Fast track entry</p>
-            <p>Bar spend as per minimum spend included.</p>
-            <p>Designated hostess service.</p>
-            <p>Our service has zero cost on client side.</p>
+            <ul>
+              <li>Fast track entry</li>
+              <li>Bar spend as per minimum spend included.</li>
+              <li>Designated hostess service.</li>
+              <li>Our service has zero cost on client side.</li>
+            </ul>
           </div>
           {mapVisible && <img className="mx-auto" src={BarMap} alt="" />}
         </div>

@@ -196,13 +196,13 @@ const Explore = () => {
   // Get Current Username
   let username = sessionStorage.getItem("username");
 
-  // Get the top 5 user booked events
-  const [events, setEvents] = useState([]);
+  // Get the top 5 user booked events place
+  const [place, setPlace] = useState([]);
   useEffect(() => {
     axiosInstance
       .get(`/upcoming-event?pageIndex=1&pageSize=5`)
       .then((res) => {
-        setEvents(res.data);
+        setPlace(res.data);
       })
       .catch((err) => {
         console.log(err);
