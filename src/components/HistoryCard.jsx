@@ -4,28 +4,8 @@ import History from "../images/HistoryCard.svg";
 // import { useEffect } from "react";
 
 const HistoryCard = (props) => {
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // Simulate a loading delay (you can replace this with actual data fetching)
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 2000); // Adjust the delay as needed
-
-  //   // Clean up the timer to avoid memory leaks
-  //   return () => clearTimeout(timer);
-  // }, []);
-
-  // if (isLoading) {
-  //   // Render loading content here
-  //   return "...Loading";
-  //   // return <Shimmer />;
-  // }
-
-  // When loading is complete, render the actual card content
-
   return (
-    <div>
+    <div onClick={props.onClick}>
       <div className="relative h-full">
         <img className="w-full" src={History} alt="" />
         <div className="absolute top-0 w-full px-7 pt-8">

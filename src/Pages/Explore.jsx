@@ -21,8 +21,8 @@ import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
 import HistoryCard from "../components/HistoryCard";
-import TimeConverter from "../components/TimeConverter";
-import DateConverter from "../components/DateConverter";
+// import TimeConverter from "../components/TimeConverter";
+// import DateConverter from "../components/DateConverter";
 import Coco from "../images/Cocofest - 1.jpeg";
 import Cocofest from "../images/Cocfest - 2.jpeg";
 import CooFest from "../images/CooFest.png";
@@ -302,10 +302,17 @@ const Explore = () => {
                 <IoIosHome className="h-6 w-6 p-[2px]" />
                 <p>Home</p>
               </NavigationItem>
-              <NavigationItem link={"/join"}>
-                <IoMdLogIn className="h-6 w-6 p-[2px]" />
-                <p>Membership</p>
-              </NavigationItem>
+              {token ? (
+                <NavigationItem link={"/dashboard"}>
+                  <IoIosHome className="h-6 w-6 p-[2px]" />
+                  <p>Dashboard</p>
+                </NavigationItem>
+              ) : (
+                <NavigationItem link={"/join"}>
+                  <IoMdLogIn className="h-6 w-6 p-[2px]" />
+                  <p>Membership</p>
+                </NavigationItem>
+              )}
               <NavigationItem link={"/scan"}>
                 <MdCastConnected className="h-6 w-6 p-[2px]" />
                 <p>Scan Ticket</p>
@@ -491,20 +498,31 @@ const Explore = () => {
         </Carousel>
       </div>
       <div className="mt-5 grid gap-5">
-        {events.map((event) => (
-          <HistoryCard
-            key={event.id}
-            owner={event.establishmentName}
-            guests={event.venue}
-            // date={DateConverter(event.dateOfEvent)}
-            date={event.startDate}
-            // time={TimeConverter(event.timeOfEvent)}
-            time={event.time}
-            table={event.tableNumber}
-            price={event.eventPrice}
-          />
-        ))}
-
+        <p className="text-primary font-bold text-2xl">Special Events</p>
+        <Carousel
+          loop={true}
+          transition={{ duration: 2 }}
+          className="rounded-xl"
+        >
+          {events.map((event) => (
+            <HistoryCard
+              key={event.establishmentId}
+              owner={event.establishmentName}
+              guests={event.venue}
+              // date={DateConverter(event.dateOfEvent)}
+              date={event.startDate}
+              // time={TimeConverter(event.timeOfEvent)}
+              time={event.time}
+              table={event.tableNumber}
+              price={event.eventPrice}
+              onClick={() => {
+                console.log("first");
+                navigate("/events", { state: { event: event } });
+              }}
+            />
+          ))}
+        </Carousel>
+        <p className="text-primary font-bold text-2xl">Event Places</p>
         {filteredClubs.map((club) => (
           <ClubCard
             key={club.id}

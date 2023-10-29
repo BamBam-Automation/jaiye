@@ -12,6 +12,7 @@ import QRCode from "./Pages/QRCode";
 import History from "./Pages/History";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
+import EventPage from "./Pages/EventPage";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -32,6 +33,11 @@ function App() {
           <Route
             path="/"
             element={<Explore />}
+            // element={isAuthenticated ? <Explore /> : <Membership />}
+          />
+          <Route
+            path="events"
+            element={<EventPage />}
             // element={isAuthenticated ? <Explore /> : <Membership />}
           />
 

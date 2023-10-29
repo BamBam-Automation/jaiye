@@ -92,13 +92,13 @@ const NavBar = (props) => {
             ""
           )}
           <div className="grid gap-4">
-            <NavigationItem link={"/dashboard"}>
-              <IoIosHome className="h-6 w-6 p-[2px]" />
-              <p>Home</p>
-            </NavigationItem>
             <NavigationItem link={"/"}>
               <FaCompass className="h-6 w-6 p-[2px]" />
               <p>Explore</p>
+            </NavigationItem>
+            <NavigationItem link={"/dashboard"}>
+              <IoIosHome className="h-6 w-6 p-[2px]" />
+              <p>Dashboard</p>
             </NavigationItem>
             <NavigationItem link={"/scan"}>
               <MdCastConnected className="h-6 w-6 p-[2px]" />
