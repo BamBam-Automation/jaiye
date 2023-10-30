@@ -4,27 +4,44 @@ import NavBar from "../components/NavBar";
 
 const EventPage = () => {
   const location = useLocation();
-  console.log(location.state);
   const summary = location?.state?.event;
+  console.log(summary);
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
 
   const [selectedTicketType, setSelectedTicketType] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDates, setSelectedDates] = useState([]);
 
   const handleTicketTypeClick = (ticketTypeId) => {
-    if (selectedTicketType !== ticketTypeId) {
-      setSelectedDate(null);
-    }
-    setSelectedTicketType(ticketTypeId);
+    setSelectedTicketType((prevType) => {
+      // Clear selections when changing ticket types
+      if (prevType !== ticketTypeId) {
+        setSelectedDates([]);
+      }
+      return ticketTypeId;
+    });
   };
 
   const handleDateClick = (eventDateId) => {
-    if (selectedDate === eventDateId) {
-      setSelectedDate(null); // Deselect the date
-    } else {
-      setSelectedDate(eventDateId); // Select the date
-    }
+    setSelectedDates((prevDates) => {
+      // Check if the date is already selected
+      if (prevDates.includes(eventDateId)) {
+        // If selected, unselect it
+        return prevDates.filter((date) => date !== eventDateId);
+      } else {
+        // If not selected, check if it's within the valid limit
+        const selectedTicket = ticketTypes.find(
+          (type) => type.ticketTypeId === selectedTicketType
+        );
+        if (selectedTicket && prevDates.length < selectedTicket.validDays) {
+          // Select the date if within the limit
+          return [...prevDates, eventDateId];
+        } else {
+          // Otherwise, don't change the selection
+          return prevDates;
+        }
+      }
+    });
   };
 
   return (
@@ -51,7 +68,7 @@ const EventPage = () => {
                   {eventDates.map((eventDate) => (
                     <label
                       className={`border h-10 text-center border-primary grid place-content-center ${
-                        selectedDate === eventDate.eventDateId
+                        selectedDates.includes(eventDate.eventDateId)
                           ? "bg-primary text-white"
                           : "bg-white text-primary"
                       }`}
