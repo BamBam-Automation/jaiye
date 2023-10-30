@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
 import ProfileImg from "../images/Profile.svg";
-import { Avatar } from "@material-tailwind/react";
+import { Alert, Avatar } from "@material-tailwind/react";
 import { BiEditAlt } from "react-icons/bi";
-import { IoIosArrowForward, IoMdKey } from "react-icons/io";
+// import { IoIosArrowForward, IoMdKey } from "react-icons/io";
 import Input from "../components/Input";
 import PrimaryButton from "../components/PrimaryButton";
+import { CiWarning } from "react-icons/ci";
+import axiosInstance from "../utils/axios/axios";
+import { BsPatchCheck } from "react-icons/bs";
+import PageTitle from "../utils/PageTitle";
 
 const Profile = () => {
   // Get Current Username
@@ -15,6 +19,57 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState(user ? user : "");
+
+  const [alert, setAlert] = useState(false);
+  const [bgColor, setBgColor] = useState("");
+  const [icon, setIcon] = useState("");
+  const [response, setResponse] = useState("");
+
+  const handleSubmit = () => {
+    const data = {
+      username: username,
+      currentPassword: oldPassword,
+      newPassword: newPassword,
+      confirmPassword: confirmPassword,
+    };
+
+    if (
+      username === "" ||
+      newPassword === "" ||
+      confirmPassword === "" ||
+      oldPassword === ""
+    ) {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("Please, check and try again");
+    }
+
+    axiosInstance
+      .post("/changepassword", data)
+      .then((res) => {
+        console.log(res);
+        setAlert(!alert);
+        setBgColor("green");
+        setIcon(<BsPatchCheck />);
+        setResponse(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+        setAlert(!alert);
+        setBgColor("red");
+        setIcon(<CiWarning />);
+        setResponse(err?.data?.message || "Request failed, try again");
+      });
+  };
+
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
+
+  PageTitle("Jaiye - Change Password");
 
   return (
     <div className="p-7 grid gap-5 items-start">
@@ -58,22 +113,15 @@ const Profile = () => {
           <Input
             label={"Confirm New Password"}
             type={"password"}
-            id={"newPassword"}
+            id={"confirmPassword"}
             value={confirmPassword}
             onChange={(e) => {
-              setNewPassword(e.target.value);
+              setConfirmPassword(e.target.value);
             }}
           />
-          <PrimaryButton
-            onClick={() =>
-              console.log(
-                `Old Password: ${oldPassword}; New Password: ${newPassword}`
-              )
-            }
-            text={"Change Password"}
-          />
+          <PrimaryButton onClick={handleSubmit} text={"Change Password"} />
         </div>
-        <div className="bg-gradient-to-b rounded-lg relative from-[#EB7C4C] to-[#A03484] p-0.5">
+        {/* <div className="bg-gradient-to-b rounded-lg relative from-[#EB7C4C] to-[#A03484] p-0.5">
           <div className="h-10 p-[0.3px] bg-[#f9f9f9] rounded-lg flex items-center justify-between px-5">
             <div className="flex gap-5 items-center">
               <IoMdKey className="h-6 w-6 p-[2px] text-primary" />
@@ -81,8 +129,21 @@ const Profile = () => {
             </div>
             <IoIosArrowForward className="h-5 w-5 text-primary" />
           </div>
-        </div>
+        </div> */}
       </div>
+      {alert && (
+        <Alert
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 0 },
+          }}
+          color={bgColor}
+          icon={icon}
+          className="absolute w-11/12 right-5 h-12 top-8"
+        >
+          {response}
+        </Alert>
+      )}
     </div>
   );
 };

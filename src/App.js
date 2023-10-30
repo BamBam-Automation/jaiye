@@ -65,8 +65,8 @@ function App() {
           />
           <Route
             path="profile"
-            element={<Profile />}
-            // element={isAuthenticated ? <Profile /> : <Membership />}
+            // element={<Profile />}
+            element={isAuthenticated ? <Profile /> : <Membership />}
           />
         </Routes>
       </BrowserRouter>
