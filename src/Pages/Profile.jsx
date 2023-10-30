@@ -13,6 +13,7 @@ const Profile = () => {
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [username, setUsername] = useState(user ? user : "");
 
   return (
@@ -50,6 +51,15 @@ const Profile = () => {
             type={"password"}
             id={"newPassword"}
             value={newPassword}
+            onChange={(e) => {
+              setNewPassword(e.target.value);
+            }}
+          />
+          <Input
+            label={"Confirm New Password"}
+            type={"password"}
+            id={"newPassword"}
+            value={confirmPassword}
             onChange={(e) => {
               setNewPassword(e.target.value);
             }}
