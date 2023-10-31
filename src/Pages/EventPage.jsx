@@ -5,8 +5,11 @@ import { Alert, Button } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
+import PageTitle from "../utils/PageTitle";
 
 const EventPage = () => {
+  PageTitle("Jaiye - Book Event");
+
   const location = useLocation();
   console.log(location);
   const summary = location?.state?.event;

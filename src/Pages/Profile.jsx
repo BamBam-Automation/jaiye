@@ -10,6 +10,9 @@ import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../utils/app/userSlice";
 
 const Profile = () => {
   // Get Current Username
@@ -24,6 +27,9 @@ const Profile = () => {
   const [bgColor, setBgColor] = useState("");
   const [icon, setIcon] = useState("");
   const [response, setResponse] = useState("");
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const data = {
@@ -43,6 +49,11 @@ const Profile = () => {
       setBgColor("red");
       setIcon(<CiWarning />);
       setResponse("Please, check and try again");
+    } else if (newPassword !== confirmPassword) {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("New Passwords do not match");
     }
 
     axiosInstance
@@ -53,6 +64,13 @@ const Profile = () => {
         setBgColor("green");
         setIcon(<BsPatchCheck />);
         setResponse(res.data.message);
+        setNewPassword("");
+        setConfirmPassword("");
+        setOldPassword("");
+        dispatch(() => {
+          logout();
+          navigate("/");
+        });
       })
       .catch((err) => {
         console.log(err);
