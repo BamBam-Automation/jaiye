@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import { Alert, Button, Carousel } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
@@ -15,6 +15,16 @@ const EventPage = () => {
   const summary = location?.state?.event;
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (summary) {
+      return;
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
