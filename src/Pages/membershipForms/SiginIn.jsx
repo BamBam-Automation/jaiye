@@ -8,6 +8,9 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../utils/app/userSlice";
 import { useEffect } from "react";
+import { BsPatchCheck } from "react-icons/bs";
+import { CiWarning } from "react-icons/ci";
+import { Alert, Spinner } from "@material-tailwind/react";
 
 const SiginIn = () => {
   const [username, setUsername] = useState("");
@@ -29,6 +32,16 @@ const SiginIn = () => {
     }
   }, []);
 
+  const [alert, setAlert] = useState(false);
+  const [bgColor, setBgColor] = useState("");
+  const [icon, setIcon] = useState("");
+
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
+
   const handleSubmit = () => {
     const data = {
       username,
@@ -37,11 +50,15 @@ const SiginIn = () => {
 
     const previousPage = sessionStorage.getItem("previousPage");
     if (username && password !== "" && rememberMe) {
+      setLoading(true);
       localStorage.setItem("user", username);
       localStorage.setItem("pass", password);
       axiosInstance
         .post("/login", data)
         .then((res) => {
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
           setLoading(false);
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
@@ -51,16 +68,34 @@ const SiginIn = () => {
         })
         .catch((err) => {
           setLoading(false);
+          setAlert(!alert);
+          setBgColor("red");
+          setIcon(<CiWarning />);
           setResponse(err.response.data.errors || err.message);
         });
     } else if (password === "" && username !== "") {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
       setResponse("The password field is required");
     } else if (username === "" && password !== "") {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
       setResponse("The username field is required");
+    } else if (username === "" && password === "") {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("Username and Password are required");
     } else {
+      setLoading(true);
       axiosInstance
         .post("/login", data)
         .then((res) => {
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
           setLoading(false);
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
@@ -76,8 +111,14 @@ const SiginIn = () => {
           console.log(err);
           setLoading(false);
           if (err.message === "timeout of 10000ms exceeded") {
+            setAlert(!alert);
+            setBgColor("red");
+            setIcon(<CiWarning />);
             setResponse("Request timeout. Try again");
           } else {
+            setAlert(!alert);
+            setBgColor("red");
+            setIcon(<CiWarning />);
             setResponse(err?.response?.data?.errors || err?.message);
           }
         });
@@ -85,6 +126,19 @@ const SiginIn = () => {
   };
   return (
     <form action="" className="grid gap-5">
+      {alert && (
+        <Alert
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 0 },
+          }}
+          color={bgColor}
+          icon={icon}
+          className="absolute h-auto top-8 w-11/12 right-5"
+        >
+          {response}
+        </Alert>
+      )}
       <Input
         label={"Username"}
         type={"text"}
@@ -122,9 +176,8 @@ const SiginIn = () => {
       </div>
       <PrimaryButton
         onClick={handleSubmit}
-        text={loading ? <LoadingSkeleton width={150} /> : "Login"}
+        text={loading ? <Spinner color="pink" /> : "Login"}
       />
-      {response}
     </form>
   );
 };

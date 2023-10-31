@@ -181,7 +181,7 @@ const SignUp = () => {
           email === ""
         }
         onClick={handleSubmit}
-        text={loading ? <Spinner color="pink" width={150} /> : "Create Account"}
+        text={loading ? <Spinner color="pink" /> : "Create Account"}
       />
       {!isEmailValid && (
         <p className="text-primary">Please enter a valid email address.</p>
