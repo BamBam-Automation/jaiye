@@ -6,32 +6,32 @@ import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
+import PaystackPop from "@paystack/inline-js";
 
 const EventPage = () => {
   PageTitle("Jaiye - Book Event");
 
   const location = useLocation();
-  console.log(location);
   const summary = location?.state?.event;
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
 
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
-
-  // const handleTicketTypeClick = (ticketTypeId) => {
-  //   setSelectedTicketType((prevType) => {
-  //     // Clear selections when changing ticket types
-  //     if (prevType !== ticketTypeId) {
-  //       setSelectedDates([]);
-  //     }
-  //     return ticketTypeId;
-  //   });
-  // };
+  const [eventPrice, setEventPrice] = useState(0);
 
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
       if (prevType !== ticketTypeId) {
+        let newEventPrice = 0; // Initialize eventPrice to 0
+        const selectedTicket = ticketTypes.find(
+          (type) => type.ticketTypeId === ticketTypeId
+        );
+
+        if (selectedTicket) {
+          newEventPrice = selectedTicket.price;
+        }
+
         if (ticketClass === 0) {
           // If ticketClass is 0, select all dates
           setSelectedDates([...eventDates.map((date) => date.eventDateId)]);
@@ -39,6 +39,9 @@ const EventPage = () => {
           // For other ticketClasses, clear selections
           setSelectedDates([]);
         }
+
+        // Set the new eventPrice
+        setEventPrice(newEventPrice);
       }
       return ticketTypeId;
     });
@@ -73,6 +76,7 @@ const EventPage = () => {
     });
   };
 
+  const email = sessionStorage.getItem("usermail");
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
   const [icon, setIcon] = useState("");
@@ -127,16 +131,35 @@ const EventPage = () => {
         break;
     }
 
-    console.log(url);
-    console.log(data);
-
     axiosInstance
       .post(url, data)
       .then((res) => {
         setAlert(!alert);
         setBgColor("green");
         setIcon(<BsPatchCheck />);
-        setResponse(res.data.message);
+        setResponse(`${res.data.message}. Redirecting to payment`);
+        const paystack = new PaystackPop();
+        paystack.newTransaction({
+          key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+          amount: eventPrice * 100,
+          email: email,
+          firstname: "",
+          lastname: "",
+          onSuccess(transaction) {
+            console.log(transaction);
+            let message = `Payment Completed with reference number: ${transaction.reference}`;
+            setAlert(!alert);
+            setBgColor("green");
+            setResponse(message);
+            setIcon(<BsPatchCheck />);
+          },
+          onCancel() {
+            setAlert(!alert);
+            setResponse("Request failed, please try again");
+            setBgColor("red");
+            setIcon(<CiWarning />);
+          },
+        });
       })
       .catch((err) => {
         setAlert(!alert);
@@ -156,7 +179,20 @@ const EventPage = () => {
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={summary?.name} />
       <p>{summary?.description}</p>
-      <div className="grid gap-3">
+      <div className="grid gap-3 relative">
+        {alert && (
+          <Alert
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 0 },
+            }}
+            color={bgColor}
+            icon={icon}
+            className="absolute w-full h-auto top-8"
+          >
+            {response}
+          </Alert>
+        )}
         <p className="font-semibold text-lg text-primary">Event Ticket Types</p>
         <p>Select Ticket Type below:</p>
         <div className="grid gap-5">
@@ -203,19 +239,6 @@ const EventPage = () => {
           <Button className="bg-primary" onClick={handleBooking}>
             Book Event
           </Button>
-          {alert && (
-            <Alert
-              animate={{
-                mount: { y: 0 },
-                unmount: { y: 0 },
-              }}
-              color={bgColor}
-              icon={icon}
-              className="absolute w-11/12 right-5 h-12 top-8"
-            >
-              {response}
-            </Alert>
-          )}
         </div>
       </div>
     </div>

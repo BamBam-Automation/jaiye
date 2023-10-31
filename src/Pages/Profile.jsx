@@ -67,10 +67,8 @@ const Profile = () => {
         setNewPassword("");
         setConfirmPassword("");
         setOldPassword("");
-        dispatch(() => {
-          logout();
-          navigate("/");
-        });
+        dispatch(logout());
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

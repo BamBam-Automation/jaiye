@@ -20,12 +20,6 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
-import HistoryCard from "../components/HistoryCard";
-// import TimeConverter from "../components/TimeConverter";
-// import DateConverter from "../components/DateConverter";
-import Coco from "../images/Cocofest - 1.jpeg";
-import Cocofest from "../images/Cocfest - 2.jpeg";
-import CooFest from "../images/CooFest.png";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -220,19 +214,6 @@ const Explore = () => {
 
   // Get Current Username
   let username = sessionStorage.getItem("username");
-
-  // // Get the top 5 user booked events place
-  // const [place, setPlace] = useState([]);
-  // useEffect(() => {
-  //   axiosInstance
-  //     .get(`/upcoming-event?pageIndex=1&pageSize=5`)
-  //     .then((res) => {
-  //       setPlace(res.data);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
@@ -474,29 +455,6 @@ const Explore = () => {
         </div>
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      <div>
-        <Carousel
-          loop={true}
-          transition={{ duration: 2 }}
-          className="rounded-xl"
-        >
-          <img
-            src={Coco}
-            alt="cocofest-image-1"
-            className="h-full w-full object-cover"
-          />
-          <img
-            src={Cocofest}
-            alt="cocofest-image-2"
-            className="h-full w-full object-cover"
-          />
-          <img
-            src={CooFest}
-            alt="cocofest-image-2"
-            className="h-full w-full object-cover"
-          />
-        </Carousel>
-      </div>
       <div className="mt-5 grid gap-5">
         <p className="text-primary font-bold text-2xl">Special Events</p>
         <Carousel
@@ -505,20 +463,11 @@ const Explore = () => {
           className="rounded-xl"
         >
           {events.map((event) => (
-            <HistoryCard
+            <img
               key={event.establishmentId}
-              owner={event.establishmentName}
-              guests={event.venue}
-              // date={DateConverter(event.dateOfEvent)}
-              date={event.startDate}
-              // time={TimeConverter(event.timeOfEvent)}
-              time={event.time}
-              table={event.tableNumber}
-              price={event.eventPrice}
-              onClick={() => {
-                console.log("first");
-                navigate("/events", { state: { event: event } });
-              }}
+              src={event.imageUrls}
+              onClick={() => navigate("/events", { state: { event: event } })}
+              alt="event-banner"
             />
           ))}
         </Carousel>
