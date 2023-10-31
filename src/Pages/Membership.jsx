@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SignIn from "./membershipForms/SiginIn";
 import { FcGoogle } from "react-icons/fc";
 // import { BiLogoApple } from "react-icons/bi";
-import { Button } from "@material-tailwind/react";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
+import axiosInstance from "../utils/axios/axios";
+import { Button } from "@material-tailwind/react";
 
 const Membership = () => {
   // State for Visible Form
@@ -26,6 +28,36 @@ const Membership = () => {
   PageTitle(title());
 
   const navigate = useNavigate();
+
+  // const responseGoogle = (response) => {
+  //   console.log(response); // Handle the Google Sign-In response here
+  // };
+
+  // const handleSuccess = (response) => {
+  //   console.log("Google Sign-In successful:", response);
+  //   // You can handle the Google Sign-In response here
+  // };
+
+  // const handleError = (error) => {
+  //   console.error("Google Sign-In error:", error);
+  //   // Handle errors here
+  // };
+
+  const login = useGoogleLogin({
+    onSuccess: (codeResponse) => console.log(codeResponse),
+    flow: "auth-code",
+  });
+
+  // useEffect(() => {
+  //   axiosInstance
+  //     .post("/google-auth", auth)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [handleSuccess]);
 
   return (
     <div className="grid relative p-7 content-between h-screen">
@@ -67,6 +99,7 @@ const Membership = () => {
           variant="outlined"
           color="blue-gray"
           className="flex items-center justify-center gap-3 border border-[#8C8A93]"
+          onClick={login}
         >
           <FcGoogle className="text-2xl" />
           Sign-up with Google

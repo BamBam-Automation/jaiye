@@ -98,49 +98,49 @@ const Clubpage = () => {
     } else if (token) {
       console.log(formData);
 
-      axiosInstance
-        .post("Order", formData)
-        .then((res) => {
-          console.log(res);
-          // const paystack = new PaystackPop();
-          // paystack.newTransaction({
-          //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
-          //   amount: "500",
-          //   email: "a@a.com",
-          //   firstname: "testing",
-          //   lastname: "more",
-          //   onSuccess(transaction) {
-          //     console.log(transaction);
-          //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
-          //     setAlert(!alert);
-          //     setBgColor("green");
-          //     setResponse(message);
-          //     setIcon(<BsPatchCheck />);
-          //   },
-          //   onCancel() {
-          //     setAlert(!alert);
-          //     setResponse("Request failed, please try again");
-          //     setBgColor("red");
-          //     setIcon(<CiWarning />);
-          //   },
-          // });
-          setAlert(!alert);
-          setBgColor("green");
-          setResponse(res.data.message);
-          setIcon(<BsPatchCheck />);
-        })
-        .catch((err) => {
-          setAlert(!alert);
-          setResponse("Request failed, please try again");
-          setBgColor("red");
-          setIcon(<CiWarning />);
-        });
-    } else {
-      const formDataJSON = JSON.stringify(formData);
-      sessionStorage.setItem("prevFormData", formDataJSON);
-      sessionStorage.setItem("previousPage", window.location.href);
-      sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
-      navigate("/join");
+      //   axiosInstance
+      //     .post("Order", formData)
+      //     .then((res) => {
+      //       console.log(res);
+      //       // const paystack = new PaystackPop();
+      //       // paystack.newTransaction({
+      //       //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+      //       //   amount: "500",
+      //       //   email: "a@a.com",
+      //       //   firstname: "testing",
+      //       //   lastname: "more",
+      //       //   onSuccess(transaction) {
+      //       //     console.log(transaction);
+      //       //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
+      //       //     setAlert(!alert);
+      //       //     setBgColor("green");
+      //       //     setResponse(message);
+      //       //     setIcon(<BsPatchCheck />);
+      //       //   },
+      //       //   onCancel() {
+      //       //     setAlert(!alert);
+      //       //     setResponse("Request failed, please try again");
+      //       //     setBgColor("red");
+      //       //     setIcon(<CiWarning />);
+      //       //   },
+      //       // });
+      //       setAlert(!alert);
+      //       setBgColor("green");
+      //       setResponse(res.data.message);
+      //       setIcon(<BsPatchCheck />);
+      //     })
+      //     .catch((err) => {
+      //       setAlert(!alert);
+      //       setResponse("Request failed, please try again");
+      //       setBgColor("red");
+      //       setIcon(<CiWarning />);
+      //     });
+      // } else {
+      //   const formDataJSON = JSON.stringify(formData);
+      //   sessionStorage.setItem("prevFormData", formDataJSON);
+      //   sessionStorage.setItem("previousPage", window.location.href);
+      //   sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
+      //   navigate("/join");
     }
   };
 
@@ -158,7 +158,7 @@ const Clubpage = () => {
       orderItems: [
         {
           orderedTableId: tableId,
-          lineItems: null,
+          lineItems: prevData.orderItems[0].lineItems, // Preserve the existing lineItems
         },
       ],
       tableId,

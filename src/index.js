@@ -1,19 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { ThemeProvider } from '@material-tailwind/react';
-import { Provider } from 'react-redux';
-import {store, persistor} from "./utils/app/store"
-import { PersistGate } from 'redux-persist/integration/react';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { ThemeProvider } from "@material-tailwind/react";
+import { Provider } from "react-redux";
+import { store, persistor } from "./utils/app/store";
+import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
     <PersistGate loading={null} persistor={persistor}>
       <ThemeProvider>
-        <App />
+        <GoogleOAuthProvider clientId="<your_client_id>">
+          <App />
+        </GoogleOAuthProvider>
       </ThemeProvider>
     </PersistGate>
     {/* </React.StrictMode> */}
