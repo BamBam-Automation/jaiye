@@ -3,7 +3,9 @@ import Input from "../../components/Input";
 import { Link } from "react-router-dom";
 import PrimaryButton from "../../components/PrimaryButton";
 import axiosInstance from "../../utils/axios/axios";
-import LoadingSkeleton from "react-loading-skeleton";
+import { BsPatchCheck } from "react-icons/bs";
+import { Alert, Spinner } from "@material-tailwind/react";
+import { CiWarning } from "react-icons/ci";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +16,8 @@ const SignUp = () => {
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastName] = useState("");
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -28,17 +32,32 @@ const SignUp = () => {
 
   const data = {
     username,
+    firstname,
+    lastname,
     email,
     password,
   };
+  const [alert, setAlert] = useState(false);
+  const [bgColor, setBgColor] = useState("");
+  const [icon, setIcon] = useState("");
+
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
 
   const handleSubmit = () => {
+    setLoading(true);
     // Check if the password meets the regex pattern
     if (/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/.test(password)) {
       // Password is valid, proceed with registration
       axiosInstance
         .post("/registration", data)
         .then((res) => {
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
           setLoading(false);
           setResponse(res.data.message);
           setTimeout(() => {
@@ -46,18 +65,27 @@ const SignUp = () => {
           }, 2000);
         })
         .catch((err) => {
+          console.log(err);
           setLoading(false);
-          if (
-            err.message === "timeout of 10000ms exceeded" ||
-            err.response.status === 500
-          ) {
-            setResponse(err.response.data.errors);
-          } else {
-            setResponse(err.data.message);
-          }
+          setAlert(!alert);
+          setBgColor("red");
+          setIcon(<CiWarning />);
+          setResponse(err?.data?.message || err?.message);
+          // if (
+          //   err.message === "timeout of 10000ms exceeded" ||
+          //   err.response.status === 500
+          // ) {
+          //   setResponse(err.response.data.errors);
+          // } else {
+          //   setResponse(err.data.message);
+          // }
         });
     } else {
       // Password is not valid
+      setLoading(false);
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
       setResponse(
         "Password must be 8 characters long and must include, at least, one uppercase one special character"
       );
@@ -66,6 +94,19 @@ const SignUp = () => {
 
   return (
     <form action="" className="grid gap-5">
+      {alert && (
+        <Alert
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 0 },
+          }}
+          color={bgColor}
+          icon={icon}
+          className="absolute h-auto top-8 w-11/12 right-5"
+        >
+          {response}
+        </Alert>
+      )}
       <Input
         autoComplete={"off"}
         label={"Email"}
@@ -73,6 +114,20 @@ const SignUp = () => {
         id={"email"}
         value={email}
         onChange={handleEmailChange}
+      />
+      <Input
+        label={"Firstname"}
+        type={"text"}
+        id={"firstname"}
+        value={firstname}
+        onChange={(e) => setFirstname(e.target.value)}
+      />
+      <Input
+        label={"Lastname"}
+        type={"text"}
+        id={"lastname"}
+        value={lastname}
+        onChange={(e) => setLastName(e.target.value)}
       />
       <Input
         label={"Username"}
@@ -126,7 +181,7 @@ const SignUp = () => {
           email === ""
         }
         onClick={handleSubmit}
-        text={loading ? <LoadingSkeleton width={150} /> : "Create Account"}
+        text={loading ? <Spinner color="pink" width={150} /> : "Create Account"}
       />
       {!isEmailValid && (
         <p className="text-primary">Please enter a valid email address.</p>
@@ -134,8 +189,6 @@ const SignUp = () => {
       {password !== confirmPassword && (
         <p> Password and Confirm Password do not match. Please try again. </p>
       )}
-
-      {response}
     </form>
   );
 };
