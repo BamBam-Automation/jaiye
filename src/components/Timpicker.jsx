@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const TimePicker = ({ formData, setFormData }) => {
+const TimePicker = ({ setTimeIsOpen, formData, setFormData }) => {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [step, setStep] = useState(0);
@@ -19,13 +19,15 @@ const TimePicker = ({ formData, setFormData }) => {
 
     if (selectedDateTime >= currentDate) {
       setSelectedDate(date);
-      setStep(1); // Move to the time selection step
+      setStep(1); // Move to the time selection step;
     }
   };
 
   const handleTimeChange = (time) => {
     setSelectedTime(time); // Update the selected time
-
+    setTimeout(() => {
+      setTimeIsOpen(false);
+    }, 1000);
     if (selectedDate) {
       const formattedDateTime = formatDateTime(selectedDate, time);
       if (formattedDateTime) {

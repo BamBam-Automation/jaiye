@@ -3,7 +3,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SignIn from "./membershipForms/SiginIn";
 import { FcGoogle } from "react-icons/fc";
-import { BiLogoApple } from "react-icons/bi";
+// import { BiLogoApple } from "react-icons/bi";
 import { Button } from "@material-tailwind/react";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
@@ -71,7 +71,7 @@ const Membership = () => {
           <FcGoogle className="text-2xl" />
           Sign-up with Google
         </Button>
-        <Button
+        {/* <Button
           size="lg"
           variant="outlined"
           color="blue-gray"
@@ -79,7 +79,7 @@ const Membership = () => {
         >
           <BiLogoApple className="text-2xl" />
           Sign-up with Apple
-        </Button>
+        </Button> */}
         <p className="text-center text-lg">
           Don't have an account?{" "}
           <span

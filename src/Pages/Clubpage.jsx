@@ -18,6 +18,7 @@ import axiosInstance from "../utils/axios/axios";
 import { CiWarning } from "react-icons/ci";
 import PaystackPop from "@paystack/inline-js";
 import DrinkOptions from "../components/DrinkOptions";
+import DrinkPicker from "../components/DrinkPicker";
 
 const Clubpage = () => {
   // State to manage steps to book seats
@@ -149,6 +150,28 @@ const Clubpage = () => {
     }
   }, 3000);
 
+  // Handle Table Selection:
+  const [selectedTable, setSelectedTable] = useState(null);
+  const handleRadioChange = (tableId) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      orderItems: [
+        {
+          orderedTableId: tableId,
+          lineItems: null,
+        },
+      ],
+      tableId,
+    }));
+
+    // Update the selected table state with the tableId
+    setSelectedTable(tableId);
+
+    setTimeout(() => {
+      setTableIsOpen(false);
+    }, 1000);
+  };
+
   // Sections for Accordion Component
   const sections = tableTypes.map((tableType, index) => ({
     header: (
@@ -200,7 +223,11 @@ const Clubpage = () => {
                 : "transition ease-in duration-200 opacity-0 scale-90"
             }`}
           >
-            <TimePicker formData={formData} setFormData={setFormData} />
+            <TimePicker
+              setTimeIsOpen={setTimeIsOpen}
+              formData={formData}
+              setFormData={setFormData}
+            />
           </div>
           <div
             className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
@@ -210,10 +237,18 @@ const Clubpage = () => {
             }`}
           >
             <Tablepicker
+              setTableIsOpen={setTableIsOpen}
               tables={tableType.tables}
               formData={formData}
               setFormData={setFormData}
+              onRadioChange={handleRadioChange}
             />
+          </div>
+          <div>
+            <Button className="border-primary border-2 text-primary outline-none bg-transparent w-full">
+              Select Drinks
+            </Button>
+            <DrinkPicker selectedTable={selectedTable} />
           </div>
           {/* {tableType.tables.map((table, index) => (
             <DrinkOptions

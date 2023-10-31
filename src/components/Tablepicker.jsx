@@ -1,41 +1,9 @@
 import React from "react";
 import { PiCheck } from "react-icons/pi";
 
-const Tablepicker = ({ tables, formData, setFormData }) => {
-  // Function to handle changes in the radio input
-  // const handleRadioChange = (e) => {
-  //   // setFormData({ ...formData, tableNumber: +e.table.name });
-  //   setFormData({ ...formData, tableId: e.target.value });
-  //   // setSelectedTable(e.target.value);
-  //   console.log(formData.tableId);
-  // };
-
-  const handleRadioChange = (e) => {
-    const tableId = e.target.value;
-    console.log(tableId);
-
-    // Map the selected tableId to the corresponding orderedTableId
-    // const orderedTableId = tables.find(
-    //   (table) => table.id === tableId
-    // )?.orderedTableId;
-    const selectedTable = tables.find((table) => table.id === tableId);
-
-    setFormData((prevData) => ({
-      ...prevData,
-      orderItems: [
-        {
-          orderedTableId: tableId, // Set orderedTableId dynamically
-          lineItems: null,
-          //   [
-          //   {
-          //     numberOfItems: ,
-          //     drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          //   },
-          // ],
-        },
-      ],
-      tableId, // Set tableId in formData
-    }));
+const Tablepicker = ({ onRadioChange, tables, formData }) => {
+  const handleRadioChange = (table) => {
+    onRadioChange(table);
   };
 
   return (
