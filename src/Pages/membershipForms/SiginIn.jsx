@@ -3,7 +3,6 @@ import Input from "../../components/Input";
 import { Link, useNavigate } from "react-router-dom";
 import PrimaryButton from "../../components/PrimaryButton";
 import axiosInstance from "../../utils/axios/axios";
-import LoadingSkeleton from "react-loading-skeleton";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../utils/app/userSlice";
