@@ -93,7 +93,7 @@ const SignUp = () => {
   };
 
   return (
-    <form action="" className="grid gap-5">
+    <form onSubmit={handleSubmit} className="grid gap-5">
       {alert && (
         <Alert
           animate={{
