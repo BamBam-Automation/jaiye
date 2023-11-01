@@ -42,21 +42,39 @@ const Membership = () => {
   //   // Handle errors here
   // };
 
-  const [accessToken, setAccessToken] = useState("");
+  // const [accessToken, setAccessToken] = useState("");
+
+  // useEffect(() => {
+  //   const data = {
+  //     accessToken: accessToken,
+  //   };
+  //   axiosInstance
+  //     .post("/google-auth", data)
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [accessToken]);
+
+  function handleCallbackResponse(response) {
+    console.log(response.credential);
+  }
 
   useEffect(() => {
-    const data = {
-      accessToken: accessToken,
-    };
-    axiosInstance
-      .post("/google-auth", data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [accessToken]);
+    // /*** Google Script ***/
+    google.accounts.id.initialize({
+      client_id:
+        "748855953781-sg66g9o7cq4j04i3bjk0d7r3lsndm1v2.apps.googleusercontent.com",
+      callback: handleCallbackResponse,
+    });
+  }, []);
+
+  const handleGoogleLogin = () => {
+    // Trigger the Google Identity Services login
+    google.accounts.id.prompt();
+  };
 
   return (
     <div className="grid relative p-7 content-between h-screen">
@@ -98,7 +116,7 @@ const Membership = () => {
           variant="outlined"
           color="blue-gray"
           className="flex items-center justify-center gap-3 border border-[#8C8A93]"
-          // onClick={handleSignIn}
+          onClick={handleGoogleLogin}
         >
           <FcGoogle className="text-2xl" />
           Sign-up with Google

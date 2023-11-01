@@ -7,10 +7,12 @@ import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import PaystackPop from "@paystack/inline-js";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 const EventPage = () => {
   PageTitle("Jaiye - Book Event");
 
+  const email = sessionStorage.getItem("usermail");
   const location = useLocation();
   const summary = location?.state?.event;
   const ticketTypes = summary?.ticketTypes || [];
@@ -86,7 +88,27 @@ const EventPage = () => {
     });
   };
 
-  const email = sessionStorage.getItem("usermail");
+  // Flutterwave Payment Option:
+  const config = {
+    public_key: "FLWPUBK_TEST-4822092bf13ce6312ecbab5ab5f56d40-X",
+    tx_ref: Date.now(),
+    amount: eventPrice,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: email,
+      phone_number: "",
+      name: "",
+    },
+    customizations: {
+      title: "my Payment Title",
+      description: "Payment for items in cart",
+      logo: "https://app.jaiye.ng/static/media/Jaiye.6fde14b11dc8c7148e4b168a5f732b56.svg",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
+
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
   const [icon, setIcon] = useState("");
@@ -251,7 +273,18 @@ const EventPage = () => {
               )}
             </label>
           ))}
-          <Button className="bg-primary" onClick={handleBooking}>
+          <Button
+            className="bg-primary"
+            onClick={() =>
+              handleFlutterPayment({
+                callback: (response) => {
+                  console.log(response);
+                  closePaymentModal();
+                },
+                onClose: () => {},
+              })
+            }
+          >
             Book Event
           </Button>
         </div>
