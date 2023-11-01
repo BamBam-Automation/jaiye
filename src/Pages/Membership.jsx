@@ -45,7 +45,7 @@ const Membership = () => {
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => console.log(codeResponse),
-    flow: "auth-code",
+    // flow: "auth-code",
   });
 
   // useEffect(() => {
