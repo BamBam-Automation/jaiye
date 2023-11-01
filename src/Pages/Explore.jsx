@@ -83,7 +83,6 @@ const Explore = () => {
     axiosInstance
       .get("events?pageNumber=1&pageSize=10")
       .then((res) => {
-        console.log(res.data.data);
         setEvents(res.data.data);
       })
       .catch((err) => {

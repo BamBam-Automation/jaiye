@@ -165,7 +165,6 @@ const SiginIn = () => {
             value={rememberMe}
             onChange={() => {
               setRememberMe(!rememberMe);
-              console.log(rememberMe);
             }}
             id=""
           />

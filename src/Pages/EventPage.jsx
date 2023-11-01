@@ -24,7 +24,7 @@ const EventPage = () => {
     } else {
       navigate("/");
     }
-  }, []);
+  });
 
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);

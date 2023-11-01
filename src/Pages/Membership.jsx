@@ -7,7 +7,6 @@ import { FcGoogle } from "react-icons/fc";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
-import { useGoogleLogin } from "@react-oauth/google";
 import axiosInstance from "../utils/axios/axios";
 import { Button } from "@material-tailwind/react";
 
@@ -43,21 +42,21 @@ const Membership = () => {
   //   // Handle errors here
   // };
 
-  const login = useGoogleLogin({
-    onSuccess: (codeResponse) => console.log(codeResponse),
-    // flow: "auth-code",
-  });
+  const [accessToken, setAccessToken] = useState("");
 
-  // useEffect(() => {
-  //   axiosInstance
-  //     .post("/google-auth", auth)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [handleSuccess]);
+  useEffect(() => {
+    const data = {
+      accessToken: accessToken,
+    };
+    axiosInstance
+      .post("/google-auth", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [accessToken]);
 
   return (
     <div className="grid relative p-7 content-between h-screen">
@@ -99,7 +98,7 @@ const Membership = () => {
           variant="outlined"
           color="blue-gray"
           className="flex items-center justify-center gap-3 border border-[#8C8A93]"
-          onClick={login}
+          // onClick={handleSignIn}
         >
           <FcGoogle className="text-2xl" />
           Sign-up with Google
