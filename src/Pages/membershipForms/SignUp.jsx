@@ -37,7 +37,7 @@ const SignUp = () => {
     lastname,
     email,
     password,
-    phone,
+    phoneNumber: phone,
   };
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
