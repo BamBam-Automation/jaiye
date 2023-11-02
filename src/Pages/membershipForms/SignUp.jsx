@@ -6,6 +6,7 @@ import axiosInstance from "../../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import { Alert, Spinner } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
+import { BiHide, BiShowAlt } from "react-icons/bi";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -82,6 +83,10 @@ const SignUp = () => {
     }
   };
 
+  // State to show password
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   return (
     <form onSubmit={handleSubmit} className="grid gap-5">
       {alert && (
@@ -112,20 +117,48 @@ const SignUp = () => {
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
-      <Input
-        label={"Password"}
-        type={"password"}
-        id={"password"}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Input
-        label={"Confirm Password"}
-        type={"password"}
-        id={"confirmPassword"}
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
+      <div className="relative">
+        <Input
+          label={"Password"}
+          type={showPassword ? "text" : "password"}
+          id={"password"}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {!showPassword && (
+          <BiShowAlt
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+        {showPassword && (
+          <BiHide
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+      </div>
+      <div className="relative">
+        <Input
+          label={"Confirm Password"}
+          type={showConfirm ? "text" : "password"}
+          id={"confirmPassword"}
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+        {!showConfirm && (
+          <BiShowAlt
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowConfirm(!showConfirm)}
+          />
+        )}
+        {showConfirm && (
+          <BiHide
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowConfirm(!showConfirm)}
+          />
+        )}
+      </div>
       <label className="flex items-center gap-2" htmlFor="rememberMe">
         <input
           className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
