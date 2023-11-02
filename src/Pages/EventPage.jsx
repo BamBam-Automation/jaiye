@@ -8,6 +8,7 @@ import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import PaystackPop from "@paystack/inline-js";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useSelector } from "react-redux";
 
 const EventPage = () => {
   PageTitle("Jaiye - Book Event");
@@ -31,6 +32,7 @@ const EventPage = () => {
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
   const [eventPrice, setEventPrice] = useState(0);
+  const phone = useSelector((state) => state.user.user.phoneNumber);
 
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
@@ -97,7 +99,7 @@ const EventPage = () => {
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: email,
-      phone_number: "",
+      phone_number: phone,
       name: "",
     },
     customizations: {
