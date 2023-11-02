@@ -16,9 +16,6 @@ const SignUp = () => {
   const [agree, setAgree] = useState(false);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastName] = useState("");
-  const [phone, SetPhone] = useState("");
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -33,11 +30,8 @@ const SignUp = () => {
 
   const data = {
     username,
-    firstname,
-    lastname,
     email,
     password,
-    phoneNumber: phone,
   };
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
@@ -50,7 +44,6 @@ const SignUp = () => {
   }, 3000);
 
   const handleSubmit = () => {
-    console.log(data);
     setLoading(true);
     // Check if the password meets the regex pattern
     if (/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/.test(password)) {
@@ -73,15 +66,9 @@ const SignUp = () => {
           setAlert(!alert);
           setBgColor("red");
           setIcon(<CiWarning />);
-          setResponse(err?.data?.message || err?.message);
-          // if (
-          //   err.message === "timeout of 10000ms exceeded" ||
-          //   err.response.status === 500
-          // ) {
-          //   setResponse(err.response.data.errors);
-          // } else {
-          //   setResponse(err.data.message);
-          // }
+          setResponse(
+            err?.data?.message || err?.response?.data?.message || err?.message
+          );
         });
     } else {
       // Password is not valid
@@ -119,20 +106,6 @@ const SignUp = () => {
         onChange={handleEmailChange}
       />
       <Input
-        label={"Firstname"}
-        type={"text"}
-        id={"firstname"}
-        value={firstname}
-        onChange={(e) => setFirstname(e.target.value)}
-      />
-      <Input
-        label={"Lastname"}
-        type={"text"}
-        id={"lastname"}
-        value={lastname}
-        onChange={(e) => setLastName(e.target.value)}
-      />
-      <Input
         label={"Username"}
         type={"text"}
         id={"username"}
@@ -152,13 +125,6 @@ const SignUp = () => {
         id={"confirmPassword"}
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-      <Input
-        label={"Phone Number"}
-        type={"tel"}
-        id={"phone"}
-        value={phone}
-        onChange={(e) => SetPhone(e.target.value)}
       />
       <label className="flex items-center gap-2" htmlFor="rememberMe">
         <input
@@ -188,7 +154,7 @@ const SignUp = () => {
           agree === false ||
           password === "" ||
           confirmPassword === "" ||
-          phone === "" ||
+          // phone === "" ||
           email === ""
         }
         onClick={handleSubmit}

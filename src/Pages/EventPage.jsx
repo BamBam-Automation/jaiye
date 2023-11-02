@@ -110,6 +110,16 @@ const EventPage = () => {
   };
 
   const handleFlutterPayment = useFlutterwave(config);
+  const handleSub = () => {
+    console.log(eventPrice);
+    handleFlutterPayment({
+      callback: (response) => {
+        console.log(response);
+        closePaymentModal();
+      },
+      onClose: () => {},
+    });
+  };
 
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
@@ -277,14 +287,15 @@ const EventPage = () => {
           ))}
           <Button
             className="bg-primary"
-            onClick={() =>
-              handleFlutterPayment({
-                callback: (response) => {
-                  console.log(response);
-                  closePaymentModal();
-                },
-                onClose: () => {},
-              })
+            onClick={
+              () => handleSub()
+              // handleFlutterPayment({
+              //   callback: (response) => {
+              //     console.log(response);
+              //     closePaymentModal();
+              //   },
+              //   onClose: () => {},
+              // })
             }
           >
             Book Event
