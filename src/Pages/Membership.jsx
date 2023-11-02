@@ -58,23 +58,23 @@ const Membership = () => {
   //     });
   // }, [accessToken]);
 
-  function handleCallbackResponse(response) {
-    console.log(response.credential);
-  }
+  // function handleCallbackResponse(response) {
+  //   console.log(response.credential);
+  // }
 
-  useEffect(() => {
-    // /*** Google Script ***/
-    google.accounts.id.initialize({
-      client_id:
-        "748855953781-sg66g9o7cq4j04i3bjk0d7r3lsndm1v2.apps.googleusercontent.com",
-      callback: handleCallbackResponse,
-    });
-  }, []);
+  // useEffect(() => {
+  //   // /*** Google Script ***/
+  //   google.accounts.id.initialize({
+  //     client_id:
+  //       "748855953781-sg66g9o7cq4j04i3bjk0d7r3lsndm1v2.apps.googleusercontent.com",
+  //     callback: handleCallbackResponse,
+  //   });
+  // }, []);
 
-  const handleGoogleLogin = () => {
-    // Trigger the Google Identity Services login
-    google.accounts.id.prompt();
-  };
+  // const handleGoogleLogin = () => {
+  //   // Trigger the Google Identity Services login
+  //   google.accounts.id.prompt();
+  // };
 
   return (
     <div className="grid relative p-7 content-between h-screen">
@@ -116,7 +116,6 @@ const Membership = () => {
           variant="outlined"
           color="blue-gray"
           className="flex items-center justify-center gap-3 border border-[#8C8A93]"
-          onClick={handleGoogleLogin}
         >
           <FcGoogle className="text-2xl" />
           Sign-up with Google
