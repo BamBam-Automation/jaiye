@@ -18,6 +18,7 @@ const SignUp = () => {
   const [response, setResponse] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastName] = useState("");
+  const [phone, SetPhone] = useState("");
 
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -36,6 +37,7 @@ const SignUp = () => {
     lastname,
     email,
     password,
+    phone,
   };
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
@@ -48,6 +50,7 @@ const SignUp = () => {
   }, 3000);
 
   const handleSubmit = () => {
+    console.log(data);
     setLoading(true);
     // Check if the password meets the regex pattern
     if (/^(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[0-9]).{8,}$/.test(password)) {
@@ -150,6 +153,13 @@ const SignUp = () => {
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
+      <Input
+        label={"Phone Number"}
+        type={"tel"}
+        id={"phone"}
+        value={phone}
+        onChange={(e) => SetPhone(e.target.value)}
+      />
       <label className="flex items-center gap-2" htmlFor="rememberMe">
         <input
           className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
@@ -178,6 +188,7 @@ const SignUp = () => {
           agree === false ||
           password === "" ||
           confirmPassword === "" ||
+          phone === "" ||
           email === ""
         }
         onClick={handleSubmit}
