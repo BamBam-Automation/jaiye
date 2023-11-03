@@ -111,14 +111,76 @@ const EventPage = () => {
 
   const handleFlutterPayment = useFlutterwave(config);
   const handleSub = () => {
+    if (selectedTicketType === null) {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("Please, select date");
+      return;
+    }
+
+    const selectedTicket = ticketTypes.find(
+      (type) => type.ticketTypeId === selectedTicketType
+    );
+
+    if (selectedTicket === undefined) {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("Please, select date");
+      return;
+    }
+
+    let url = "";
+    let data = {};
+
+    switch (selectedTicket.ticketClass) {
+      case 0:
+        url = "events/book/ticket";
+        data = {
+          ticketTypeId: selectedTicketType,
+        };
+        break;
+      case 1:
+        url = "events/book/multiple-days-ticket";
+        data = {
+          ticketTypeId: selectedTicketType,
+          eventDateIds: selectedDates,
+        };
+        break;
+      case 2:
+        url = "events/book/single-day-ticket";
+        data = {
+          ticketTypeId: selectedTicketType,
+          eventDateId: selectedDates[0],
+        };
+        break;
+      // Add more cases if needed for other ticketClass values
+      default:
+        break;
+    }
     console.log(eventPrice);
-    handleFlutterPayment({
-      callback: (response) => {
-        console.log(response);
-        closePaymentModal();
-      },
-      onClose: () => {},
-    });
+    axiosInstance
+      .post(url, data)
+      .then((res) => {
+        setAlert(!alert);
+        setBgColor("green");
+        setIcon(<BsPatchCheck />);
+        setResponse(`${res.data.message}. Redirecting to payment`);
+        handleFlutterPayment({
+          callback: (response) => {
+            console.log(response);
+            closePaymentModal();
+          },
+          onClose: () => {},
+        });
+      })
+      .catch((err) => {
+        setAlert(!alert);
+        setBgColor("red");
+        setIcon(<CiWarning />);
+        setResponse(err?.data?.message || err?.message);
+      });
   };
 
   const [alert, setAlert] = useState(false);
@@ -220,7 +282,7 @@ const EventPage = () => {
   }, 3000);
 
   return (
-    <div className="p-7 grid gap-5 items-start relative">
+    <div className="p-7 grid gap-5 items-start">
       <NavBar title={summary?.name} />
       <p className="font-bold text-2xl">{summary?.description}</p>
       {alert && (
