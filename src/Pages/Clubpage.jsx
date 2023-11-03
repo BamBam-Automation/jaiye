@@ -341,7 +341,7 @@ const Clubpage = () => {
         <div className="grid gap-5">
           <h4 className="text-2xl font-bold">{summary?.name}</h4>
           <img
-            className="w-full object-cover rounded-lg h-36"
+            className="w-full object-cover rounded-lg h-full"
             src={summary?.imageUrl}
             alt="business banner"
           />
@@ -361,7 +361,8 @@ const Clubpage = () => {
               </span>
               <span className="flex">
                 <PiClockLight className="h-5 w-5 text-primary" />
-                <p>{TimeConverter(summary?.openingTime)}</p>
+                <p>{summary?.openingTime}</p>
+                {/* <p>{TimeConverter(summary?.openingTime)}</p> */}
               </span>
             </div>
             <span className="flex">
