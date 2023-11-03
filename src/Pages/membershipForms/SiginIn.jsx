@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { BsPatchCheck } from "react-icons/bs";
 import { CiWarning } from "react-icons/ci";
 import { Alert, Spinner } from "@material-tailwind/react";
+import { BiHide, BiShowAlt } from "react-icons/bi";
 
 const SiginIn = () => {
   const [username, setUsername] = useState("");
@@ -123,6 +124,10 @@ const SiginIn = () => {
         });
     }
   };
+
+  // State to show password
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <form onSubmit={handleSubmit} className="grid gap-5">
       {alert && (
@@ -147,15 +152,29 @@ const SiginIn = () => {
           setUsername(e.target.value);
         }}
       />
-      <Input
-        label={"Password"}
-        type={"password"}
-        id={"password"}
-        value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
+      <div className="relative">
+        <Input
+          label={"Password"}
+          type={showPassword ? "text" : "password"}
+          id={"password"}
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+        />
+        {!showPassword && (
+          <BiShowAlt
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+        {showPassword && (
+          <BiHide
+            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        )}
+      </div>
       <div className="flex items-center justify-between">
         <label className="flex items-center gap-2" htmlFor="rememberMe">
           <input

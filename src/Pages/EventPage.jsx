@@ -155,7 +155,6 @@ const EventPage = () => {
           eventDateId: selectedDates[0],
         };
         break;
-      // Add more cases if needed for other ticketClass values
       default:
         break;
     }
