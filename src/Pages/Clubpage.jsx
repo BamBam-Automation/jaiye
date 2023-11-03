@@ -12,12 +12,11 @@ import Tablepicker from "../components/Tablepicker";
 import BarMap from "../images/Map.svg";
 import NavBar from "../components/NavBar";
 import { useLocation, useNavigate } from "react-router-dom";
-import TimeConverter from "../components/TimeConverter";
+// import TimeConverter from "../components/TimeConverter";
 import { Map, Marker } from "pigeon-maps";
 import axiosInstance from "../utils/axios/axios";
 import { CiWarning } from "react-icons/ci";
 import PaystackPop from "@paystack/inline-js";
-import DrinkOptions from "../components/DrinkOptions";
 import DrinkPicker from "../components/DrinkPicker";
 
 const Clubpage = () => {
@@ -38,6 +37,10 @@ const Clubpage = () => {
   const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
   console.log(prevSummary);
   const summary = prevSummary?.club || location?.state?.club;
+
+  if (!summary) {
+    window.location.href = "/";
+  }
 
   const [tableTypes, setTableTypes] = useState([]);
   useEffect(() => {
@@ -72,7 +75,7 @@ const Clubpage = () => {
           lineItems: [
             {
               numberOfItems: 0,
-              drinkCategoryId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+              drinkCategoryId: "",
             },
           ],
         },
@@ -152,25 +155,63 @@ const Clubpage = () => {
 
   // Handle Table Selection:
   const [selectedTable, setSelectedTable] = useState(null);
-  const handleRadioChange = (tableId) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      orderItems: [
-        {
-          orderedTableId: tableId,
-          lineItems: prevData.orderItems[0].lineItems, // Preserve the existing lineItems
-        },
-      ],
-      tableId,
-    }));
-
-    // Update the selected table state with the tableId
-    setSelectedTable(tableId);
-
-    setTimeout(() => {
-      setTableIsOpen(false);
-    }, 1000);
+  const [drinkDropdownVisible, setDrinkDropdownVisible] = useState(false);
+  const handleShowDrinks = () => {
+    setDrinkDropdownVisible(!drinkDropdownVisible);
   };
+
+  // const handleRadioChange = (tableId) => {
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     orderItems: [
+  //       {
+  //         orderedTableId: tableId,
+  //         lineItems: prevData.orderItems[0].lineItems, // Preserve the existing lineItems
+  //       },
+  //     ],
+  //     tableId,
+  //   }));
+
+  //   // Update the selected table state with the tableId
+  //   setSelectedTable(tableId);
+  //   setTimeout(() => {
+  //     setTableIsOpen(false);
+  //   }, 1000);
+  // };
+
+  const handleRadioChange = (tableId) => {
+    // Find the selected table by matching the tableId
+    const selectedTableType = tableTypes.find((tableType) =>
+      tableType.tables.some((table) => table.id === tableId)
+    );
+
+    if (selectedTableType) {
+      const selectedTable = selectedTableType.tables.find(
+        (table) => table.id === tableId
+      );
+
+      setFormData((prevData) => ({
+        ...prevData,
+        orderItems: [
+          {
+            orderedTableId: tableId,
+            lineItems: prevData.orderItems[0].lineItems, // Preserve the existing lineItems
+          },
+        ],
+        tableId,
+      }));
+
+      // Update the selected table state with the table's drinkOptions
+      setSelectedTable(selectedTable.drinkOptions);
+      setTimeout(() => {
+        setTableIsOpen(false);
+      }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Selected Table:", selectedTable);
+  });
 
   // Sections for Accordion Component
   const sections = tableTypes.map((tableType, index) => ({
@@ -216,48 +257,60 @@ const Clubpage = () => {
               Select Table
             </Button>
           </div>
-          <div
-            className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg overflow-y-scroll grid bg-white top-5 left-0 ${
-              timeIsOpen
-                ? "transition ease-out duration-200 opacity-100 scale-100"
-                : "transition ease-in duration-200 opacity-0 scale-90"
-            }`}
-          >
-            <TimePicker
-              setTimeIsOpen={setTimeIsOpen}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          </div>
-          <div
-            className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
-              tableIsOpen
-                ? "transition ease-out duration-200 opacity-100 scale-100"
-                : "transition ease-in duration-200 opacity-0 scale-90"
-            }`}
-          >
-            <Tablepicker
-              setTableIsOpen={setTableIsOpen}
-              tables={tableType.tables}
-              formData={formData}
-              setFormData={setFormData}
-              onRadioChange={handleRadioChange}
-            />
-          </div>
-          <div>
-            <Button className="border-primary border-2 text-primary outline-none bg-transparent w-full">
+          {timeIsOpen && (
+            <div
+              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg overflow-y-scroll grid bg-white top-5 left-0 ${
+                timeIsOpen
+                  ? "transition ease-out duration-200 opacity-100 scale-100 z-20"
+                  : "transition ease-in duration-200 scale-90 z-20"
+              }`}
+            >
+              <TimePicker
+                setTimeIsOpen={setTimeIsOpen}
+                formData={formData}
+                setFormData={setFormData}
+              />
+            </div>
+          )}
+          {tableIsOpen && (
+            <div
+              className={`absolute w-1/2 h-40 rounded-lg py-3 shadow-lg top-5 right-0 bg-white overflow-y-scroll ${
+                tableIsOpen
+                  ? "transition ease-out duration-200 opacity-100 scale-100 z-20"
+                  : "transition ease-in duration-200 scale-90 z-20"
+              }`}
+            >
+              <Tablepicker
+                setTableIsOpen={setTableIsOpen}
+                tables={tableType.tables}
+                formData={formData}
+                setFormData={setFormData}
+                onRadioChange={handleRadioChange}
+              />
+            </div>
+          )}
+          <div className="">
+            <Button
+              className="border-primary border-2 text-primary outline-none bg-transparent w-full"
+              onClick={handleShowDrinks}
+            >
               Select Drinks
             </Button>
-            <DrinkPicker selectedTable={selectedTable} />
+            {drinkDropdownVisible && (
+              <div
+                className={`absolute w-full h-40 rounded-lg py-3 px-4 shadow-lg bg-white overflow-y-scroll ${
+                  drinkDropdownVisible
+                    ? "transition ease-out duration-200 opacity-100 scale-100 z-20"
+                    : "transition ease-in duration-200 scale-90 z-20"
+                }`}
+              >
+                <DrinkPicker
+                  selectedTable={selectedTable}
+                  setDrinkDropdownVisible={setDrinkDropdownVisible}
+                />
+              </div>
+            )}
           </div>
-          {/* {tableType.tables.map((table, index) => (
-            <DrinkOptions
-              key={index}
-              drinks={table.drinkOptions}
-              formData={formData}
-              setFormData={setFormData}
-            />
-          ))} */}
           <div>
             <ul>
               <li>Fast track entry</li>

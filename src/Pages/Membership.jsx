@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SignIn from "./membershipForms/SiginIn";
@@ -7,7 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../utils/axios/axios";
+// import axiosInstance from "../utils/axios/axios";
 import { Button } from "@material-tailwind/react";
 
 const Membership = () => {

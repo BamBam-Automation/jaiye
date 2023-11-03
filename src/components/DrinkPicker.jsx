@@ -1,23 +1,35 @@
-import React from "react";
+const ClubPage = ({ selectedTable, setDrinkDropdownVisible }) => {
+  // Other code ...
 
-const DrinkPicker = ({ selectedTable }) => {
+  // const handleShowDrinks = () => {
+  //   setDrinkDropdownVisible(!drinkDropdownVisible);
+  // };
+
+  // Handle selecting a drink option and close the dropdown
+  const handleSelectDrink = (drink) => {
+    // Add your logic to handle the selected drink
+    // ...
+
+    // Close the dropdown
+    setDrinkDropdownVisible(false);
+  };
+
   return (
-    <div className="space-y-3">
-      <h4 className="text-2xl font-bold">Select Drinks</h4>
-      {selectedTable &&
-        selectedTable.drinkOptions &&
-        selectedTable.drinkOptions.length > 0 && (
-          <div>
-            <p>Drinks available for {selectedTable.name}:</p>
-            <ul>
-              {selectedTable.drinkOptions.map((drink, index) => (
-                <li key={index}>{drink.name}</li>
-              ))}
-            </ul>
-          </div>
+    <div>
+      <p>Available Drinks:</p>
+      <ul>
+        {selectedTable && selectedTable.length > 0 ? (
+          selectedTable.map((drink, index) => (
+            <li key={index} onClick={() => handleSelectDrink(drink)}>
+              {drink.drinkCategoryName}
+            </li>
+          ))
+        ) : (
+          <li>No drinks available, please select a table</li>
         )}
+      </ul>
     </div>
   );
 };
 
-export default DrinkPicker;
+export default ClubPage;
