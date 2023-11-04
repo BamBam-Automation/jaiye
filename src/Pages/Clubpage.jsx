@@ -101,49 +101,49 @@ const Clubpage = () => {
     } else if (token) {
       console.log(formData);
 
-      //   axiosInstance
-      //     .post("Order", formData)
-      //     .then((res) => {
-      //       console.log(res);
-      //       // const paystack = new PaystackPop();
-      //       // paystack.newTransaction({
-      //       //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
-      //       //   amount: "500",
-      //       //   email: "a@a.com",
-      //       //   firstname: "testing",
-      //       //   lastname: "more",
-      //       //   onSuccess(transaction) {
-      //       //     console.log(transaction);
-      //       //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
-      //       //     setAlert(!alert);
-      //       //     setBgColor("green");
-      //       //     setResponse(message);
-      //       //     setIcon(<BsPatchCheck />);
-      //       //   },
-      //       //   onCancel() {
-      //       //     setAlert(!alert);
-      //       //     setResponse("Request failed, please try again");
-      //       //     setBgColor("red");
-      //       //     setIcon(<CiWarning />);
-      //       //   },
-      //       // });
-      //       setAlert(!alert);
-      //       setBgColor("green");
-      //       setResponse(res.data.message);
-      //       setIcon(<BsPatchCheck />);
-      //     })
-      //     .catch((err) => {
-      //       setAlert(!alert);
-      //       setResponse("Request failed, please try again");
-      //       setBgColor("red");
-      //       setIcon(<CiWarning />);
-      //     });
-      // } else {
-      //   const formDataJSON = JSON.stringify(formData);
-      //   sessionStorage.setItem("prevFormData", formDataJSON);
-      //   sessionStorage.setItem("previousPage", window.location.href);
-      //   sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
-      //   navigate("/join");
+      axiosInstance
+        .post("order", formData)
+        .then((res) => {
+          console.log(res);
+          // const paystack = new PaystackPop();
+          // paystack.newTransaction({
+          //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+          //   amount: "500",
+          //   email: "a@a.com",
+          //   firstname: "testing",
+          //   lastname: "more",
+          //   onSuccess(transaction) {
+          //     console.log(transaction);
+          //     let message = `Payment Complete!!! Reference ${transaction.reference}`;
+          //     setAlert(!alert);
+          //     setBgColor("green");
+          //     setResponse(message);
+          //     setIcon(<BsPatchCheck />);
+          //   },
+          //   onCancel() {
+          //     setAlert(!alert);
+          //     setResponse("Request failed, please try again");
+          //     setBgColor("red");
+          //     setIcon(<CiWarning />);
+          //   },
+          // });
+          setAlert(!alert);
+          setBgColor("green");
+          setResponse(res.data.message);
+          setIcon(<BsPatchCheck />);
+        })
+        .catch((err) => {
+          setAlert(!alert);
+          setResponse("Request failed, please try again");
+          setBgColor("red");
+          setIcon(<CiWarning />);
+        });
+    } else {
+      const formDataJSON = JSON.stringify(formData);
+      sessionStorage.setItem("prevFormData", formDataJSON);
+      sessionStorage.setItem("previousPage", window.location.href);
+      sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
+      navigate("/join");
     }
   };
 
@@ -159,6 +159,9 @@ const Clubpage = () => {
   const handleShowDrinks = () => {
     setDrinkDropdownVisible(!drinkDropdownVisible);
   };
+
+  const orderIndex = 0; // Provide the appropriate index or default value
+  const lineItemIndex = 0; // Provide the appropriate index or default value
 
   // const handleRadioChange = (tableId) => {
   //   setFormData((prevData) => ({
@@ -208,10 +211,6 @@ const Clubpage = () => {
       }, 1000);
     }
   };
-
-  useEffect(() => {
-    console.log("Selected Table:", selectedTable);
-  });
 
   // Sections for Accordion Component
   const sections = tableTypes.map((tableType, index) => ({
@@ -300,13 +299,18 @@ const Clubpage = () => {
               <div
                 className={`absolute w-full h-40 rounded-lg py-3 px-4 shadow-lg bg-white overflow-y-scroll ${
                   drinkDropdownVisible
-                    ? "transition ease-out duration-200 opacity-100 scale-100 z-20"
-                    : "transition ease-in duration-200 scale-90 z-20"
+                    ? "transition ease-out duration-200 opacity-100 scale-100"
+                    : "transition ease-in duration-200 scale-90"
                 }`}
               >
                 <DrinkPicker
                   selectedTable={selectedTable}
                   setDrinkDropdownVisible={setDrinkDropdownVisible}
+                  formData={formData}
+                  setFormData={setFormData}
+                  orderIndex={orderIndex}
+                  lineItemIndex={lineItemIndex}
+                  onDrinkSelect={handleShowDrinks}
                 />
               </div>
             )}
@@ -389,7 +393,7 @@ const Clubpage = () => {
   PageTitle("Jaiye - Book Table");
   return (
     <div className="p-7 grid gap-5 h-screen items-start">
-      <div className="grid gap-3 items-start">
+      <div className="grid gap-3 items-start pb-7">
         <NavBar title={"Book Table"} />
         <div className="grid gap-5">
           <h4 className="text-2xl font-bold">{summary?.name}</h4>
@@ -425,23 +429,23 @@ const Clubpage = () => {
           </div>
         </div>
         {activeStep()}
+        {alert && (
+          <Alert
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 100 },
+            }}
+            color={bgcolor}
+            icon={icon}
+            className="absolute w-11/12 right-5 h-12 top-8"
+          >
+            {response}
+          </Alert>
+        )}
+        <Button className="bg-primary mt-7" onClick={handleSubmit}>
+          {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>
+        </Button>
       </div>
-      {alert && (
-        <Alert
-          animate={{
-            mount: { y: 0 },
-            unmount: { y: 100 },
-          }}
-          color={bgcolor}
-          icon={icon}
-          className="absolute w-11/12 right-5 h-12 top-8"
-        >
-          {response}
-        </Alert>
-      )}
-      <Button className="!self-end bg-primary !mb-40" onClick={handleSubmit}>
-        {steps === 0 ? "Select Table" : "Book Table"} <span>&#8594;</span>
-      </Button>
     </div>
   );
 };

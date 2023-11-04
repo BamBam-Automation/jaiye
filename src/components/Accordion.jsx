@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import DrinkOptions from "./DrinkOptions";
 
 const Accordion = ({
   formData,
@@ -42,15 +41,6 @@ const Accordion = ({
           {activeIndex === index && (
             <div className="accordion-content">{section.content}</div>
           )}
-
-          {section.table &&
-            section.table.drinkOptions && ( // Check if table and drinkOptions exist
-              <DrinkOptions
-                drinks={section.table.drinkOptions}
-                formData={formData}
-                setFormData={setFormData}
-              />
-            )}
         </div>
       ))}
     </div>

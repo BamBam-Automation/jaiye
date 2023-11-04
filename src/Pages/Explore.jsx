@@ -62,8 +62,7 @@ const Explore = () => {
         const response = await axiosInstance.get(
           `/establishments?pageIndex=${pageIndex}&pageSize=${pageSize}`
         );
-        const newClubs = response.data;
-        // console.log(newClubs);
+        const newClubs = response.data.data;
         // Append the new clubs to the existing list
         setClubs((prevClubs) => [...prevClubs, ...newClubs]);
       } catch (error) {
