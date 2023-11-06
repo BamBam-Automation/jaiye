@@ -454,7 +454,7 @@ const Explore = () => {
       )}
       <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
       <div className="mt-5 grid gap-5">
-        <p className="text-primary font-bold text-2xl">Special Events</p>
+        <p className="text-primary font-bold text-2xl">Happening Events</p>
         <Carousel
           loop={true}
           transition={{ duration: 2 }}
@@ -469,7 +469,7 @@ const Explore = () => {
             />
           ))}
         </Carousel>
-        <p className="text-primary font-bold text-2xl">Event Places</p>
+        <p className="text-primary font-bold text-2xl">Clubs Around You</p>
         {filteredClubs.map((club) => (
           <ClubCard
             key={club.id}
