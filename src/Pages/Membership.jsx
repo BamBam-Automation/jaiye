@@ -12,14 +12,16 @@ import { Button } from "@material-tailwind/react";
 
 const Membership = () => {
   // State for Visible Form
-  const [signUpForm, setSignUpForm] = useState(false);
+  const [signUpForm, setSignUpForm] = useState(0);
 
   // Handle Visible Page Title
   const title = () => {
-    if (!signUpForm) {
+    if (signUpForm === 0) {
       return "Jaiye - Sign In";
-    } else {
+    } else if (signUpForm === 1) {
       return "Jaiye - Sign Up";
+    } else {
+      return "Jaiye - Forgot Password";
     }
   };
 
@@ -76,6 +78,54 @@ const Membership = () => {
   //   google.accounts.id.prompt();
   // };
 
+  const pageHeader = () => {
+    if (signUpForm === 0) {
+      return "Login";
+    } else if (signUpForm === 1) {
+      return "Sign Up";
+    } else {
+      return "Forgot Password";
+    }
+  };
+
+  const visibleForm = () => {
+    if (signUpForm === 0) {
+      return <SignIn setSignUpForm={setSignUpForm} />;
+    } else if (signUpForm === 1) {
+      return <SignUp />;
+    } else {
+      return "Forgot Password";
+    }
+  };
+
+  const pageTitles = () => {
+    if (signUpForm === 0) {
+      return (
+        <>
+          Welcome
+          <br />
+          Back!
+        </>
+      );
+    } else if (signUpForm === 1) {
+      return (
+        <>
+          Create
+          <br />
+          Account
+        </>
+      );
+    } else {
+      return (
+        <>
+          Forgot
+          <br />
+          Password
+        </>
+      );
+    }
+  };
+
   return (
     <div className="grid relative p-7 content-between h-screen">
       <div className="flex gap-6 items-center">
@@ -83,28 +133,12 @@ const Membership = () => {
           className="h-5 w-5 text-primary"
           onClick={() => navigate(-1)}
         />
-        <p className="font-medium">{!signUpForm ? "Login" : "Sign Up"}</p>
+        {/* <p className="font-medium">{!signUpForm ? "Login" : "Sign Up"}</p> */}
+        <p className="font-medium">{pageHeader()}</p>
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
-      <h3 className="mt-9 text-primary font-bold text-3xl">
-        {!signUpForm ? (
-          <>
-            Welcome
-            <br />
-            Back!
-          </>
-        ) : (
-          <>
-            Create
-            <br />
-            Account
-          </>
-        )}
-      </h3>
-      <>
-        {!signUpForm && <SignIn />}
-        {signUpForm && <SignUp />}
-      </>
+      <h3 className="mt-9 text-primary font-bold text-3xl">{pageTitles()}</h3>
+      <>{visibleForm()}</>
       <div className="flex items-center gap-2">
         <span className="h-[1px] bg-secondary w-full"></span>
         <p>or</p>
@@ -134,7 +168,11 @@ const Membership = () => {
           <span
             className="text-primary cursor-pointer"
             onClick={() => {
-              setSignUpForm(!signUpForm);
+              if (signUpForm === 0) {
+                setSignUpForm(1);
+              } else {
+                setSignUpForm(0);
+              }
             }}
           >
             {!signUpForm ? "Sign Up" : "Sign In"}

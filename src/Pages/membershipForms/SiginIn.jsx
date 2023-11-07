@@ -12,7 +12,7 @@ import { CiWarning } from "react-icons/ci";
 import { Alert, Spinner } from "@material-tailwind/react";
 import { BiHide, BiShowAlt } from "react-icons/bi";
 
-const SiginIn = () => {
+const SiginIn = ({ setSignUpForm }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -119,7 +119,7 @@ const SiginIn = () => {
             setAlert(!alert);
             setBgColor("red");
             setIcon(<CiWarning />);
-            setResponse(err?.response?.data?.errors || err?.message);
+            setResponse(err?.response?.data?.Message || err?.message);
           }
         });
     }
@@ -189,7 +189,9 @@ const SiginIn = () => {
           />
           Remember Me
         </label>
-        <Link className="text-primary">Forgot Password</Link>
+        <p className="text-primary" onClick={() => setSignUpForm(2)}>
+          Forgot Password
+        </p>
       </div>
       <PrimaryButton
         onClick={handleSubmit}

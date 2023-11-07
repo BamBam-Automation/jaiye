@@ -91,102 +91,104 @@ const EventPage = () => {
   };
 
   // Flutterwave Payment Option:
-  const config = {
-    public_key: "FLWPUBK_TEST-4822092bf13ce6312ecbab5ab5f56d40-X",
-    tx_ref: Date.now(),
-    amount: eventPrice,
-    currency: "NGN",
-    payment_options: "card,mobilemoney,ussd",
-    customer: {
-      email: email,
-      phone_number: phone,
-      name: "",
-    },
-    customizations: {
-      title: "my Payment Title",
-      description: "Payment for items in cart",
-      logo: "https://app.jaiye.ng/static/media/Jaiye.6fde14b11dc8c7148e4b168a5f732b56.svg",
-    },
-  };
+  // const config = {
+  //   public_key: "FLWPUBK_TEST-4822092bf13ce6312ecbab5ab5f56d40-X",
+  //   tx_ref: Date.now(),
+  //   amount: eventPrice,
+  //   currency: "NGN",
+  //   payment_options: "card,mobilemoney,ussd",
+  //   customer: {
+  //     email: email,
+  //     phone_number: phone,
+  //     name: "",
+  //   },
+  //   customizations: {
+  //     title: "my Payment Title",
+  //     description: "Payment for items in cart",
+  //     logo: "https://app.jaiye.ng/static/media/Jaiye.6fde14b11dc8c7148e4b168a5f732b56.svg",
+  //   },
+  // };
 
-  const handleFlutterPayment = useFlutterwave(config);
-  const handleSub = () => {
-    if (selectedTicketType === null) {
-      setAlert(!alert);
-      setBgColor("red");
-      setIcon(<CiWarning />);
-      setResponse("Please, select date");
-      return;
-    }
+  // const handleFlutterPayment = useFlutterwave(config);
+  // const handleSub = () => {
+  //   if (selectedTicketType === null) {
+  //     setAlert(!alert);
+  //     setBgColor("red");
+  //     setIcon(<CiWarning />);
+  //     setResponse("Please, select date");
+  //     return;
+  //   }
 
-    const selectedTicket = ticketTypes.find(
-      (type) => type.ticketTypeId === selectedTicketType
-    );
+  //   const selectedTicket = ticketTypes.find(
+  //     (type) => type.ticketTypeId === selectedTicketType
+  //   );
 
-    if (selectedTicket === undefined) {
-      setAlert(!alert);
-      setBgColor("red");
-      setIcon(<CiWarning />);
-      setResponse("Please, select date");
-      return;
-    }
+  //   if (selectedTicket === undefined) {
+  //     setAlert(!alert);
+  //     setBgColor("red");
+  //     setIcon(<CiWarning />);
+  //     setResponse("Please, select date");
+  //     return;
+  //   }
 
-    let url = "";
-    let data = {};
+  //   let url = "";
+  //   let data = {};
 
-    switch (selectedTicket.ticketClass) {
-      case 0:
-        url = "events/book/ticket";
-        data = {
-          ticketTypeId: selectedTicketType,
-        };
-        break;
-      case 1:
-        url = "events/book/multiple-days-ticket";
-        data = {
-          ticketTypeId: selectedTicketType,
-          eventDateIds: selectedDates,
-        };
-        break;
-      case 2:
-        url = "events/book/single-day-ticket";
-        data = {
-          ticketTypeId: selectedTicketType,
-          eventDateId: selectedDates[0],
-        };
-        break;
-      default:
-        break;
-    }
-    console.log(eventPrice);
-    axiosInstance
-      .post(url, data)
-      .then((res) => {
-        setAlert(!alert);
-        setBgColor("green");
-        setIcon(<BsPatchCheck />);
-        setResponse(`${res.data.message}. Redirecting to payment`);
-        handleFlutterPayment({
-          callback: (response) => {
-            console.log(response);
-            closePaymentModal();
-          },
-          onClose: () => {},
-        });
-      })
-      .catch((err) => {
-        setAlert(!alert);
-        setBgColor("red");
-        setIcon(<CiWarning />);
-        setResponse(err?.data?.message || err?.message);
-      });
-  };
+  //   switch (selectedTicket.ticketClass) {
+  //     case 0:
+  //       url = "events/book/ticket";
+  //       data = {
+  //         ticketTypeId: selectedTicketType,
+  //       };
+  //       break;
+  //     case 1:
+  //       url = "events/book/multiple-days-ticket";
+  //       data = {
+  //         ticketTypeId: selectedTicketType,
+  //         eventDateIds: selectedDates,
+  //       };
+  //       break;
+  //     case 2:
+  //       url = "events/book/single-day-ticket";
+  //       data = {
+  //         ticketTypeId: selectedTicketType,
+  //         eventDateId: selectedDates[0],
+  //       };
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   console.log(eventPrice);
+  //   axiosInstance
+  //     .post(url, data)
+  //     .then((res) => {
+  //       setAlert(!alert);
+  //       setBgColor("green");
+  //       setIcon(<BsPatchCheck />);
+  //       setResponse(`${res.data.message}. Redirecting to payment`);
+  //       handleFlutterPayment({
+  //         callback: (response) => {
+  //           console.log(response);
+  //           closePaymentModal();
+  //         },
+  //         onClose: () => {},
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       setAlert(!alert);
+  //       setBgColor("red");
+  //       setIcon(<CiWarning />);
+  //       setResponse(err?.data?.message || err?.message);
+  //     });
+  // };
 
   const [alert, setAlert] = useState(false);
   const [bgColor, setBgColor] = useState("");
   const [icon, setIcon] = useState("");
   const [response, setResponse] = useState("");
-  const handleBooking = () => {
+
+  // Paystack Payment Method
+  const handlePayStackBooking = () => {
     if (selectedTicketType === null) {
       setAlert(!alert);
       setBgColor("red");
@@ -250,6 +252,10 @@ const EventPage = () => {
           email: email,
           firstname: "",
           lastname: "",
+          metadata: {
+            tickedtId: selectedTicketType,
+            paymentKind: "EventTicket",
+          },
           onSuccess(transaction) {
             console.log(transaction);
             let message = `Payment Completed with reference number: ${transaction.reference}`;
@@ -349,7 +355,7 @@ const EventPage = () => {
           <Button
             className="bg-primary"
             onClick={
-              () => handleSub()
+              () => handlePayStackBooking()
               // handleFlutterPayment({
               //   callback: (response) => {
               //     console.log(response);
