@@ -40,6 +40,12 @@ const ForgotPassword = () => {
       });
   };
 
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
+
   return (
     <form className="grid gap-5">
       {alert && (
