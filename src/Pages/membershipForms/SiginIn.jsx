@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../../components/Input";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../../components/PrimaryButton";
 import axiosInstance from "../../utils/axios/axios";
 import { useState } from "react";

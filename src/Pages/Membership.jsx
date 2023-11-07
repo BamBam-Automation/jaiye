@@ -9,6 +9,7 @@ import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
 // import axiosInstance from "../utils/axios/axios";
 import { Button } from "@material-tailwind/react";
+import ForgotPassword from "./membershipForms/ForgotPassword";
 
 const Membership = () => {
   // State for Visible Form
@@ -94,7 +95,7 @@ const Membership = () => {
     } else if (signUpForm === 1) {
       return <SignUp />;
     } else {
-      return "Forgot Password";
+      return <ForgotPassword />;
     }
   };
 
