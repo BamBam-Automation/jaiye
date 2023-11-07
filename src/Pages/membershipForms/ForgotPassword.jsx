@@ -19,25 +19,37 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
-    console.log(email);
-    setLoading(true);
-    axiosInstance
-      .post(`forgotpassword?email=${email}&callbackUrl=/join`)
-      .then((res) => {
-        console.log(res);
-        setAlert(!alert);
-        setBgColor("green");
-        setIcon(<BsPatchCheck />);
-        setResponse("Request Successful! Check your mail");
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setAlert(!alert);
-        setBgColor("red");
-        setIcon(<CiWarning />);
-        setResponse("Request Failed. Try again!");
-      });
+    const data = {
+      email: email,
+      callbackUrl: "/join",
+    };
+    if (email !== "") {
+      setLoading(true);
+      axiosInstance
+        .post(`forgotpassword`, data)
+        .then((res) => {
+          console.log(res);
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
+          setResponse("Request Successful! Check your mail");
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlert(!alert);
+          setBgColor("red");
+          setIcon(<CiWarning />);
+          setLoading(false);
+          setResponse("Request Failed. Try again!");
+        });
+    } else if (email === "") {
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setLoading(false);
+      setResponse("Enter you email address");
+    }
   };
 
   setTimeout(() => {
