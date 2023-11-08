@@ -13,6 +13,7 @@ import History from "./Pages/History";
 import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import EventPage from "./Pages/EventPage";
+import AllEvents from "./Pages/AllEvents";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -42,6 +43,10 @@ function App() {
           <Route
             path="ticket"
             element={isAuthenticated ? <Ticket /> : <Membership />}
+          />
+          <Route
+            path="event-booking"
+            element={isAuthenticated ? <AllEvents /> : <Membership />}
           />
           <Route
             path="scan"

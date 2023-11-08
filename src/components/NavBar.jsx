@@ -11,6 +11,7 @@ import { GoHistory } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
+import { CiBookmarkCheck } from "react-icons/ci";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
@@ -107,6 +108,10 @@ const NavBar = (props) => {
             <NavigationItem link={"/history"}>
               <GoHistory className="h-6 w-6 p-[2px]" />
               <p>History</p>
+            </NavigationItem>
+            <NavigationItem link={"/event-booking"}>
+              <CiBookmarkCheck className="h-6 w-6 p-[2px]" />
+              <p>Booked Events</p>
             </NavigationItem>
             <NavigationItem link={"/profile"}>
               <FaUser className="h-6 w-6 p-[2px]" />

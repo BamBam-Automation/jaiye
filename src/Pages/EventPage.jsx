@@ -272,6 +272,9 @@ const EventPage = () => {
           },
         });
         setLoading(false);
+        setTimeout(() => {
+          navigate("/event-booking");
+        }, 3000);
       })
       .catch((err) => {
         setAlert(!alert);
