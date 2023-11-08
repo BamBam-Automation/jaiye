@@ -6,14 +6,29 @@ import { FcGoogle } from "react-icons/fc";
 // import { BiLogoApple } from "react-icons/bi";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 // import axiosInstance from "../utils/axios/axios";
 import { Button } from "@material-tailwind/react";
 import ForgotPassword from "./membershipForms/ForgotPassword";
+import { useEffect } from "react";
 
 const Membership = () => {
   // State for Visible Form
   const [signUpForm, setSignUpForm] = useState(0);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  let userToken = searchParams.toString();
+  userToken = decodeURIComponent(userToken);
+
+  useEffect(() => {
+    if (userToken) {
+      setSignUpForm(2);
+    } else {
+      setSignUpForm(0);
+    }
+  }, [userToken]);
+
+  const navigate = useNavigate();
 
   // Handle Visible Page Title
   const title = () => {
@@ -28,8 +43,6 @@ const Membership = () => {
 
   // Page Title Handler
   PageTitle(title());
-
-  const navigate = useNavigate();
 
   // const responseGoogle = (response) => {
   //   console.log(response); // Handle the Google Sign-In response here
@@ -95,7 +108,7 @@ const Membership = () => {
     } else if (signUpForm === 1) {
       return <SignUp />;
     } else {
-      return <ForgotPassword />;
+      return <ForgotPassword userToken={userToken} />;
     }
   };
 

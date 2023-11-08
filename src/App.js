@@ -17,27 +17,15 @@ import EventPage from "./Pages/EventPage";
 function App() {
   // Access the isAuthenticated state from Redux store
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-
   return (
     <div className="bg-[#F9F9F9] text-tertiary min-h-screen overflow-y-scroll">
       <BrowserRouter>
         <Routes>
           <Route path="join" element={<Membership />} />
-          {/* <Route path="/" element={<Welcome />} />
-          <Route
-            path="location"
-            element={<Location />}
-            // element={isAuthenticated ? <Location /> : <Membership />}
-          /> */}
 
-          <Route
-            path="/"
-            element={<Explore />}
-            // element={isAuthenticated ? <Explore /> : <Membership />}
-          />
+          <Route path="/" element={<Explore />} />
           <Route
             path="events"
-            // element={<EventPage />}
             element={isAuthenticated ? <EventPage /> : <Membership />}
           />
 
