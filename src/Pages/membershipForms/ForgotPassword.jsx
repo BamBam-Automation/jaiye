@@ -69,7 +69,6 @@ const ForgotPassword = ({ userToken }) => {
         axiosInstance
           .post(url, data)
           .then((res) => {
-            console.log(res);
             setAlert(!alert);
             setBgColor("green");
             setIcon(<BsPatchCheck />);
@@ -81,7 +80,6 @@ const ForgotPassword = ({ userToken }) => {
             }, 2000);
           })
           .catch((err) => {
-            console.log(err);
             setAlert(!alert);
             setBgColor("red");
             setIcon(<CiWarning />);
@@ -102,7 +100,6 @@ const ForgotPassword = ({ userToken }) => {
         axiosInstance
           .post(url, data)
           .then((res) => {
-            console.log(res);
             setAlert(!alert);
             setBgColor("green");
             setIcon(<BsPatchCheck />);
@@ -110,7 +107,6 @@ const ForgotPassword = ({ userToken }) => {
             setLoading(false);
           })
           .catch((err) => {
-            console.log(err);
             setAlert(!alert);
             setBgColor("red");
             setIcon(<CiWarning />);

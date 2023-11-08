@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { Alert, Button, Carousel } from "@material-tailwind/react";
+import { Alert, Button, Carousel, Spinner } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import PaystackPop from "@paystack/inline-js";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
-import { useSelector } from "react-redux";
+import PrimaryButton from "../components/PrimaryButton";
 
 const EventPage = () => {
   PageTitle("Jaiye - Book Event");
@@ -18,6 +18,7 @@ const EventPage = () => {
   const summary = location?.state?.event;
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,7 +33,6 @@ const EventPage = () => {
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
   const [eventPrice, setEventPrice] = useState(0);
-  const phone = useSelector((state) => state.user.user.phoneNumber);
 
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
@@ -237,7 +237,7 @@ const EventPage = () => {
       default:
         break;
     }
-
+    setLoading(true);
     axiosInstance
       .post(url, data)
       .then((res) => {
@@ -271,12 +271,14 @@ const EventPage = () => {
             setIcon(<CiWarning />);
           },
         });
+        setLoading(false);
       })
       .catch((err) => {
         setAlert(!alert);
         setBgColor("red");
         setIcon(<CiWarning />);
         setResponse(err?.data?.message || err?.message);
+        setLoading(false);
       });
   };
 
@@ -352,7 +354,7 @@ const EventPage = () => {
               )}
             </label>
           ))}
-          <Button
+          {/* <Button
             className="bg-primary"
             onClick={
               () => handlePayStackBooking()
@@ -365,8 +367,12 @@ const EventPage = () => {
               // })
             }
           >
-            Book Event
-          </Button>
+            {loading ? <Spinner color="pink" /> : "Book Event"}
+          </Button> */}
+          <PrimaryButton
+            onClick={handlePayStackBooking}
+            text={loading ? <Spinner color="pink" /> : "Book Event"}
+          />
         </div>
       </div>
     </div>
