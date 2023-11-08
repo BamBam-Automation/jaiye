@@ -33,28 +33,55 @@ const EventPage = () => {
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
   const [eventPrice, setEventPrice] = useState(0);
+  const [ticketName, setTicketName] = useState("");
 
+  // const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
+  //   setSelectedTicketType((prevType) => {
+  //     if (prevType !== ticketTypeId) {
+  //       let newEventPrice = 0; // Initialize eventPrice to 0
+  //       const selectedTicket = ticketTypes.find(
+  //         (type) => type.ticketTypeId === ticketTypeId
+  //       );
+
+  //       if (selectedTicket) {
+  //         newEventPrice = selectedTicket.price;
+  //       }
+
+  //       if (ticketClass === 0) {
+  //         // If ticketClass is 0, select all dates
+  //         setSelectedDates([...eventDates.map((date) => date.eventDateId)]);
+  //       } else {
+  //         // For other ticketClasses, clear selections
+  //         setSelectedDates([]);
+  //       }
+
+  //       // Set the new eventPrice
+  //       setEventPrice(newEventPrice);
+  //     }
+  //     return ticketTypeId;
+  //   });
+  // };
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
       if (prevType !== ticketTypeId) {
-        let newEventPrice = 0; // Initialize eventPrice to 0
+        let newEventPrice = 0;
         const selectedTicket = ticketTypes.find(
           (type) => type.ticketTypeId === ticketTypeId
         );
 
         if (selectedTicket) {
           newEventPrice = selectedTicket.price;
+          setTicketName(selectedTicket.name); // Set the ticket name
+        } else {
+          setTicketName(""); // If selectedTicket is not found, reset the ticketName
         }
 
         if (ticketClass === 0) {
-          // If ticketClass is 0, select all dates
           setSelectedDates([...eventDates.map((date) => date.eventDateId)]);
         } else {
-          // For other ticketClasses, clear selections
           setSelectedDates([]);
         }
 
-        // Set the new eventPrice
         setEventPrice(newEventPrice);
       }
       return ticketTypeId;
@@ -263,6 +290,16 @@ const EventPage = () => {
             setBgColor("green");
             setResponse(message);
             setIcon(<BsPatchCheck />);
+            setLoading(false);
+            setTimeout(() => {
+              navigate("/event-booking", {
+                state: {
+                  event: ticketName,
+                  details: transaction.reference,
+                  amount: eventPrice,
+                },
+              });
+            }, 3000);
           },
           onCancel() {
             setAlert(!alert);
@@ -271,10 +308,6 @@ const EventPage = () => {
             setIcon(<CiWarning />);
           },
         });
-        setLoading(false);
-        setTimeout(() => {
-          navigate("/event-booking");
-        }, 3000);
       })
       .catch((err) => {
         setAlert(!alert);

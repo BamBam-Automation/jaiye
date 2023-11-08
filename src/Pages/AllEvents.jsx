@@ -4,39 +4,41 @@ import axiosInstance from "../utils/axios/axios";
 import NavBar from "../components/NavBar";
 import HistoryCard from "../components/HistoryCard";
 import PageTitle from "../utils/PageTitle";
+import { useLocation } from "react-router-dom";
 
 const AllEvents = () => {
-  PageTitle("Jaiye - All Booked Events");
+  PageTitle("Jaiye - Recently Booked Event");
 
-  const [pageIndex, setPageIndex] = useState(1);
-  const pageSize = 10;
-  const [events, setEvents] = useState([]);
+  const location = useLocation();
+  console.log(location);
+  const summary = location?.state;
+  const user = sessionStorage.getItem("username");
 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axiosInstance.get(
-          `/events/bookings?pageIndex=${pageIndex}&pageSize=${pageSize}`
-        );
-        const newEvents = response.data.data;
-        console.log(newEvents);
-        // Append the new clubs to the existing list
-        setEvents((prevEvents) => [...prevEvents, ...newEvents]);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchEvents();
-  }, [pageIndex]);
-
-  const moreHistory = () => {
-    setPageIndex(pageIndex + 1);
-  };
   return (
     <div className="p-7 grid gap-5 items-start">
-      <NavBar title={"History"} />
+      <NavBar title={"Booked Event Summary"} />
       <div className="mt-10 grid gap-5">
-        {events.length === 0 ? (
+        <div className="bg-primary/10 p-5 rounded-lg shadow-2xl grid gap-3">
+          <div>
+            <p>Booked By:</p>
+            <p className="text-primary font-bold text-2xl">{user}</p>
+          </div>
+          <div>
+            <p className="text-primary font-semibold text-xl">Ticket Type</p>
+            <p>{summary?.event}</p>
+          </div>
+          <div>
+            <p className="text-primary font-semibold text-xl">
+              Payment Transaction Reference
+            </p>
+            <p>{summary?.details}</p>
+          </div>
+          <div>
+            <p className="text-primary font-semibold text-xl">Ticket Price</p>
+            <p>{summary?.amount}</p>
+          </div>
+        </div>
+        {/* {events.length === 0 ? (
           <p className="mx-auto text-center text-2xl font-semibold text-primary">
             You have no active reservations
           </p>
@@ -52,7 +54,7 @@ const AllEvents = () => {
               //   price={event.eventPrice}
             />
           ))
-        )}
+        )} */}
       </div>
     </div>
   );

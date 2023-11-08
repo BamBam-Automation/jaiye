@@ -2,7 +2,7 @@ import { Drawer, IconButton } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { FiMenu, FiPower } from "react-icons/fi";
 import Jaiye from "../images/Jaiye.svg";
-import Profile from "../images/Profile.svg";
+// import Profile from "../images/Profile.svg";
 import { IoIosArrowBack, IoIosHome } from "react-icons/io";
 import NavigationItem from "./NavigationItem";
 import { FaCompass, FaUser } from "react-icons/fa";
@@ -11,7 +11,7 @@ import { GoHistory } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
-import { CiBookmarkCheck } from "react-icons/ci";
+// import { CiBookmarkCheck } from "react-icons/ci";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
@@ -82,11 +82,11 @@ const NavBar = (props) => {
           </div>
           {token ? (
             <div className="flex items-center gap-3">
-              <img
+              {/* <img
                 className="h-10 w-10 rounded-full object-contain"
                 src={Profile}
                 alt="profile"
-              />
+              /> */}
               <h4 className="font-bold text-xl text-primary">{username}</h4>
             </div>
           ) : (
@@ -109,10 +109,10 @@ const NavBar = (props) => {
               <GoHistory className="h-6 w-6 p-[2px]" />
               <p>History</p>
             </NavigationItem>
-            <NavigationItem link={"/event-booking"}>
+            {/* <NavigationItem link={"/event-booking"}>
               <CiBookmarkCheck className="h-6 w-6 p-[2px]" />
               <p>Booked Events</p>
-            </NavigationItem>
+            </NavigationItem> */}
             <NavigationItem link={"/profile"}>
               <FaUser className="h-6 w-6 p-[2px]" />
               <p>Profile</p>
