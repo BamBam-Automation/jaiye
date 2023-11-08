@@ -3,8 +3,11 @@ import { useState } from "react";
 import axiosInstance from "../utils/axios/axios";
 import NavBar from "../components/NavBar";
 import HistoryCard from "../components/HistoryCard";
+import PageTitle from "../utils/PageTitle";
 
 const AllEvents = () => {
+  PageTitle("Jaiye - All Booked Events");
+
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 10;
   const [events, setEvents] = useState([]);

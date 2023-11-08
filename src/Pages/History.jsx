@@ -6,8 +6,10 @@ import axiosInstance from "../utils/axios/axios";
 import { useState } from "react";
 import DateConverter from "../components/DateConverter";
 import TimeConverter from "../components/TimeConverter";
+import PageTitle from "../utils/PageTitle";
 
 const History = () => {
+  PageTitle("Jaiye - All Booked Event Centers");
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 10;
   const [events, setEvents] = useState([]);
