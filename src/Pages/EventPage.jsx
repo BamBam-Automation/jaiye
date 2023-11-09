@@ -7,15 +7,20 @@ import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
 import PageTitle from "../utils/PageTitle";
 import PaystackPop from "@paystack/inline-js";
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+// import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import PrimaryButton from "../components/PrimaryButton";
+import { useSelector } from "react-redux";
+import Input from "../components/Input";
 
 const EventPage = () => {
   PageTitle("Jaiye - Book Event");
 
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+
   const email = sessionStorage.getItem("usermail");
+  const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
   const location = useLocation();
-  const summary = location?.state?.event;
+  const summary = location?.state?.event || prevSummary?.event;
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
   const [loading, setLoading] = useState(false);
@@ -34,6 +39,7 @@ const EventPage = () => {
   const [selectedDates, setSelectedDates] = useState([]);
   const [eventPrice, setEventPrice] = useState(0);
   const [ticketName, setTicketName] = useState("");
+  const [code, setCode] = useState("");
 
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
@@ -193,13 +199,19 @@ const EventPage = () => {
 
   // Paystack Payment Method
   const handlePayStackBooking = () => {
-    if (selectedTicketType === null) {
-      setAlert(!alert);
-      setBgColor("red");
-      setIcon(<CiWarning />);
-      setResponse("Please, select date");
-      return;
+    if (isAuthenticated === false || selectedTicketType === null) {
+      sessionStorage.setItem("previousPage", window.location.href);
+      sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
+      navigate("/join");
     }
+
+    // if (selectedTicketType === null) {
+    //   setAlert(!alert);
+    //   setBgColor("red");
+    //   setIcon(<CiWarning />);
+    //   setResponse("Please, select date");
+    //   return;
+    // }
 
     const selectedTicket = ticketTypes.find(
       (type) => type.ticketTypeId === selectedTicketType
@@ -220,12 +232,14 @@ const EventPage = () => {
       case 0:
         url = "events/book/ticket";
         data = {
+          referralCode: code,
           ticketTypeId: selectedTicketType,
         };
         break;
       case 1:
         url = "events/book/multiple-days-ticket";
         data = {
+          referralCode: code,
           ticketTypeId: selectedTicketType,
           eventDateIds: selectedDates,
         };
@@ -233,6 +247,7 @@ const EventPage = () => {
       case 2:
         url = "events/book/single-day-ticket";
         data = {
+          referralCode: code,
           ticketTypeId: selectedTicketType,
           eventDateId: selectedDates[0],
         };
@@ -245,7 +260,6 @@ const EventPage = () => {
     axiosInstance
       .post(url, data)
       .then((res) => {
-        console.log(res);
         setAlert(!alert);
         setBgColor("green");
         setIcon(<BsPatchCheck />);
@@ -262,7 +276,6 @@ const EventPage = () => {
             paymentKind: "EventTicket",
           },
           onSuccess(transaction) {
-            console.log(transaction);
             let message = `Payment Completed with reference number: ${transaction.reference}`;
             setAlert(!alert);
             setBgColor("green");
@@ -368,6 +381,15 @@ const EventPage = () => {
               )}
             </label>
           ))}
+          <Input
+            label={"Referral Code"}
+            type={"text"}
+            id={"username"}
+            value={code}
+            onChange={(e) => {
+              setCode(e.target.value);
+            }}
+          />
           {/* <Button
             className="bg-primary"
             onClick={

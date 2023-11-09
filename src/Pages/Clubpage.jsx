@@ -35,7 +35,7 @@ const Clubpage = () => {
   const location = useLocation();
   console.log(location.state);
   const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
-  console.log(prevSummary);
+  // console.log(prevSummary);
   const summary = prevSummary?.club || location?.state?.club;
 
   if (!summary) {

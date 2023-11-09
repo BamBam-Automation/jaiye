@@ -101,14 +101,14 @@ const NavBar = (props) => {
               <IoIosHome className="h-6 w-6 p-[2px]" />
               <p>Dashboard</p>
             </NavigationItem>
-            <NavigationItem link={"/scan"}>
+            {/* <NavigationItem link={"/scan"}>
               <MdCastConnected className="h-6 w-6 p-[2px]" />
               <p>Scan Ticket</p>
-            </NavigationItem>
-            {/* <NavigationItem link={"/history"}>
+            </NavigationItem> */}
+            <NavigationItem link={"/history"}>
               <GoHistory className="h-6 w-6 p-[2px]" />
               <p>History</p>
-            </NavigationItem> */}
+            </NavigationItem>
             <NavigationItem link={"/profile"}>
               <FaUser className="h-6 w-6 p-[2px]" />
               <p>Profile</p>

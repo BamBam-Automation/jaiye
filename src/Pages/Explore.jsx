@@ -292,10 +292,10 @@ const Explore = () => {
                   <p>Membership</p>
                 </NavigationItem>
               )}
-              <NavigationItem link={"/scan"}>
+              {/* <NavigationItem link={"/scan"}>
                 <MdCastConnected className="h-6 w-6 p-[2px]" />
                 <p>Scan Ticket</p>
-              </NavigationItem>
+              </NavigationItem> */}
               <NavigationItem link={"/history"}>
                 <GoHistory className="h-6 w-6 p-[2px]" />
                 <p>History</p>

@@ -27,7 +27,8 @@ function App() {
           <Route path="/" element={<Explore />} />
           <Route
             path="events"
-            element={isAuthenticated ? <EventPage /> : <Membership />}
+            element={<EventPage />}
+            // element={isAuthenticated ? <EventPage /> : <Membership />}
           />
 
           {/* Protected routes */}
