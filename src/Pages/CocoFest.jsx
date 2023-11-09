@@ -4,6 +4,7 @@ import axiosInstance from "../utils/axios/axios";
 import { Carousel } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../components/PrimaryButton";
+import PageTitle from "../utils/PageTitle";
 
 const CocoFest = () => {
   const navigate = useNavigate();
@@ -21,6 +22,8 @@ const CocoFest = () => {
         console.log(err);
       });
   }, []);
+
+  PageTitle("Jaiye - CocoFest Festival");
 
   return (
     <div className="p-7 grid gap-5 items-start">
