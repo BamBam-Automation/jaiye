@@ -92,8 +92,8 @@ const Profile = () => {
       <NavBar title={"Profile"} />
       <div className="mx-auto grid justify-items-center relative gap-5">
         <h5 className="text-2xl font-medium">Profile</h5>
-        <Avatar src={ProfileImg} size="xxl" />
-        <BiEditAlt className="text-xl w-10 h-10 p-2 rounded-full bg-[#f8f8f8] shadow-xl absolute bottom-[25%] right-[30%]" />
+        {/* <Avatar src={ProfileImg} size="xxl" />
+        <BiEditAlt className="text-xl w-10 h-10 p-2 rounded-full bg-[#f8f8f8] shadow-xl absolute bottom-[25%] right-[30%]" /> */}
         <h5 className="text-2xl font-semibold">{username}</h5>
       </div>
       <div className="space-y-5">

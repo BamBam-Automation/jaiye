@@ -11,6 +11,8 @@ import ForgotPassword from "./membershipForms/ForgotPassword";
 import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axiosInstance from "../utils/axios/axios";
+import { hasGrantedAnyScopeGoogle } from "@react-oauth/google";
+import { useDispatch } from "react-redux";
 
 const Membership = () => {
   // State for Visible Form
@@ -45,26 +47,26 @@ const Membership = () => {
   PageTitle(title());
 
   const [accessToken, setAccessToken] = useState("");
+
+  const dispatch = useDispatch();
+
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       console.log(tokenResponse);
       setAccessToken(tokenResponse.access_token);
+      const data = {
+        accessToken: accessToken,
+      };
+      axiosInstance
+        .post("/google-auth", data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   });
-
-  useEffect(() => {
-    const data = {
-      accessToken: accessToken,
-    };
-    axiosInstance
-      .post("/google-auth", data)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [login]);
 
   const pageHeader = () => {
     if (signUpForm === 0) {
@@ -121,7 +123,6 @@ const Membership = () => {
           className="h-5 w-5 text-primary"
           onClick={() => navigate(-1)}
         />
-        {/* <p className="font-medium">{!signUpForm ? "Login" : "Sign Up"}</p> */}
         <p className="font-medium">{pageHeader()}</p>
       </div>
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
@@ -143,15 +144,6 @@ const Membership = () => {
           <FcGoogle className="text-2xl" />
           Sign-up with Google
         </Button>
-        {/* <Button
-          size="lg"
-          variant="outlined"
-          color="blue-gray"
-          className="flex items-center justify-center gap-3 border border-[#8C8A93]"
-        >
-          <BiLogoApple className="text-2xl" />
-          Sign-up with Apple
-        </Button> */}
         <p className="text-center text-lg">
           Don't have an account?{" "}
           <span
