@@ -1,12 +1,12 @@
 import NavBar from "../components/NavBar";
 import PageTitle from "../utils/PageTitle";
 import { useLocation } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 const AllEvents = () => {
   PageTitle("Jaiye - Recently Booked Event");
 
   const location = useLocation();
-  console.log(location);
   const summary = location?.state;
   const user = sessionStorage.getItem("username");
 
@@ -33,6 +33,13 @@ const AllEvents = () => {
             <p className="text-primary font-semibold text-xl">Ticket Price</p>
             <p>{summary?.amount}</p>
           </div>
+
+          <QRCode
+            title="GeeksForGeeks"
+            // value={value}
+            // bgColor={back}
+            // fgColor={fore}
+          />
         </div>
         {/* {events.length === 0 ? (
           <p className="mx-auto text-center text-2xl font-semibold text-primary">

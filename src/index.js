@@ -6,6 +6,7 @@ import { ThemeProvider } from "@material-tailwind/react";
 import { Provider } from "react-redux";
 import { store, persistor } from "./utils/app/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -13,7 +14,9 @@ root.render(
     {/* <React.StrictMode> */}
     <PersistGate loading={null} persistor={persistor}>
       <ThemeProvider>
-        <App />
+        <GoogleOAuthProvider clientId="748855953781-sg66g9o7cq4j04i3bjk0d7r3lsndm1v2.apps.googleusercontent.com">
+          <App />
+        </GoogleOAuthProvider>
       </ThemeProvider>
     </PersistGate>
     {/* </React.StrictMode> */}

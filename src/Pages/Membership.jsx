@@ -3,14 +3,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import Group from "../images/Group.svg";
 import SignIn from "./membershipForms/SiginIn";
 import { FcGoogle } from "react-icons/fc";
-// import { BiLogoApple } from "react-icons/bi";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 import { useLocation, useNavigate } from "react-router-dom";
-// import axiosInstance from "../utils/axios/axios";
 import { Button } from "@material-tailwind/react";
 import ForgotPassword from "./membershipForms/ForgotPassword";
 import { useEffect } from "react";
+import { useGoogleLogin } from "@react-oauth/google";
+import axiosInstance from "../utils/axios/axios";
 
 const Membership = () => {
   // State for Visible Form
@@ -44,53 +44,27 @@ const Membership = () => {
   // Page Title Handler
   PageTitle(title());
 
-  // const responseGoogle = (response) => {
-  //   console.log(response); // Handle the Google Sign-In response here
-  // };
+  const [accessToken, setAccessToken] = useState("");
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log(tokenResponse.access_token);
+      setAccessToken(tokenResponse.access_token);
+    },
+  });
 
-  // const handleSuccess = (response) => {
-  //   console.log("Google Sign-In successful:", response);
-  //   // You can handle the Google Sign-In response here
-  // };
-
-  // const handleError = (error) => {
-  //   console.error("Google Sign-In error:", error);
-  //   // Handle errors here
-  // };
-
-  // const [accessToken, setAccessToken] = useState("");
-
-  // useEffect(() => {
-  //   const data = {
-  //     accessToken: accessToken,
-  //   };
-  //   axiosInstance
-  //     .post("/google-auth", data)
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [accessToken]);
-
-  // function handleCallbackResponse(response) {
-  //   console.log(response.credential);
-  // }
-
-  // useEffect(() => {
-  //   // /*** Google Script ***/
-  //   google.accounts.id.initialize({
-  //     client_id:
-  //       "748855953781-sg66g9o7cq4j04i3bjk0d7r3lsndm1v2.apps.googleusercontent.com",
-  //     callback: handleCallbackResponse,
-  //   });
-  // }, []);
-
-  // const handleGoogleLogin = () => {
-  //   // Trigger the Google Identity Services login
-  //   google.accounts.id.prompt();
-  // };
+  useEffect(() => {
+    const data = {
+      accessToken: accessToken,
+    };
+    axiosInstance
+      .post("/google-auth", data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [login]);
 
   const pageHeader = () => {
     if (signUpForm === 0) {
@@ -164,6 +138,7 @@ const Membership = () => {
           variant="outlined"
           color="blue-gray"
           className="flex items-center justify-center gap-3 border border-[#8C8A93]"
+          onClick={() => login()}
         >
           <FcGoogle className="text-2xl" />
           Sign-up with Google
