@@ -105,13 +105,9 @@ const NavBar = (props) => {
               <MdCastConnected className="h-6 w-6 p-[2px]" />
               <p>Scan Ticket</p>
             </NavigationItem>
-            <NavigationItem link={"/history"}>
+            {/* <NavigationItem link={"/history"}>
               <GoHistory className="h-6 w-6 p-[2px]" />
               <p>History</p>
-            </NavigationItem>
-            {/* <NavigationItem link={"/event-booking"}>
-              <CiBookmarkCheck className="h-6 w-6 p-[2px]" />
-              <p>Booked Events</p>
             </NavigationItem> */}
             <NavigationItem link={"/profile"}>
               <FaUser className="h-6 w-6 p-[2px]" />

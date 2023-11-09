@@ -58,7 +58,6 @@ const History = () => {
       </div>
       {events.length !== 0 ? (
         <button
-          // variant="outlined"
           className={`text-primary h-full border border-primary mx-auto rounded-md py-3 px-4`}
           onClick={moreHistory}
         >
