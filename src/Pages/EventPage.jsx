@@ -260,6 +260,8 @@ const EventPage = () => {
     axiosInstance
       .post(url, data)
       .then((res) => {
+        console.log(res);
+        console.log(res.data.data.encodedTicket);
         setAlert(!alert);
         setBgColor("green");
         setIcon(<BsPatchCheck />);
@@ -288,6 +290,7 @@ const EventPage = () => {
                   event: ticketName,
                   details: transaction.reference,
                   amount: eventPrice,
+                  ticketSummary: res.data.data.encodedTicket,
                 },
               });
             }, 3000);

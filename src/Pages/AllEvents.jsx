@@ -7,8 +7,11 @@ const AllEvents = () => {
   PageTitle("Jaiye - Recently Booked Event");
 
   const location = useLocation();
-  const summary = location?.state;
+  const { event, details, amount, ticketSummary } = location.state;
+  const passKey = JSON.stringify(ticketSummary);
   const user = sessionStorage.getItem("username");
+
+  const bgColor = "rgba(255, 255, 255, 0.0)";
 
   return (
     <div className="p-7 grid gap-5 items-start">
@@ -21,43 +24,22 @@ const AllEvents = () => {
           </div>
           <div>
             <p className="text-primary font-semibold text-xl">Ticket Type</p>
-            <p>{summary?.event}</p>
+            <p>{event}</p>
           </div>
           <div>
             <p className="text-primary font-semibold text-xl">
               Payment Transaction Reference
             </p>
-            <p>{summary?.details}</p>
+            <p>{details}</p>
           </div>
           <div>
             <p className="text-primary font-semibold text-xl">Ticket Price</p>
-            <p>{summary?.amount}</p>
+            <p>{amount}</p>
           </div>
-
-          <QRCode
-            title="GeeksForGeeks"
-            // value={value}
-            // bgColor={back}
-            // fgColor={fore}
-          />
+          <div className="mx-auto bg-transparent shadow-md">
+            <QRCode title={event} value={passKey} bgColor={bgColor} />
+          </div>
         </div>
-        {/* {events.length === 0 ? (
-          <p className="mx-auto text-center text-2xl font-semibold text-primary">
-            You have no active reservations
-          </p>
-        ) : (
-          events.map((event) => (
-            <HistoryCard
-              key={event.ticketId}
-              owner={event.eventName}
-              //   guests={event.numberOfGuest}
-              date={event.eventStartDate}
-              //   time={TimeConverter(event.timeOfEvent)}
-              //   table={event.tableNumber}
-              //   price={event.eventPrice}
-            />
-          ))
-        )} */}
       </div>
     </div>
   );

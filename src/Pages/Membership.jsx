@@ -47,7 +47,7 @@ const Membership = () => {
   const [accessToken, setAccessToken] = useState("");
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse.access_token);
+      console.log(tokenResponse);
       setAccessToken(tokenResponse.access_token);
     },
   });
