@@ -335,11 +335,11 @@ const EventPage = () => {
           {response}
         </Alert>
       )}
-      <Carousel loop={true} transition={{ duration: 2 }} className="rounded-xl">
+      {/* <Carousel loop={true} transition={{ duration: 2 }} className="rounded-xl">
         {summary?.imageUrls?.map((event) => (
           <img key={event} src={event} alt="event-banner" />
         ))}
-      </Carousel>
+      </Carousel> */}
       <div className="grid gap-3">
         <p className="font-semibold text-lg text-primary">Event Ticket Types</p>
         <p>Select Ticket Type below:</p>
