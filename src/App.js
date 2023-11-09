@@ -14,6 +14,7 @@ import Home from "./Pages/Home";
 import Profile from "./Pages/Profile";
 import EventPage from "./Pages/EventPage";
 import AllEvents from "./Pages/AllEvents";
+import CocoFest from "./Pages/CocoFest";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -25,6 +26,7 @@ function App() {
           <Route path="join" element={<Membership />} />
 
           <Route path="/" element={<Explore />} />
+          <Route path="cocoFest" element={<CocoFest />} />
           <Route
             path="events"
             element={<EventPage />}
