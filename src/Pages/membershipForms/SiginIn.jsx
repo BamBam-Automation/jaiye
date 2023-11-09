@@ -63,7 +63,7 @@ const SiginIn = ({ setSignUpForm }) => {
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
-            navigate("/dashboard");
+            navigate("/");
           }, 2000);
         })
         .catch((err) => {
@@ -93,6 +93,7 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post("/login", data)
         .then((res) => {
+          console.log(res.data);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);

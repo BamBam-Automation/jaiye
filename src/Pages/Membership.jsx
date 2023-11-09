@@ -6,13 +6,15 @@ import { FcGoogle } from "react-icons/fc";
 import SignUp from "./membershipForms/SignUp";
 import PageTitle from "../utils/PageTitle";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import { Alert, Button } from "@material-tailwind/react";
 import ForgotPassword from "./membershipForms/ForgotPassword";
 import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axiosInstance from "../utils/axios/axios";
 import { hasGrantedAnyScopeGoogle } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
+import { CiWarning } from "react-icons/ci";
+import { BsPatchCheck } from "react-icons/bs";
 
 const Membership = () => {
   // State for Visible Form
@@ -47,6 +49,16 @@ const Membership = () => {
   PageTitle(title());
 
   const [accessToken, setAccessToken] = useState("");
+  const [alert, setAlert] = useState(false);
+  const [bgColor, setBgColor] = useState("");
+  const [icon, setIcon] = useState("");
+  const [response, setResponse] = useState("");
+
+  setTimeout(() => {
+    if (alert === true) {
+      setAlert(false);
+    }
+  }, 3000);
 
   const dispatch = useDispatch();
 
@@ -61,9 +73,20 @@ const Membership = () => {
         .post("/google-auth", data)
         .then((res) => {
           console.log(res);
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
+          setResponse(res.data.message + ". Redirecting!");
+          dispatch(login(res.data));
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          setAlert(!alert);
+          setBgColor("red");
+          setIcon(<CiWarning />);
+          setResponse(err?.response?.data?.Message || err?.message);
         });
     },
   });
@@ -118,6 +141,19 @@ const Membership = () => {
 
   return (
     <div className="grid relative p-7 content-between h-screen">
+      {alert && (
+        <Alert
+          animate={{
+            mount: { y: 0 },
+            unmount: { y: 0 },
+          }}
+          color={bgColor}
+          icon={icon}
+          className="absolute h-auto top-8 w-11/12 right-5 z-40"
+        >
+          {response}
+        </Alert>
+      )}
       <div className="flex gap-6 items-center">
         <IoIosArrowBack
           className="h-5 w-5 text-primary"
