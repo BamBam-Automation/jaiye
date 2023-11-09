@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { Alert, Button, Carousel, Spinner } from "@material-tailwind/react";
+import { Alert, Carousel, Spinner } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";
@@ -35,32 +35,6 @@ const EventPage = () => {
   const [eventPrice, setEventPrice] = useState(0);
   const [ticketName, setTicketName] = useState("");
 
-  // const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
-  //   setSelectedTicketType((prevType) => {
-  //     if (prevType !== ticketTypeId) {
-  //       let newEventPrice = 0; // Initialize eventPrice to 0
-  //       const selectedTicket = ticketTypes.find(
-  //         (type) => type.ticketTypeId === ticketTypeId
-  //       );
-
-  //       if (selectedTicket) {
-  //         newEventPrice = selectedTicket.price;
-  //       }
-
-  //       if (ticketClass === 0) {
-  //         // If ticketClass is 0, select all dates
-  //         setSelectedDates([...eventDates.map((date) => date.eventDateId)]);
-  //       } else {
-  //         // For other ticketClasses, clear selections
-  //         setSelectedDates([]);
-  //       }
-
-  //       // Set the new eventPrice
-  //       setEventPrice(newEventPrice);
-  //     }
-  //     return ticketTypeId;
-  //   });
-  // };
   const handleTicketTypeClick = (ticketTypeId, ticketClass) => {
     setSelectedTicketType((prevType) => {
       if (prevType !== ticketTypeId) {
@@ -90,15 +64,18 @@ const EventPage = () => {
 
   const handleDateClick = (eventDateId, ticketClass) => {
     setSelectedDates((prevDates) => {
+      // Check if the ticketClass is 0 (all dates)
+      if (ticketClass === 0) {
+        // If ticketClass is 0, don't change the selection (disable date selection)
+        return prevDates;
+      }
+
       // Check if the date is already selected
       if (prevDates.includes(eventDateId)) {
         // If selected, unselect it
         return prevDates.filter((date) => date !== eventDateId);
       } else {
-        if (ticketClass === 0) {
-          // If ticketClass is 0, select all dates
-          return [...eventDates.map((date) => date.eventDateId)];
-        } else if (ticketClass === 2) {
+        if (ticketClass === 2) {
           // If ticketClass is 2 (single-day ticket), only allow selecting one date
           return [eventDateId];
         } else {
@@ -268,6 +245,7 @@ const EventPage = () => {
     axiosInstance
       .post(url, data)
       .then((res) => {
+        console.log(res);
         setAlert(!alert);
         setBgColor("green");
         setIcon(<BsPatchCheck />);
@@ -280,7 +258,7 @@ const EventPage = () => {
           firstname: "",
           lastname: "",
           metadata: {
-            tickedtId: selectedTicketType,
+            ticketId: res.data.data.ticketId,
             paymentKind: "EventTicket",
           },
           onSuccess(transaction) {

@@ -1,8 +1,4 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import axiosInstance from "../utils/axios/axios";
 import NavBar from "../components/NavBar";
-import HistoryCard from "../components/HistoryCard";
 import PageTitle from "../utils/PageTitle";
 import { useLocation } from "react-router-dom";
 
