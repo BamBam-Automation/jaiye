@@ -1,18 +1,23 @@
 import React from "react";
 import NavBar from "../components/NavBar";
-import HistoryCard from "../components/HistoryCard";
+// import HistoryCard from "../components/HistoryCard";
 import { useEffect } from "react";
 import axiosInstance from "../utils/axios/axios";
 import { useState } from "react";
-import DateConverter from "../components/DateConverter";
-import TimeConverter from "../components/TimeConverter";
+// import DateConverter from "../components/DateConverter";
+// import TimeConverter from "../components/TimeConverter";
 import PageTitle from "../utils/PageTitle";
+import TicketCard from "../components/TicketCard";
+import { useSelector } from "react-redux";
+import QRCode from "react-qr-code";
 
 const History = () => {
   PageTitle("Jaiye - All Booked Event Centers");
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 10;
   const [events, setEvents] = useState([]);
+
+  const user = useSelector((state) => state.user.user.username);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -35,6 +40,12 @@ const History = () => {
     setPageIndex(pageIndex + 1);
   };
 
+  const finalEncodedTicket = (arg) => {
+    return JSON.stringify(arg);
+  };
+
+  const bgColor = "rgba(255, 255, 255, 0.0)";
+
   return (
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"History"} />
@@ -45,15 +56,18 @@ const History = () => {
           </p>
         ) : (
           events.map((event) => (
-            <HistoryCard
-              key={event.id}
-              owner={event.owner}
-              guests={event.numberOfGuest}
-              date={DateConverter(event.dateOfEvent)}
-              time={TimeConverter(event.timeOfEvent)}
-              table={event.tableNumber}
-              price={event.eventPrice}
-            />
+            <TicketCard
+              key={event.ticketId}
+              user={user}
+              event={event.ticketTypeName}
+              details={event.reference}
+            >
+              <QRCode
+                title={event.ticketTypeName}
+                value={finalEncodedTicket(event.encodedTicket)}
+                bgColor={bgColor}
+              />
+            </TicketCard>
           ))
         )}
       </div>
