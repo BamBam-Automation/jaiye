@@ -18,8 +18,9 @@ const History = () => {
     const fetchEvents = async () => {
       try {
         const response = await axiosInstance.get(
-          `/upcoming-event?pageIndex=${pageIndex}&pageSize=${pageSize}`
+          `/events/bookings?pageIndex=${pageIndex}&pageSize=${pageSize}`
         );
+        console.log(response.data.data);
         const newEvents = response.data.data;
         // Append the new clubs to the existing list
         setEvents((prevEvents) => [...prevEvents, ...newEvents]);
