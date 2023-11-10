@@ -63,7 +63,7 @@ const SiginIn = ({ setSignUpForm }) => {
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
-            navigate("/");
+            navigate("/cocoFest");
           }, 2000);
         })
         .catch((err) => {
@@ -104,7 +104,7 @@ const SiginIn = ({ setSignUpForm }) => {
             if (previousPage) {
               window.location.href = previousPage;
             } else {
-              navigate("/");
+              navigate("/cocoFest");
             }
           }, 2000);
         })

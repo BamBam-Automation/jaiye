@@ -74,37 +74,6 @@ const Membership = () => {
     },
   });
 
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     const data = {
-  //       accessToken: accessToken,
-  //     };
-
-  //     axiosInstance
-  //       .post("/google-auth", data)
-  //       .then((res) => {
-  //         console.log(res);
-  //         // Handle the response and perform actions as needed
-  //         setAlert(!alert);
-  //         setBgColor("green");
-  //         setIcon(<BsPatchCheck />);
-  //         setResponse(res.data.message + ". Redirecting!");
-  //         dispatch(login(res.data));
-  //         setTimeout(() => {
-  //           navigate("/");
-  //         }, 2000);
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //         setAlert(!alert);
-  //         setBgColor("red");
-  //         setIcon(<CiWarning />);
-  //         setResponse(err?.response?.data?.Message || err?.message);
-  //         // Handle errors
-  //       });
-  //   }
-  // }, [accessToken]);
-
   useEffect(() => {
     const handleGoogleLogin = async () => {
       if (accessToken) {
@@ -126,7 +95,7 @@ const Membership = () => {
           setResponse(res.data.message + ". Redirecting!");
 
           setTimeout(() => {
-            navigate("/");
+            navigate("/cocoFest");
           }, 2000);
         } catch (err) {
           console.error(err);
