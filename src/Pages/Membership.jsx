@@ -65,14 +65,13 @@ const Membership = () => {
 
   const login = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      console.log(tokenResponse);
       setAccessToken(tokenResponse.access_token);
-      const data = {
-        accessToken: accessToken,
-      };
-      console.log(accessToken);
     },
   });
+
+  const previousPage =
+    sessionStorage.getItem("previousPage") ||
+    localStorage.getItem("previousPage");
 
   useEffect(() => {
     const handleGoogleLogin = async () => {
@@ -83,7 +82,6 @@ const Membership = () => {
 
         try {
           const res = await axiosInstance.post("/google-auth", data);
-          console.log(res);
 
           // Dispatch the action with user data
           dispatch(loginSuccess(res.data));
@@ -95,7 +93,11 @@ const Membership = () => {
           setResponse(res.data.message + ". Redirecting!");
 
           setTimeout(() => {
-            navigate("/cocoFest");
+            if (previousPage) {
+              window.location.href = previousPage;
+            } else {
+              navigate("/cocoFest");
+            }
           }, 2000);
         } catch (err) {
           console.error(err);

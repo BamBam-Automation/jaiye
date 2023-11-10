@@ -14,7 +14,6 @@ const CocoFest = () => {
     axiosInstance
       .get("events?pageNumber=1&pageSize=10")
       .then((res) => {
-        console.log(res.data.data[0].eventDates);
         setEvents(res.data.data);
         setDates(res.data.data[0].eventDates);
       })

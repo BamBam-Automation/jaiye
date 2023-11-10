@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
-import ProfileImg from "../images/Profile.svg";
-import { Alert, Avatar } from "@material-tailwind/react";
-import { BiEditAlt } from "react-icons/bi";
+// import ProfileImg from "../images/Profile.svg";
+import { Alert } from "@material-tailwind/react";
+// import { BiEditAlt } from "react-icons/bi";
 // import { IoIosArrowForward, IoMdKey } from "react-icons/io";
 import Input from "../components/Input";
 import PrimaryButton from "../components/PrimaryButton";

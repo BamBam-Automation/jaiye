@@ -16,24 +16,27 @@ const EventPage = () => {
   PageTitle("Jaiye - Book Event");
 
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
-
   const email = sessionStorage.getItem("usermail");
-  const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
+  let prevSummary = {};
+  if (isAuthenticated) {
+    prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
+  }
+  // const prevSummary = ""; //JSON.parse(sessionStorage.getItem("prevSummary"));
   const location = useLocation();
-  const summary = location?.state?.event || prevSummary?.event;
+  const summary = location?.state?.event || prevSummary;
+
+  useEffect(() => {
+    // Check if summary is an empty object
+    if (Object.keys(summary).length === 0) {
+      navigate("/");
+    }
+  }, [summary]);
+
   const ticketTypes = summary?.ticketTypes || [];
   const eventDates = summary?.eventDates || [];
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (summary) {
-      return;
-    } else {
-      navigate("/");
-    }
-  });
 
   const [selectedTicketType, setSelectedTicketType] = useState(null);
   const [selectedDates, setSelectedDates] = useState([]);
@@ -199,19 +202,14 @@ const EventPage = () => {
 
   // Paystack Payment Method
   const handlePayStackBooking = () => {
-    if (isAuthenticated === false || selectedTicketType === null) {
+    let url = "";
+    let data = {};
+
+    if (!isAuthenticated) {
       sessionStorage.setItem("previousPage", window.location.href);
-      sessionStorage.setItem("prevSummary", JSON.stringify(location?.state));
+      sessionStorage.setItem("prevSummary", JSON.stringify(summary));
       navigate("/join");
     }
-
-    // if (selectedTicketType === null) {
-    //   setAlert(!alert);
-    //   setBgColor("red");
-    //   setIcon(<CiWarning />);
-    //   setResponse("Please, select date");
-    //   return;
-    // }
 
     const selectedTicket = ticketTypes.find(
       (type) => type.ticketTypeId === selectedTicketType
@@ -221,12 +219,9 @@ const EventPage = () => {
       setAlert(!alert);
       setBgColor("red");
       setIcon(<CiWarning />);
-      setResponse("Please, select date");
+      setResponse("Please, select ticket");
       return;
     }
-
-    let url = "";
-    let data = {};
 
     switch (selectedTicket.ticketClass) {
       case 0:
@@ -252,64 +247,67 @@ const EventPage = () => {
           eventDateId: selectedDates[0],
         };
         break;
-      // Add more cases if needed for other ticketClass values
       default:
         break;
     }
-    setLoading(true);
-    axiosInstance
-      .post(url, data)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data.data.encodedTicket);
-        setAlert(!alert);
-        setBgColor("green");
-        setIcon(<BsPatchCheck />);
-        setResponse(`${res.data.message}. Redirecting to payment`);
-        const paystack = new PaystackPop();
-        paystack.newTransaction({
-          key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
-          amount: eventPrice * 100,
-          email: email,
-          firstname: "",
-          lastname: "",
-          metadata: {
-            ticketId: res.data.data.ticketId,
-            paymentKind: "EventTicket",
-          },
-          onSuccess(transaction) {
-            let message = `Payment Completed with reference number: ${transaction.reference}`;
-            setAlert(!alert);
-            setBgColor("green");
-            setResponse(message);
-            setIcon(<BsPatchCheck />);
-            setLoading(false);
-            setTimeout(() => {
-              navigate("/event-booking", {
-                state: {
-                  event: ticketName,
-                  details: transaction.reference,
-                  amount: eventPrice,
-                  ticketSummary: res.data.data.encodedTicket,
-                },
-              });
-            }, 3000);
-          },
-          onCancel() {
-            setAlert(!alert);
-            setResponse("Request failed, please try again");
-            setBgColor("red");
-            setIcon(<CiWarning />);
-          },
+
+    if (isAuthenticated) {
+      setLoading(true);
+      axiosInstance
+        .post(url, data)
+        .then((res) => {
+          console.log(res);
+          console.log(res.data.data.encodedTicket);
+          setAlert(!alert);
+          setBgColor("green");
+          setIcon(<BsPatchCheck />);
+          setResponse(`${res.data.message}. Redirecting to payment`);
+          const paystack = new PaystackPop();
+          paystack.newTransaction({
+            key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+            amount: eventPrice * 100,
+            email: email,
+            firstname: "",
+            lastname: "",
+            metadata: {
+              ticketId: res.data.data.ticketId,
+              paymentKind: "EventTicket",
+            },
+            onSuccess(transaction) {
+              let message = `Payment Completed with reference number: ${transaction.reference}`;
+              setAlert(!alert);
+              setBgColor("green");
+              setResponse(message);
+              setIcon(<BsPatchCheck />);
+              setLoading(false);
+              setTimeout(() => {
+                navigate("/event-booking", {
+                  state: {
+                    event: ticketName,
+                    details: transaction.reference,
+                    amount: eventPrice,
+                    ticketSummary: res.data.data.encodedTicket,
+                  },
+                });
+              }, 3000);
+            },
+            onCancel() {
+              setAlert(!alert);
+              setResponse("Request failed, please try again");
+              setBgColor("red");
+              setIcon(<CiWarning />);
+              setLoading(false);
+            },
+          });
+        })
+        .catch((err) => {
+          setAlert(!alert);
+          setBgColor("red");
+          setIcon(<CiWarning />);
+          setResponse(err?.data?.message || err?.message);
+          setLoading(false);
         });
-      })
-      .catch((err) => {
-        setAlert(!alert);
-        setBgColor("red");
-        setIcon(<CiWarning />);
-        setResponse(err?.data?.message || err?.message);
-        setLoading(false);
-      });
+    }
   };
 
   setTimeout(() => {
@@ -335,11 +333,6 @@ const EventPage = () => {
           {response}
         </Alert>
       )}
-      {/* <Carousel loop={true} transition={{ duration: 2 }} className="rounded-xl">
-        {summary?.imageUrls?.map((event) => (
-          <img key={event} src={event} alt="event-banner" />
-        ))}
-      </Carousel> */}
       <div className="grid gap-3">
         <p className="font-semibold text-lg text-primary">Event Ticket Types</p>
         <p>Select Ticket Type below:</p>
@@ -393,21 +386,6 @@ const EventPage = () => {
               setCode(e.target.value);
             }}
           />
-          {/* <Button
-            className="bg-primary"
-            onClick={
-              () => handlePayStackBooking()
-              // handleFlutterPayment({
-              //   callback: (response) => {
-              //     console.log(response);
-              //     closePaymentModal();
-              //   },
-              //   onClose: () => {},
-              // })
-            }
-          >
-            {loading ? <Spinner color="pink" /> : "Book Event"}
-          </Button> */}
           <PrimaryButton
             onClick={handlePayStackBooking}
             text={loading ? <Spinner color="pink" /> : "Book Event"}

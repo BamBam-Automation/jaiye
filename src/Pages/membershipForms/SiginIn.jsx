@@ -48,7 +48,10 @@ const SiginIn = ({ setSignUpForm }) => {
       password,
     };
 
-    const previousPage = sessionStorage.getItem("previousPage");
+    const previousPage =
+      sessionStorage.getItem("previousPage") ||
+      localStorage.getItem("previousPage");
+
     if (username && password !== "" && rememberMe) {
       setLoading(true);
       localStorage.setItem("user", username);
@@ -63,7 +66,11 @@ const SiginIn = ({ setSignUpForm }) => {
           setResponse(res.data.message + ". Redirecting!");
           dispatch(login(res.data));
           setTimeout(() => {
-            navigate("/cocoFest");
+            if (previousPage) {
+              window.location.href = previousPage;
+            } else {
+              navigate("/cocoFest");
+            }
           }, 2000);
         })
         .catch((err) => {
@@ -94,6 +101,7 @@ const SiginIn = ({ setSignUpForm }) => {
         .post("/login", data)
         .then((res) => {
           console.log(res.data);
+          console.log(previousPage);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
