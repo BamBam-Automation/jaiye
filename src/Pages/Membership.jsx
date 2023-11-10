@@ -15,6 +15,7 @@ import { hasGrantedAnyScopeGoogle } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { CiWarning } from "react-icons/ci";
 import { BsPatchCheck } from "react-icons/bs";
+import { loginSuccess } from "../utils/app/userSlice";
 
 const Membership = () => {
   // State for Visible Form
@@ -70,57 +71,74 @@ const Membership = () => {
         accessToken: accessToken,
       };
       console.log(accessToken);
-      // axiosInstance
-      //   .post("/google-auth", data)
-      //   .then((res) => {
-      //     console.log(res);
-      //     setAlert(!alert);
-      //     setBgColor("green");
-      //     setIcon(<BsPatchCheck />);
-      //     setResponse(res.data.message + ". Redirecting!");
-      //     dispatch(login(res.data));
-      //     setTimeout(() => {
-      //       navigate("/");
-      //     }, 2000);
-      //   })
-      //   .catch((err) => {
-      //     setAlert(!alert);
-      //     setBgColor("red");
-      //     setIcon(<CiWarning />);
-      //     setResponse(err?.response?.data?.Message || err?.message);
-      //   });
     },
   });
 
-  useEffect(() => {
-    if (accessToken) {
-      const data = {
-        accessToken: accessToken,
-      };
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     const data = {
+  //       accessToken: accessToken,
+  //     };
 
-      axiosInstance
-        .post("/google-auth", data)
-        .then((res) => {
+  //     axiosInstance
+  //       .post("/google-auth", data)
+  //       .then((res) => {
+  //         console.log(res);
+  //         // Handle the response and perform actions as needed
+  //         setAlert(!alert);
+  //         setBgColor("green");
+  //         setIcon(<BsPatchCheck />);
+  //         setResponse(res.data.message + ". Redirecting!");
+  //         dispatch(login(res.data));
+  //         setTimeout(() => {
+  //           navigate("/");
+  //         }, 2000);
+  //       })
+  //       .catch((err) => {
+  //         console.error(err);
+  //         setAlert(!alert);
+  //         setBgColor("red");
+  //         setIcon(<CiWarning />);
+  //         setResponse(err?.response?.data?.Message || err?.message);
+  //         // Handle errors
+  //       });
+  //   }
+  // }, [accessToken]);
+
+  useEffect(() => {
+    const handleGoogleLogin = async () => {
+      if (accessToken) {
+        const data = {
+          accessToken: accessToken,
+        };
+
+        try {
+          const res = await axiosInstance.post("/google-auth", data);
           console.log(res);
-          // Handle the response and perform actions as needed
+
+          // Dispatch the action with user data
+          dispatch(loginSuccess(res.data));
+          // dispatch(loginSuccess(res.data));
+
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
           setResponse(res.data.message + ". Redirecting!");
-          dispatch(login(res.data));
+
           setTimeout(() => {
             navigate("/");
           }, 2000);
-        })
-        .catch((err) => {
+        } catch (err) {
           console.error(err);
           setAlert(!alert);
           setBgColor("red");
           setIcon(<CiWarning />);
           setResponse(err?.response?.data?.Message || err?.message);
-          // Handle errors
-        });
-    }
+        }
+      }
+    };
+
+    handleGoogleLogin();
   }, [accessToken]);
 
   const pageHeader = () => {

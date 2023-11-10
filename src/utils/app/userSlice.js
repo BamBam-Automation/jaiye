@@ -14,6 +14,13 @@ export const userSlice = createSlice({
       sessionStorage.setItem("username", action.payload.username);
       sessionStorage.setItem("usermail", action.payload.email);
     },
+    loginSuccess: (state, action) => {
+      state.isAuthenticated = true;
+      state.user = action.payload;
+      sessionStorage.setItem("token", action.payload.token);
+      sessionStorage.setItem("username", action.payload.username);
+      sessionStorage.setItem("usermail", action.payload.email);
+    },
     logout: (state) => {
       state.isAuthenticated = false;
       sessionStorage.clear();
@@ -22,6 +29,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, loginSuccess, logout } = userSlice.actions;
 
 export default userSlice.reducer;
