@@ -53,7 +53,7 @@ const CocoFest = () => {
       ))} */}
       <PrimaryButton
         onClick={() => navigate("/events", { state: { event: events[0] } })}
-        text="See Event Details"
+        text="Book Event"
       />
     </div>
   );

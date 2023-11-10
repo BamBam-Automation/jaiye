@@ -135,7 +135,7 @@ const Profile = () => {
               setConfirmPassword(e.target.value);
             }}
           />
-          <PrimaryButton onClick={handleSubmit} text={"Change Password"} />
+          <PrimaryButton onClick={handleSubmit} text={"Edit Profile"} />
         </div>
         {/* <div className="bg-gradient-to-b rounded-lg relative from-[#EB7C4C] to-[#A03484] p-0.5">
           <div className="h-10 p-[0.3px] bg-[#f9f9f9] rounded-lg flex items-center justify-between px-5">

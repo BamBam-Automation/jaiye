@@ -266,11 +266,11 @@ const Explore = () => {
             </div>
             {token ? (
               <div className="flex items-center gap-3">
-                <img
+                {/* <img
                   className="h-10 w-10 rounded-full object-contain"
                   src={Profile}
                   alt="profile"
-                />
+                /> */}
                 <h4 className="font-bold text-xl text-primary">{username}</h4>
               </div>
             ) : (
