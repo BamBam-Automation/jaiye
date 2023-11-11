@@ -200,6 +200,8 @@ const EventPage = () => {
   const [icon, setIcon] = useState("");
   const [response, setResponse] = useState("");
 
+  console.log(process.env);
+
   // Paystack Payment Method
   const handlePayStackBooking = () => {
     let url = "";
@@ -264,7 +266,7 @@ const EventPage = () => {
           setResponse(`${res.data.message}. Redirecting to payment`);
           const paystack = new PaystackPop();
           paystack.newTransaction({
-            key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+            key: `${process.env.REACT_APP_PAYSTACK}`,
             amount: eventPrice * 100,
             email: email,
             firstname: "",

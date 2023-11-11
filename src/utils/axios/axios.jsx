@@ -4,7 +4,7 @@ import axios from "axios";
 const authToken = sessionStorage.getItem("token");
 
 const axiosInstance = axios.create({
-  baseURL: "https://jaiye.axle-cartage.com/api/",
+  baseURL: `${process.env.REACT_APP_AXIOS_BASEURL}`,
   timeout: 10000,
   headers: {
     accept: "*/*",
