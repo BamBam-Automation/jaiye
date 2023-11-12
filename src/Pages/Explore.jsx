@@ -212,8 +212,6 @@ const Explore = () => {
 
   // Get Current Username
   let username = sessionStorage.getItem("username");
-  const key = process.env.REACT_APP_PAYSTACK;
-  console.log(key);
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">

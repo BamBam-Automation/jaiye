@@ -256,15 +256,13 @@ const EventPage = () => {
       axiosInstance
         .post(url, data)
         .then((res) => {
-          console.log(res);
-          console.log(res.data.data.encodedTicket);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
           setResponse(`${res.data.message}. Redirecting to payment`);
           const paystack = new PaystackPop();
           paystack.newTransaction({
-            key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+            key: `${process.env.REACT_APP_PAYSTACK}`,
             amount: eventPrice * 100,
             email: email,
             firstname: "",

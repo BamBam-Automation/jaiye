@@ -107,7 +107,7 @@ const Clubpage = () => {
           console.log(res);
           // const paystack = new PaystackPop();
           // paystack.newTransaction({
-          //   key: "pk_test_b6dad8eb9616b4f29b0a2a4a3918636326e9870d",
+          //   key: `{process.env.REACT_APP_PAYSTACK}`,
           //   amount: "500",
           //   email: "a@a.com",
           //   firstname: "testing",
