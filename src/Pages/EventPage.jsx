@@ -200,8 +200,6 @@ const EventPage = () => {
   const [icon, setIcon] = useState("");
   const [response, setResponse] = useState("");
 
-  console.log(process.env);
-
   // Paystack Payment Method
   const handlePayStackBooking = () => {
     let url = "";
@@ -258,8 +256,6 @@ const EventPage = () => {
       axiosInstance
         .post(url, data)
         .then((res) => {
-          console.log(res);
-          console.log(res.data.data.encodedTicket);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
