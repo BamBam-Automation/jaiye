@@ -304,6 +304,11 @@ const EventPage = () => {
           setAlert(!alert);
           setBgColor("red");
           setIcon(<CiWarning />);
+          if (err?.data?.message === "Request failed with status code 401") {
+            sessionStorage.setItem("previousPage", window.location.href);
+            sessionStorage.setItem("prevSummary", JSON.stringify(summary));
+            navigate("/join");
+          }
           setResponse(err?.data?.message || err?.message);
           setLoading(false);
         });
