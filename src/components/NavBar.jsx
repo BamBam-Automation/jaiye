@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { FiMenu, FiPower } from "react-icons/fi";
 import Jaiye from "../images/Jaiye.svg";
 // import Profile from "../images/Profile.svg";
-import { IoIosArrowBack, IoIosHome } from "react-icons/io";
+import { IoIosArrowBack, IoIosHome, IoMdLogIn } from "react-icons/io";
 import NavigationItem from "./NavigationItem";
 import { FaCompass, FaUser } from "react-icons/fa";
 import { MdCastConnected } from "react-icons/md";
@@ -97,10 +97,17 @@ const NavBar = (props) => {
               <FaCompass className="h-6 w-6 p-[2px]" />
               <p>Explore</p>
             </NavigationItem>
-            <NavigationItem link={"/dashboard"}>
-              <IoIosHome className="h-6 w-6 p-[2px]" />
-              <p>Dashboard</p>
-            </NavigationItem>
+            {token ? (
+              <NavigationItem link={"/dashboard"}>
+                <IoIosHome className="h-6 w-6 p-[2px]" />
+                <p>Dashboard</p>
+              </NavigationItem>
+            ) : (
+              <NavigationItem link={"/join"}>
+                <IoMdLogIn className="h-6 w-6 p-[2px]" />
+                <p>Membership</p>
+              </NavigationItem>
+            )}
             {/* <NavigationItem link={"/scan"}>
               <MdCastConnected className="h-6 w-6 p-[2px]" />
               <p>Scan Ticket</p>
