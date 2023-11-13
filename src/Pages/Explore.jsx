@@ -20,6 +20,7 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
+import NavBar from "../components/NavBar";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -318,21 +319,6 @@ const Explore = () => {
           </Drawer>
         )}
       </div>
-      <div className="h-11 flex justify-around">
-        {barType.map((bar) => (
-          <p
-            onClick={() => setActiveTab(bar)}
-            className={
-              activeTab === bar
-                ? "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
-                : "border-b p-3"
-            }
-            key={bar}
-          >
-            {bar}
-          </p>
-        ))}
-      </div>
       {drawerState && (
         <div className="fixed w-screen h-full left-0 z-20 overflow-scroll">
           <Drawer
@@ -452,41 +438,62 @@ const Explore = () => {
           </Drawer>
         </div>
       )}
-      <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
-      <div className="mt-5 grid gap-5">
+      <div className="grid gap-5 lg:flex lg:flex-row-reverse lg:justify-between">
+        <div className="h-11 flex justify-around lg:gap-20">
+          {barType.map((bar) => (
+            <button
+              onClick={() => setActiveTab(bar)}
+              className={
+                activeTab === bar
+                  ? "bg-gradient-to-r from-[#EB7C4C] to-[#A03484] transition ease-in-out duration-700 border-primary/70 border-b-4 p-3 font-semibold bg-clip-text text-transparent"
+                  : "border-b p-3"
+              }
+              key={bar}
+            >
+              {bar}
+            </button>
+          ))}
+        </div>
+        <p className="font-bold text-2xl">{`${day} ${dayDate}, ${month}`}</p>
+      </div>
+      <div className="mt-5 grid gap-5 md:w-full">
         <p className="text-primary font-bold text-2xl">Happening Events</p>
-        <Carousel
-          loop={true}
-          transition={{ duration: 2 }}
-          className="rounded-xl"
-        >
-          {events.map((event) => (
-            <img
-              key={event.establishmentId}
-              src={event.imageUrls}
-              onClick={() => navigate("/events", { state: { event: event } })}
-              alt="event-banner"
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <Carousel
+            loop={true}
+            transition={{ duration: 2 }}
+            className="rounded-xl"
+          >
+            {events.map((event) => (
+              <img
+                key={event.establishmentId}
+                src={event.imageUrls}
+                onClick={() => navigate("/events", { state: { event: event } })}
+                alt="event-banner"
+              />
+            ))}
+          </Carousel>
+        </div>
+        <p className="text-primary font-bold text-2xl">Clubs Around You</p>
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredClubs.map((club) => (
+            <ClubCard
+              key={club.id}
+              img={club.imageUrl}
+              name={club.name}
+              type={clubType(club.establishmentType)}
+              distance={"4.2Km"}
+              rating={"4.5(42)"}
+              time={"07:00PM"}
+              state={
+                activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
+              }
+              onClick={() => {
+                getSingleClub(club.id);
+              }}
             />
           ))}
-        </Carousel>
-        <p className="text-primary font-bold text-2xl">Clubs Around You</p>
-        {filteredClubs.map((club) => (
-          <ClubCard
-            key={club.id}
-            img={club.imageUrl}
-            name={club.name}
-            type={clubType(club.establishmentType)}
-            distance={"4.2Km"}
-            rating={"4.5(42)"}
-            time={"07:00PM"}
-            state={
-              activeCategory !== "Clubs" ? !activeTab.includes("Clubs") : ""
-            }
-            onClick={() => {
-              getSingleClub(club.id);
-            }}
-          />
-        ))}
+        </div>
       </div>
       <button
         // variant="outlined"

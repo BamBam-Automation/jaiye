@@ -20,7 +20,7 @@ function App() {
   // Access the isAuthenticated state from Redux store
   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   return (
-    <div className="bg-[#F9F9F9] text-tertiary min-h-screen overflow-y-scroll">
+    <div className="bg-[#F9F9F9] text-tertiary min-h-screen overflow-y-scroll md:overflow-hidden">
       <BrowserRouter>
         <Routes>
           <Route path="join" element={<Membership />} />

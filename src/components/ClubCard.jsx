@@ -12,7 +12,11 @@ const ClubCard = (props) => {
   return (
     <Card className="w-full h-fit" onClick={props.onClick}>
       <CardHeader floated={false} className="m-0 rounded-b-none">
-        <img className="w-full object-cover h-36" src={props.img} alt="" />
+        <img
+          className="w-full object-cover h-36 md:h-72 lg:h-40"
+          src={props.img}
+          alt=""
+        />
       </CardHeader>
       <CardBody>
         <h4 className="font-bold">{props.name}</h4>
