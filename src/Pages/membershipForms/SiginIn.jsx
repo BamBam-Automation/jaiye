@@ -138,7 +138,10 @@ const SiginIn = ({ setSignUpForm }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-5">
+    <form
+      onSubmit={handleSubmit}
+      className="grid gap-5 lg:gap-10 lg:w-2/3 lg:mx-auto"
+    >
       {alert && (
         <Alert
           animate={{
@@ -198,9 +201,9 @@ const SiginIn = ({ setSignUpForm }) => {
           />
           Remember Me
         </label>
-        <p className="text-primary" onClick={() => setSignUpForm(2)}>
+        <button className="text-primary" onClick={() => setSignUpForm(2)}>
           Forgot Password
-        </p>
+        </button>
       </div>
       <PrimaryButton
         onClick={handleSubmit}

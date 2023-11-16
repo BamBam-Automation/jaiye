@@ -130,7 +130,10 @@ const ForgotPassword = ({ userToken }) => {
   }, 3000);
 
   return (
-    <form className="grid gap-5" onSubmit={handleSubmit}>
+    <form
+      className="grid gap-5 lg:gap-10 lg:w-2/3 lg:mx-auto"
+      onSubmit={handleSubmit}
+    >
       {alert && (
         <Alert
           animate={{

@@ -11,11 +11,12 @@ import ForgotPassword from "./membershipForms/ForgotPassword";
 import { useEffect } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import axiosInstance from "../utils/axios/axios";
-import { hasGrantedAnyScopeGoogle } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { CiWarning } from "react-icons/ci";
 import { BsPatchCheck } from "react-icons/bs";
 import { loginSuccess } from "../utils/app/userSlice";
+import BigCirlces from "../images/BigCircles.svg";
+import Jaiye from "../images/Jaiye.svg";
 
 const Membership = () => {
   // State for Visible Form
@@ -134,88 +135,89 @@ const Membership = () => {
 
   const pageTitles = () => {
     if (signUpForm === 0) {
-      return (
-        <>
-          Welcome
-          <br />
-          Back!
-        </>
-      );
+      return <>Welcome Back!</>;
     } else if (signUpForm === 1) {
-      return (
-        <>
-          Create
-          <br />
-          Account
-        </>
-      );
+      return <>Create Account</>;
     } else {
-      return (
-        <>
-          Forgot
-          <br />
-          Password
-        </>
-      );
+      return <>Forgot Password</>;
     }
   };
 
   return (
-    <div className="grid relative p-7 content-between h-screen">
-      {alert && (
-        <Alert
-          animate={{
-            mount: { y: 0 },
-            unmount: { y: 0 },
-          }}
-          color={bgColor}
-          icon={icon}
-          className="absolute h-auto top-8 w-11/12 right-5 z-40"
-        >
-          {response}
-        </Alert>
-      )}
-      <div className="flex gap-6 items-center">
-        <IoIosArrowBack
-          className="h-5 w-5 text-primary"
-          onClick={() => navigate(-1)}
-        />
-        <p className="font-medium">{pageHeader()}</p>
-      </div>
+    <div className="w-screen lg:flex lg:flex-row-reverse">
       <img className="absolute right-0 top-0" src={Group} alt="Eclipse" />
-      <h3 className="mt-9 text-primary font-bold text-3xl">{pageTitles()}</h3>
-      <>{visibleForm()}</>
-      <div className="flex items-center gap-2">
-        <span className="h-[1px] bg-secondary w-full"></span>
-        <p>or</p>
-        <span className="h-[1px] bg-secondary w-full"></span>
+      <div className="hidden lg:block h-screen relative bg-gradient-to-br from-[#EB7C4C] to-[#A03484] basis-1/2">
+        <img
+          src={BigCirlces}
+          alt="bg-image"
+          className="absolute bottom-0 mix-blend-multiply left-0 h-screen w-full"
+        />
       </div>
-      <div className="grid gap-5">
-        <Button
-          size="lg"
-          variant="outlined"
-          color="blue-gray"
-          className="flex items-center justify-center gap-3 border border-[#8C8A93]"
-          onClick={() => login()}
-        >
-          <FcGoogle className="text-2xl" />
-          Sign-up with Google
-        </Button>
-        <p className="text-center text-lg">
-          Don't have an account?{" "}
-          <span
-            className="text-primary cursor-pointer"
-            onClick={() => {
-              if (signUpForm === 0) {
-                setSignUpForm(1);
-              } else {
-                setSignUpForm(0);
-              }
+      <div className="grid p-7 content-between h-screen lg:basis-1/2 lg:content-center">
+        {alert && (
+          <Alert
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 0 },
             }}
+            color={bgColor}
+            icon={icon}
+            className="absolute h-auto top-8 w-11/12 right-5 z-40"
           >
-            {!signUpForm ? "Sign Up" : "Sign In"}
-          </span>
-        </p>
+            {response}
+          </Alert>
+        )}
+        <div className="block md:hidden">
+          <div className="flex gap-6 items-center">
+            <IoIosArrowBack
+              className="h-5 w-5 text-primary"
+              onClick={() => navigate(-1)}
+            />
+            <p className="font-medium">{pageHeader()}</p>
+          </div>
+        </div>
+        <div className="hidden lg:block mx-auto">
+          <div className="grid gap-5 relative">
+            <img src={Jaiye} alt="jaiye-logo" className="mx-auto" />
+            <h1 className="text-center text-6xl font-extrabold">Jaiye</h1>
+          </div>
+        </div>
+        <h3 className="mt-9 text-primary font-bold text-3xl md:text-center lg:my-12 z-20">
+          {pageTitles()}
+        </h3>
+        <>{visibleForm()}</>
+        <div className="flex items-center gap-2 my-10 lg:w-2/3 lg:mx-auto">
+          <span className="h-[1px] bg-secondary w-full"></span>
+          <p>or</p>
+          <span className="h-[1px] bg-secondary w-full"></span>
+        </div>
+        <div className="grid gap-5  lg:gap-10 lg:w-2/3 lg:mx-auto">
+          <Button
+            size="lg"
+            variant="outlined"
+            color="blue-gray"
+            className="flex items-center justify-center gap-3 border border-[#8C8A93]"
+            onClick={() => login()}
+          >
+            <FcGoogle className="text-2xl" />
+            Sign-up with Google
+          </Button>
+          <p className="text-center text-lg">
+            Don't have an account?{" "}
+            <span
+              className="text-primary cursor-pointer"
+              onClick={() => {
+                if (signUpForm === 0) {
+                  setSignUpForm(1);
+                } else {
+                  setSignUpForm(0);
+                }
+              }}
+            >
+              {!signUpForm ? "Sign Up" : "Sign In"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );

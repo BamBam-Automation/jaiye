@@ -88,7 +88,10 @@ const SignUp = () => {
   const [showConfirm, setShowConfirm] = useState(false);
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-5">
+    <form
+      onSubmit={handleSubmit}
+      className="grid gap-5  lg:gap-10 lg:w-2/3 lg:mx-auto"
+    >
       {alert && (
         <Alert
           animate={{
