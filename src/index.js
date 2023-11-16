@@ -7,8 +7,13 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./utils/app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { inject } from "@vercel/analytics";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+// const AppWithAnalytics = withAnalytics(App);
+
+inject();
+
 root.render(
   <Provider store={store}>
     {/* <React.StrictMode> */}
@@ -16,6 +21,7 @@ root.render(
       <ThemeProvider>
         <GoogleOAuthProvider clientId="748855953781-qi4g2a0c2jca2veh2n2pd1ge1o1d65o4.apps.googleusercontent.com">
           <App />
+          {/* <AppWithAnalytics /> */}
         </GoogleOAuthProvider>
       </ThemeProvider>
     </PersistGate>
