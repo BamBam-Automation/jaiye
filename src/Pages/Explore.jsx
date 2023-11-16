@@ -6,7 +6,7 @@ import { GoFilter, GoHistory } from "react-icons/go";
 import ClubCard from "../components/ClubCard";
 import { Button, Carousel, Drawer, IconButton } from "@material-tailwind/react";
 import { PiCheck, PiUserCircleLight } from "react-icons/pi";
-import { RxStarFilled } from "react-icons/rx";
+import { RxAvatar, RxStarFilled } from "react-icons/rx";
 import { GrClose } from "react-icons/gr";
 // import PageTitle from "../utils/PageTitle";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
-import NavBar from "../components/NavBar";
+import Avatar from "../images/Avatar.svg";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -216,6 +216,29 @@ const Explore = () => {
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
+      {/* <div className="hidden lg:block py-6 px-14 sticky top-0 bg-[#]">
+        <div className="flex flex-grow justify-between">
+          <span className="flex gap-4 items-center">
+            <img src={Jaiye} alt="jaiye-logo" className="h-10" />
+            <h1 className="text-3xl font-extrabold">Jaiye</h1>
+          </span>
+          <div className="flex gap-10">
+            <NavigationItem link={"/"}>
+              <IoIosHome className="h-6 w-6 p-[2px] lg:hidden" />
+              <p className="lg:font-semibold text-lg">Home</p>
+            </NavigationItem>
+            <NavigationItem link={"/history"}>
+              <GoHistory className="h-6 w-6 p-[2px]" />
+              <p>History</p>
+            </NavigationItem>
+          </div>
+          <div>
+            <div className="h-12 w-12 rounded-full bg-[#FFEDEA] grid content-center">
+              <img src={Avatar} alt="user-avatar" className="h-8" />
+            </div>
+          </div>
+        </div>
+      </div> */}
       <div className="flex justify-between gap-5">
         <div className="flex justify-between w-full items-baseline">
           <IoIosArrowBack
