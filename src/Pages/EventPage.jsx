@@ -263,7 +263,7 @@ const EventPage = () => {
           const paystack = new PaystackPop();
           paystack.newTransaction({
             key: `${process.env.REACT_APP_PAYSTACK}`,
-            amount: eventPrice * 100,
+            amount: eventPrice * 100 + 350,
             email: email,
             firstname: "",
             lastname: "",
