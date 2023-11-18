@@ -98,7 +98,7 @@ const Profile = () => {
       </div>
       <div className="space-y-5">
         <h4 className="font-semibold text-lg text-center">Account</h4>
-        <div className="space-y-5 grid">
+        <div className="grid gap-5 md:gap-10 w-full md:w-2/3 mx-auto lg:w-1/2">
           <Input
             label={"Username"}
             type={"text"}

@@ -94,6 +94,9 @@ const Home = () => {
           You have no active reservations
         </p>
       ) : (
+        ""
+      )}
+      <div>
         <Carousel
           loop={true}
           transition={{ duration: 2 }}
@@ -111,7 +114,7 @@ const Home = () => {
             />
           ))}
         </Carousel>
-      )}
+      </div>
       <div className="flex justify-between items-center">
         <p className="font-semibold text-lg">Popular Places</p>
         <Link to={"/explore"} className="text-primary">
