@@ -49,7 +49,7 @@ const History = () => {
   return (
     <div className="p-7 grid gap-5 items-start">
       <NavBar title={"History"} />
-      <div className="mt-10 grid gap-5">
+      <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {events.length === 0 ? (
           <p className="mx-auto text-center text-2xl font-semibold text-primary">
             You have no active reservations
