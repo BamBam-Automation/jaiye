@@ -17,6 +17,7 @@ import { FiPower } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
+import NavBar from "../components/NavBar";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -212,108 +213,113 @@ const Explore = () => {
 
   return (
     <div className="grid gap-5 relative content-start p-7 h-screen overflow-y-scroll">
-      <div className="flex justify-between gap-5">
-        <div className="flex justify-between w-full items-baseline">
-          <IoIosArrowBack
-            className="h-5 w-5 text-primary"
-            onClick={previousPage}
-          />
-          <div className="mb-5 sticky top-0">
-            <Input type="search" id="search" label="Search" />
-            <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />
-          </div>
-          <GoFilter
-            className="h-5 w-5 text-primary"
-            onClick={() => setDrawerState(!drawerState)}
-          />
-        </div>
-        <PiUserCircleLight
-          className="h-10 w-10 text-primary"
-          onClick={() => setMenu(!menu)}
-        />
-        {menu && (
-          <Drawer
-            className="p-10 grid items-start gap-10 rounded-l-xl"
-            open={true}
-            placement="right"
-            onClose={() => setMenu(false)}
-          >
-            <div className="flex items-center justify-between">
-              <img className="h-10" src={Jaiye} alt="logo" />
-              <IconButton
-                variant="text"
-                color="blue-gray"
-                onClick={() => setMenu(false)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                  stroke="currentColor"
-                  className="h-5 w-5"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconButton>
+      <div className="hidden lg:block">
+        <NavBar />
+      </div>
+      <div className="lg:hidden">
+        <div className="flex justify-between gap-5">
+          <div className="flex justify-between w-full items-baseline">
+            <IoIosArrowBack
+              className="h-5 w-5 text-primary"
+              onClick={previousPage}
+            />
+            <div className="mb-5 sticky top-0">
+              <Input type="search" id="search" label="Search" />
+              <CiSearch className="absolute text-primary top-1 right-2 h-8 w-8" />
             </div>
-            {token ? (
-              <div className="flex items-center gap-3">
-                {/* <img
+            <GoFilter
+              className="h-5 w-5 text-primary"
+              onClick={() => setDrawerState(!drawerState)}
+            />
+          </div>
+          <PiUserCircleLight
+            className="h-10 w-10 text-primary"
+            onClick={() => setMenu(!menu)}
+          />
+          {menu && (
+            <Drawer
+              className="p-10 grid items-start gap-10 rounded-l-xl"
+              open={true}
+              placement="right"
+              onClose={() => setMenu(false)}
+            >
+              <div className="flex items-center justify-between">
+                <img className="h-10" src={Jaiye} alt="logo" />
+                <IconButton
+                  variant="text"
+                  color="blue-gray"
+                  onClick={() => setMenu(false)}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                    stroke="currentColor"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </IconButton>
+              </div>
+              {token ? (
+                <div className="flex items-center gap-3">
+                  {/* <img
                   className="h-10 w-10 rounded-full object-contain"
                   src={Profile}
                   alt="profile"
                 /> */}
-                <h4 className="font-bold text-xl text-primary">{username}</h4>
-              </div>
-            ) : (
-              ""
-            )}
-            <div className="grid gap-4">
-              <NavigationItem link={"/"}>
-                <IoIosHome className="h-6 w-6 p-[2px]" />
-                <p>Home</p>
-              </NavigationItem>
-              {token ? (
-                <NavigationItem link={"/dashboard"}>
-                  <IoIosHome className="h-6 w-6 p-[2px]" />
-                  <p>Dashboard</p>
-                </NavigationItem>
+                  <h4 className="font-bold text-xl text-primary">{username}</h4>
+                </div>
               ) : (
-                <NavigationItem link={"/join"}>
-                  <IoMdLogIn className="h-6 w-6 p-[2px]" />
-                  <p>Membership</p>
-                </NavigationItem>
+                ""
               )}
-              {/* <NavigationItem link={"/scan"}>
+              <div className="grid gap-4">
+                <NavigationItem link={"/"}>
+                  <IoIosHome className="h-6 w-6 p-[2px]" />
+                  <p>Home</p>
+                </NavigationItem>
+                {token ? (
+                  <NavigationItem link={"/dashboard"}>
+                    <IoIosHome className="h-6 w-6 p-[2px]" />
+                    <p>Dashboard</p>
+                  </NavigationItem>
+                ) : (
+                  <NavigationItem link={"/join"}>
+                    <IoMdLogIn className="h-6 w-6 p-[2px]" />
+                    <p>Membership</p>
+                  </NavigationItem>
+                )}
+                {/* <NavigationItem link={"/scan"}>
                 <MdCastConnected className="h-6 w-6 p-[2px]" />
                 <p>Scan Ticket</p>
               </NavigationItem> */}
-              <NavigationItem link={"/history"}>
-                <GoHistory className="h-6 w-6 p-[2px]" />
-                <p>History</p>
-              </NavigationItem>
-              <NavigationItem link={"/profile"}>
-                <FaUser className="h-6 w-6 p-[2px]" />
-                <p>Profile</p>
-              </NavigationItem>
-            </div>
-            {token ? (
-              <div onClick={userLogOut}>
-                <button className="text-[#848484] flex items-center self-end gap-3">
-                  <FiPower className="h-8 w-8 p-[2px]" />
-                  <p>Sign Out</p>
-                </button>
+                <NavigationItem link={"/history"}>
+                  <GoHistory className="h-6 w-6 p-[2px]" />
+                  <p>History</p>
+                </NavigationItem>
+                <NavigationItem link={"/profile"}>
+                  <FaUser className="h-6 w-6 p-[2px]" />
+                  <p>Profile</p>
+                </NavigationItem>
               </div>
-            ) : (
-              ""
-            )}
-          </Drawer>
-        )}
+              {token ? (
+                <div onClick={userLogOut}>
+                  <button className="text-[#848484] flex items-center self-end gap-3">
+                    <FiPower className="h-8 w-8 p-[2px]" />
+                    <p>Sign Out</p>
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </Drawer>
+          )}
+        </div>
       </div>
       {drawerState && (
         <div className="fixed w-screen h-full left-0 z-20 overflow-scroll">
