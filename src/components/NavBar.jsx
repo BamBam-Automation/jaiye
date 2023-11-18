@@ -34,7 +34,7 @@ const NavBar = (props) => {
   let username = sessionStorage.getItem("username");
 
   return (
-    <div className="border-b sticky top-0">
+    <div className="border-b sticky -top-10 bg-[#f9f9f9] z-40">
       <div className="hidden lg:block py-6 px-14">
         <div className="flex flex-grow justify-between">
           <span className="flex gap-4 items-center">
