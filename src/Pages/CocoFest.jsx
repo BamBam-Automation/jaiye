@@ -42,14 +42,6 @@ const CocoFest = () => {
           />
         ))}
       </Carousel>
-      {/* <p className="font-semibold text-lg text-primary">Event Dates:</p>
-      {dates.map((date, index) => (
-        <div className="grid" key={index}>
-          <p className="bg-primary/70 mx-auto w-2/3 grid place-content-center text-white/90 h-10 rounded">
-            {date.date}
-          </p>
-        </div>
-      ))} */}
       <PrimaryButton
         onClick={() => navigate("/events", { state: { event: events[0] } })}
         text="Book Event"

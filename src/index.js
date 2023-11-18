@@ -10,7 +10,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { inject } from "@vercel/analytics";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-// const AppWithAnalytics = withAnalytics(App);
 
 inject();
 
