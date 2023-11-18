@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Menu from "./Menu";
 // import { CiBookmarkCheck } from "react-icons/ci";
+import Avatar from "../images/Avatar.svg";
 
 const NavBar = (props) => {
   const [open, setOpen] = useState(false);
@@ -33,8 +34,21 @@ const NavBar = (props) => {
   let username = sessionStorage.getItem("username");
 
   return (
-    <div>
-      <div className="hidden lg:block sticky top-0"></div>
+    <div className="border-b sticky top-0">
+      <div className="hidden lg:block py-6 px-14">
+        <div className="flex flex-grow justify-between">
+          <span className="flex gap-4 items-center">
+            <img src={Jaiye} alt="jaiye-logo" className="h-10" />
+            <h1 className="text-3xl font-extrabold">Jaiye</h1>
+          </span>
+          <Menu />
+          <div>
+            <div className="h-12 w-12 rounded-full bg-[#FFEDEA] p-2">
+              <img src={Avatar} alt="user-avatar" className="h-8" />
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Mobile Menu */}
       <div className="block lg:hidden">
         <div className="self-start flex font-semibold items-center justify-between">

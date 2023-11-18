@@ -9,19 +9,19 @@ const Menu = (props) => {
   const token = sessionStorage.getItem("token");
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 lg:grid-flow-col">
       <NavigationItem link={"/"}>
-        <FaCompass className="h-6 w-6 p-[2px]" />
+        <FaCompass className="h-6 w-6 p-[2px] lg:hidden" />
         <p>Explore</p>
       </NavigationItem>
       {token ? (
         <NavigationItem link={"/dashboard"}>
-          <IoIosHome className="h-6 w-6 p-[2px]" />
+          <IoIosHome className="h-6 w-6 p-[2px] lg:hidden" />
           <p>Dashboard</p>
         </NavigationItem>
       ) : (
         <NavigationItem link={"/join"}>
-          <IoMdLogIn className="h-6 w-6 p-[2px]" />
+          <IoMdLogIn className="h-6 w-6 p-[2px] lg:hidden" />
           <p>Membership</p>
         </NavigationItem>
       )}
@@ -30,11 +30,11 @@ const Menu = (props) => {
               <p>Scan Ticket</p>
             </NavigationItem> */}
       <NavigationItem link={"/history"}>
-        <GoHistory className="h-6 w-6 p-[2px]" />
+        <GoHistory className="h-6 w-6 p-[2px] lg:hidden" />
         <p>History</p>
       </NavigationItem>
       <NavigationItem link={"/profile"}>
-        <FaUser className="h-6 w-6 p-[2px]" />
+        <FaUser className="h-6 w-6 p-[2px] lg:hidden" />
         <p>Profile</p>
       </NavigationItem>
     </div>
