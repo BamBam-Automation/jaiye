@@ -14,6 +14,7 @@ import axiosInstance from "../utils/axios/axios";
 import NavigationItem from "../components/NavigationItem";
 import { FaUser } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
+import { RxStarFilled } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
