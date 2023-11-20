@@ -33,10 +33,14 @@ const Menu = (props) => {
         <GoHistory className="h-6 w-6 p-[2px] lg:hidden" />
         <p>History</p>
       </NavigationItem>
-      <NavigationItem link={"/profile"}>
-        <FaUser className="h-6 w-6 p-[2px] lg:hidden" />
-        <p>Profile</p>
-      </NavigationItem>
+      {token ? (
+        <NavigationItem link={"/profile"}>
+          <FaUser className="h-6 w-6 p-[2px] lg:hidden" />
+          <p>Profile</p>
+        </NavigationItem>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

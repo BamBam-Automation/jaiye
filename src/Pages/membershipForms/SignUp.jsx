@@ -90,7 +90,7 @@ const SignUp = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid gap-5  lg:gap-10 lg:w-2/3 lg:mx-auto"
+      className="grid gap-5 lg:gap-7 lg:w-2/3 lg:mx-auto"
     >
       {alert && (
         <Alert
