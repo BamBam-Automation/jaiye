@@ -33,7 +33,7 @@ const Clubpage = () => {
   const [mapVisible, setMapVisible] = useState(false);
 
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
   const prevSummary = JSON.parse(sessionStorage.getItem("prevSummary"));
   // console.log(prevSummary);
   const summary = prevSummary?.club || location?.state?.club;
@@ -47,11 +47,11 @@ const Clubpage = () => {
     axiosInstance
       .get(`/tableType?establishmentId=${summary.id}`)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setTableTypes(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -99,12 +99,12 @@ const Clubpage = () => {
     if (steps !== 1) {
       setSteps((step) => step + 1);
     } else if (token) {
-      console.log(formData);
+      // console.log(formData);
 
       axiosInstance
         .post("order", formData)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // const paystack = new PaystackPop();
           // paystack.newTransaction({
           //   key: `{process.env.REACT_APP_PAYSTACK}`,

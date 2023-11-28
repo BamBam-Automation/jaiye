@@ -26,7 +26,7 @@ const QRScannerComponent = () => {
   const handleZoomChange = (event) => {
     const { value } = event.target;
     setZoomLevel(value);
-    console.log(value);
+    // console.log(value);
   };
 
   return (

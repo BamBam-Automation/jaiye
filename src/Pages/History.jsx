@@ -29,7 +29,7 @@ const History = () => {
         // Append the new clubs to the existing list
         setEvents((prevEvents) => [...prevEvents, ...newEvents]);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchEvents();

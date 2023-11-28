@@ -59,6 +59,7 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post("/login", data)
         .then((res) => {
+          // console.log(res);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
@@ -100,8 +101,8 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post("/login", data)
         .then((res) => {
-          console.log(res.data);
-          console.log(previousPage);
+          // console.log(res);
+          // console.log(previousPage);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
@@ -117,7 +118,7 @@ const SiginIn = ({ setSignUpForm }) => {
           }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLoading(false);
           if (err.message === "timeout of 10000ms exceeded") {
             setAlert(!alert);

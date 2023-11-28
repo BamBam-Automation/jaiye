@@ -59,7 +59,7 @@ const Profile = () => {
     axiosInstance
       .post("/changepassword", data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setAlert(!alert);
         setBgColor("green");
         setIcon(<BsPatchCheck />);
@@ -71,7 +71,7 @@ const Profile = () => {
         navigate("/");
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setAlert(!alert);
         setBgColor("red");
         setIcon(<CiWarning />);

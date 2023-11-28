@@ -52,7 +52,7 @@ const ForgotPassword = ({ userToken }) => {
       };
     }
 
-    console.log(data, url);
+    // console.log(data, url);
     if (userToken) {
       if (password !== confirmPassword) {
         setAlert(!alert);

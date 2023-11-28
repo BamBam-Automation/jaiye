@@ -62,7 +62,7 @@ const SignUp = () => {
           }, 2000);
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
           setLoading(false);
           setAlert(!alert);
           setBgColor("red");

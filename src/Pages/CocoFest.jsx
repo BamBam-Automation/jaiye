@@ -18,7 +18,7 @@ const CocoFest = () => {
         setDates(res.data.data[0].eventDates);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

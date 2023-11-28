@@ -27,7 +27,7 @@ const Home = () => {
         setEvents(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -40,7 +40,7 @@ const Home = () => {
         setClubs(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 

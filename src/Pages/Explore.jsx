@@ -65,7 +65,7 @@ const Explore = () => {
         // Append the new clubs to the existing list
         setClubs((prevClubs) => [...prevClubs, ...newClubs]);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     fetchClubs();
@@ -84,7 +84,7 @@ const Explore = () => {
         setEvents(res.data.data);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
     // const fecthEvents = async () => {
     //   try {
@@ -144,7 +144,7 @@ const Explore = () => {
         navigate("/club", { state: { club: res.data } });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 
