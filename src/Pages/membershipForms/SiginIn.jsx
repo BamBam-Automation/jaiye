@@ -151,7 +151,7 @@ const SiginIn = ({ setSignUpForm }) => {
           }}
           color={bgColor}
           icon={icon}
-          className="absolute h-auto top-8 w-11/12 right-5"
+          className="absolute h-auto top-8 w-11/12 right-5 z-50"
         >
           {response}
         </Alert>

@@ -155,7 +155,7 @@ const Profile = () => {
           }}
           color={bgColor}
           icon={icon}
-          className="absolute w-11/12 right-5 h-12 top-8"
+          className="absolute w-11/12 right-5 h-12 top-8 z-50"
         >
           {response}
         </Alert>
