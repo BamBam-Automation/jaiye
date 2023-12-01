@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../components/NavBar";
-import { Alert, Carousel, Spinner } from "@material-tailwind/react";
+import { Alert, Spinner } from "@material-tailwind/react";
 import { CiWarning } from "react-icons/ci";
 import axiosInstance from "../utils/axios/axios";
 import { BsPatchCheck } from "react-icons/bs";

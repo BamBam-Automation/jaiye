@@ -6,8 +6,7 @@ import { GoFilter, GoHistory } from "react-icons/go";
 import ClubCard from "../components/ClubCard";
 import { Button, Carousel, Drawer, IconButton } from "@material-tailwind/react";
 import { PiCheck, PiUserCircleLight } from "react-icons/pi";
-import { GrClose, GrUserAdmin } from "react-icons/gr";
-// import PageTitle from "../utils/PageTitle";
+import { GrClose } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axiosInstance from "../utils/axios/axios";
@@ -19,7 +18,6 @@ import { useDispatch } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
 import NavBar from "../components/NavBar";
-import PrimaryButton from "../components/PrimaryButton";
 
 const Explore = () => {
   const navigate = useNavigate();
@@ -198,17 +196,6 @@ const Explore = () => {
     }
   };
 
-  // Manage Admin form State
-  const [showAdminForm, setShowAdminForm] = useState(false);
-
-  const [adminUsername, setAdminUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  // Manage Admin login
-  const handleAdminLogin = () => {
-    console.log("first");
-  };
-
   // Manage Menu Icon
   const [menu, setMenu] = useState(false);
 
@@ -307,40 +294,6 @@ const Explore = () => {
                     <p>Membership</p>
                   </NavigationItem>
                 )}
-                <button
-                  className="flex items-center gap-5 px-5 text-[#848484]"
-                  onClick={() => setShowAdminForm(!showAdminForm)}
-                >
-                  <GrUserAdmin className="h-6 w-6 p-[2px] text-[#848484]" />
-                  <p>Admin</p>
-                </button>
-                {showAdminForm && (
-                  <form className="grid gap-5" onSubmit={handleAdminLogin}>
-                    <Input
-                      label={"Username"}
-                      type={"text"}
-                      id={"username"}
-                      value={adminUsername}
-                      onChange={(e) => {
-                        setAdminUsername(e.target.value);
-                      }}
-                    />
-                    <Input
-                      label={"Password"}
-                      type={"password"}
-                      id={"password"}
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
-                    />
-                    <PrimaryButton text={"LOGIN"} />
-                  </form>
-                )}
-                {/* <NavigationItem link={"/scan"}>
-                <MdCastConnected className="h-6 w-6 p-[2px]" />
-                <p>Scan Ticket</p>
-              </NavigationItem> */}
                 <NavigationItem link={"/history"}>
                   <GoHistory className="h-6 w-6 p-[2px]" />
                   <p>History</p>
