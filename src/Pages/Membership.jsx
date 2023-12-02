@@ -145,6 +145,8 @@ const Membership = () => {
       return <>Welcome Back!</>;
     } else if (signUpForm === 1) {
       return <>Create Account</>;
+    } else if (signUpForm === 2) {
+      return <>Admin Registrattion</>;
     } else {
       return <>Forgot Password</>;
     }
