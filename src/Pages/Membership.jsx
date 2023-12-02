@@ -17,6 +17,7 @@ import { BsPatchCheck } from "react-icons/bs";
 import { loginSuccess } from "../utils/app/userSlice";
 import BigCirlces from "../images/BigCircles.svg";
 import Jaiye from "../images/Jaiye.svg";
+import AdminRegistration from "./membershipForms/AdminRegistration";
 
 const Membership = () => {
   // State for Visible Form
@@ -42,6 +43,8 @@ const Membership = () => {
       return "Jaiye - Sign In";
     } else if (signUpForm === 1) {
       return "Jaiye - Sign Up";
+    } else if (signUpForm === 2) {
+      return "Jaiye - Admin Registration";
     } else {
       return "Jaiye - Forgot Password";
     }
@@ -118,6 +121,8 @@ const Membership = () => {
       return "Login";
     } else if (signUpForm === 1) {
       return "Sign Up";
+    } else if (signUpForm === 2) {
+      return "Admin Sign Up";
     } else {
       return "Forgot Password";
     }
@@ -128,6 +133,8 @@ const Membership = () => {
       return <SignIn setSignUpForm={setSignUpForm} />;
     } else if (signUpForm === 1) {
       return <SignUp />;
+    } else if (signUpForm === 2) {
+      return <AdminRegistration />;
     } else {
       return <ForgotPassword userToken={userToken} />;
     }
@@ -177,21 +184,21 @@ const Membership = () => {
           </div>
         </div>
         <div className="hidden lg:block mx-auto">
-          <div className="grid gap-5 relative">
+          <div className="grid gap-5">
             <img src={Jaiye} alt="jaiye-logo" className="mx-auto" />
             <h1 className="text-center text-6xl font-extrabold">Jaiye</h1>
           </div>
         </div>
-        <h3 className="mt-9 text-primary font-bold text-3xl md:text-center lg:my-12 z-20">
+        <h3 className="mt-5 text-primary font-bold text-3xl md:text-center lg:mb-5 z-20">
           {pageTitles()}
         </h3>
         <>{visibleForm()}</>
-        <div className="flex items-center gap-2 my-10 lg:w-2/3 lg:mx-auto">
+        <div className="flex items-center gap-2 my-5 lg:w-2/3 lg:mx-auto">
           <span className="h-[1px] bg-secondary w-full"></span>
           <p>or</p>
           <span className="h-[1px] bg-secondary w-full"></span>
         </div>
-        <div className="grid gap-5  lg:gap-10 lg:w-2/3 lg:mx-auto">
+        <div className="grid gap-5 lg:w-2/3 lg:mx-auto">
           <Button
             size="lg"
             variant="outlined"
@@ -202,6 +209,16 @@ const Membership = () => {
             <FcGoogle className="text-2xl" />
             Sign-up with Google
           </Button>
+          {signUpForm ? (
+            <p className="text-center text-lg">
+              To sign up as admin, click{" "}
+              <button className="text-primary" onClick={() => setSignUpForm(2)}>
+                Here
+              </button>
+            </p>
+          ) : (
+            ""
+          )}
           <p className="text-center text-lg">
             Don't have an account?{" "}
             <span
