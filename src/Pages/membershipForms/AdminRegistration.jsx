@@ -8,6 +8,7 @@ import { BsPatchCheck } from "react-icons/bs";
 
 const AdminRegistration = () => {
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,18 +22,18 @@ const AdminRegistration = () => {
 
   const handleSubmit = () => {
     const data = {
+      username,
       firstName,
       lastName,
       email,
-      phone,
+      phoneNumber: phone,
       password,
     };
-    if (!firstName || !lastName || !email || !phone || !password) {
+    if (!username || !firstName || !lastName || !email || !phone || !password) {
       setAlert(!alert);
       setBgColor("red");
       setIcon(<CiWarning />);
       setResponse("Required fields are empty");
-      //   console.log(data);
     } else if (password !== confrimPassword) {
       setAlert(!alert);
       setBgColor("red");
@@ -59,7 +60,6 @@ const AdminRegistration = () => {
           );
         });
     }
-    // console.log(data);
   };
 
   setTimeout(() => {
@@ -83,6 +83,13 @@ const AdminRegistration = () => {
           {response}
         </Alert>
       )}
+      <Input
+        label={"Username"}
+        type={"text"}
+        id={"username"}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
       <Input
         label={"First Name"}
         type={"text"}
