@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../components/NavBar";
 import { MdOutlineTableBar } from "react-icons/md";
 import { BsTicketPerforated } from "react-icons/bs";
@@ -14,7 +14,28 @@ import { BsPatchCheck } from "react-icons/bs";
 const PurchaseSummary = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { amount, data, event, url, image } = location.state;
+
+  //   const { amount, data, event, url, image } = location?.state;
+  const {
+    amount = null,
+    data = null,
+    event = null,
+    url = null,
+    image = null,
+  } = location?.state || {};
+
+  useEffect(() => {
+    if (
+      amount === null ||
+      data === null ||
+      event === null ||
+      url === null ||
+      image === null
+    ) {
+      navigate("/");
+    }
+  }, [amount]);
+
   //   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const email = sessionStorage.getItem("usermail");
 
