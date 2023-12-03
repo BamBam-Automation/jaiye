@@ -16,6 +16,7 @@ import EventPage from "./Pages/EventPage";
 import AllEvents from "./Pages/AllEvents";
 import CocoFest from "./Pages/CocoFest";
 import PurchaseSummary from "./Pages/PurchaseSummary";
+import GenZ from "./Pages/GenZ";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/" element={<Explore />} />
           <Route path="cocoFest" element={<CocoFest />} />
+          <Route path="genZ" element={<GenZ />} />
           <Route
             path="events"
             element={<EventPage />}

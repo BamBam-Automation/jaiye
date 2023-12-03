@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../components/PrimaryButton";
 import PageTitle from "../utils/PageTitle";
 
-const CocoFest = () => {
+const GenZ = () => {
   const navigate = useNavigate();
   const [cocoFest, setCocoFest] = useState({});
   useEffect(() => {
     axiosInstance
       .get("events?pageNumber=1&pageSize=10")
       .then((res) => {
-        setCocoFest(res.data.data[0]);
+        setCocoFest(res.data.data[1]);
       })
       .catch((err) => {
         // console.log(err);
@@ -45,4 +45,4 @@ const CocoFest = () => {
   );
 };
 
-export default CocoFest;
+export default GenZ;
