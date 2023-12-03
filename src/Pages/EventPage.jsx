@@ -23,7 +23,7 @@ const EventPage = () => {
   }
   // const prevSummary = ""; //JSON.parse(sessionStorage.getItem("prevSummary"));
   const location = useLocation();
-  // console.log(location);
+  console.log(location);
   const summary = location?.state?.event || prevSummary;
 
   useEffect(() => {
@@ -202,7 +202,119 @@ const EventPage = () => {
   const [response, setResponse] = useState("");
 
   // Paystack Payment Method
-  const handlePayStackBooking = () => {
+  // const handlePayStackBooking = () => {
+  //   let url = "";
+  //   let data = {};
+
+  //   if (!isAuthenticated) {
+  //     sessionStorage.setItem("previousPage", window.location.href);
+  //     sessionStorage.setItem("prevSummary", JSON.stringify(summary));
+  //     navigate("/join");
+  //   }
+
+  //   const selectedTicket = ticketTypes.find(
+  //     (type) => type.ticketTypeId === selectedTicketType
+  //   );
+
+  //   if (selectedTicket === undefined) {
+  //     setAlert(!alert);
+  //     setBgColor("red");
+  //     setIcon(<CiWarning />);
+  //     setResponse("Please, select ticket");
+  //     return;
+  //   }
+
+  //   switch (selectedTicket.ticketClass) {
+  //     case 0:
+  //       url = "events/book/ticket";
+  //       data = {
+  //         referralCode: code,
+  //         ticketTypeId: selectedTicketType,
+  //       };
+  //       break;
+  //     case 1:
+  //       url = "events/book/multiple-days-ticket";
+  //       data = {
+  //         referralCode: code,
+  //         ticketTypeId: selectedTicketType,
+  //         eventDateIds: selectedDates,
+  //       };
+  //       break;
+  //     case 2:
+  //       url = "events/book/single-day-ticket";
+  //       data = {
+  //         referralCode: code,
+  //         ticketTypeId: selectedTicketType,
+  //         eventDateId: selectedDates[0],
+  //       };
+  //       break;
+  //     default:
+  //       break;
+  //   }
+
+  //   if (isAuthenticated) {
+  //     setLoading(true);
+  //     axiosInstance
+  //       .post(url, data)
+  //       .then((res) => {
+  //         setAlert(!alert);
+  //         setBgColor("green");
+  //         setIcon(<BsPatchCheck />);
+  //         setResponse(`${res.data.message}. Redirecting to payment`);
+  //         const paystack = new PaystackPop();
+  //         paystack.newTransaction({
+  //           key: `${process.env.REACT_APP_PAYSTACK}`,
+  //           amount: eventPrice * 100 + 35000,
+  //           email: email,
+  //           firstname: "",
+  //           lastname: "",
+  //           metadata: {
+  //             ticketId: res.data.data.ticketId,
+  //             paymentKind: "EventTicket",
+  //           },
+  //           onSuccess(transaction) {
+  //             let message = `Payment Completed with reference number: ${transaction.reference}`;
+  //             setAlert(!alert);
+  //             setBgColor("green");
+  //             setResponse(message);
+  //             setIcon(<BsPatchCheck />);
+  //             setLoading(false);
+  //             setTimeout(() => {
+  //               navigate("/event-booking", {
+  //                 state: {
+  //                   event: ticketName,
+  //                   details: transaction.reference,
+  //                   amount: eventPrice,
+  //                   ticketSummary: res.data.data.encodedTicket,
+  //                 },
+  //               });
+  //             }, 3000);
+  //           },
+  //           onCancel() {
+  //             setAlert(!alert);
+  //             setResponse("Request failed, please try again");
+  //             setBgColor("red");
+  //             setIcon(<CiWarning />);
+  //             setLoading(false);
+  //           },
+  //         });
+  //       })
+  //       .catch((err) => {
+  //         setAlert(!alert);
+  //         setBgColor("red");
+  //         setIcon(<CiWarning />);
+  //         if (err?.data?.message === "Request failed with status code 401") {
+  //           sessionStorage.setItem("previousPage", window.location.href);
+  //           sessionStorage.setItem("prevSummary", JSON.stringify(summary));
+  //           navigate("/join");
+  //         }
+  //         setResponse(err?.data?.message || err?.message);
+  //         setLoading(false);
+  //       });
+  //   }
+  // };
+
+  const handleSubmit = () => {
     let url = "";
     let data = {};
 
@@ -252,66 +364,17 @@ const EventPage = () => {
         break;
     }
 
-    if (isAuthenticated) {
-      setLoading(true);
-      axiosInstance
-        .post(url, data)
-        .then((res) => {
-          setAlert(!alert);
-          setBgColor("green");
-          setIcon(<BsPatchCheck />);
-          setResponse(`${res.data.message}. Redirecting to payment`);
-          const paystack = new PaystackPop();
-          paystack.newTransaction({
-            key: `${process.env.REACT_APP_PAYSTACK}`,
-            amount: eventPrice * 100 + 35000,
-            email: email,
-            firstname: "",
-            lastname: "",
-            metadata: {
-              ticketId: res.data.data.ticketId,
-              paymentKind: "EventTicket",
-            },
-            onSuccess(transaction) {
-              let message = `Payment Completed with reference number: ${transaction.reference}`;
-              setAlert(!alert);
-              setBgColor("green");
-              setResponse(message);
-              setIcon(<BsPatchCheck />);
-              setLoading(false);
-              setTimeout(() => {
-                navigate("/event-booking", {
-                  state: {
-                    event: ticketName,
-                    details: transaction.reference,
-                    amount: eventPrice,
-                    ticketSummary: res.data.data.encodedTicket,
-                  },
-                });
-              }, 3000);
-            },
-            onCancel() {
-              setAlert(!alert);
-              setResponse("Request failed, please try again");
-              setBgColor("red");
-              setIcon(<CiWarning />);
-              setLoading(false);
-            },
-          });
-        })
-        .catch((err) => {
-          setAlert(!alert);
-          setBgColor("red");
-          setIcon(<CiWarning />);
-          if (err?.data?.message === "Request failed with status code 401") {
-            sessionStorage.setItem("previousPage", window.location.href);
-            sessionStorage.setItem("prevSummary", JSON.stringify(summary));
-            navigate("/join");
-          }
-          setResponse(err?.data?.message || err?.message);
-          setLoading(false);
-        });
-    }
+    navigate("/summary", {
+      state: {
+        url,
+        data,
+        image: location?.state?.event?.imageUrls[0],
+        event: ticketName,
+        // details: transaction.reference,
+        amount: eventPrice,
+        // ticketSummary: res.data.data.encodedTicket,
+      },
+    });
   };
 
   setTimeout(() => {
@@ -391,7 +454,8 @@ const EventPage = () => {
             }}
           />
           <PrimaryButton
-            onClick={handlePayStackBooking}
+            // onClick={handlePayStackBooking}
+            onClick={handleSubmit}
             text={loading ? <Spinner color="pink" /> : "Book Event"}
           />
         </div>

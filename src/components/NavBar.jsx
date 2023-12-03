@@ -54,7 +54,7 @@ const NavBar = (props) => {
         <div className="self-start flex font-semibold items-center justify-between">
           <div className="flex gap-5 items-center">
             <IoIosArrowBack
-              className="h-5 w-5 text-primary"
+              className="h-5 w-5 text-primary cursor-pointer"
               onClick={previousPage}
             />
             <h6>{props.title}</h6>
