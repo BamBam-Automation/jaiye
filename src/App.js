@@ -15,6 +15,7 @@ import Profile from "./Pages/Profile";
 import EventPage from "./Pages/EventPage";
 import AllEvents from "./Pages/AllEvents";
 import CocoFest from "./Pages/CocoFest";
+import PurchaseSummary from "./Pages/PurchaseSummary";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -37,6 +38,10 @@ function App() {
           <Route
             path="dashboard"
             element={isAuthenticated ? <Home /> : <Membership />}
+          />
+          <Route
+            path="summary"
+            element={isAuthenticated ? <PurchaseSummary /> : <Membership />}
           />
           <Route
             path="club"
