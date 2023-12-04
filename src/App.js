@@ -17,6 +17,7 @@ import AllEvents from "./Pages/AllEvents";
 import CocoFest from "./Pages/CocoFest";
 import PurchaseSummary from "./Pages/PurchaseSummary";
 import GenZ from "./Pages/GenZ";
+import GenZEventPage from "./Pages/GenZEventPage";
 
 function App() {
   // Access the isAuthenticated state from Redux store
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Explore />} />
           <Route path="cocoFest" element={<CocoFest />} />
           <Route path="genZ" element={<GenZ />} />
+          <Route path="genZEventSummary" element={<GenZEventPage />} />
           <Route
             path="events"
             element={<EventPage />}
@@ -41,10 +43,7 @@ function App() {
             path="dashboard"
             element={isAuthenticated ? <Home /> : <Membership />}
           />
-          <Route
-            path="summary"
-            element={isAuthenticated ? <PurchaseSummary /> : <Membership />}
-          />
+          <Route path="summary" element={<PurchaseSummary />} />
           <Route
             path="club"
             element={<Clubpage />}

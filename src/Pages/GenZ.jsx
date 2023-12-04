@@ -13,6 +13,7 @@ const GenZ = () => {
     axiosInstance
       .get("events?pageNumber=1&pageSize=10")
       .then((res) => {
+        // console.log(res.data.data[1]);
         setCocoFest(res.data.data[1]);
       })
       .catch((err) => {
@@ -22,6 +23,10 @@ const GenZ = () => {
 
   // console.log(cocoFest);
   PageTitle("Jaiye - CocoFest Festival");
+
+  const summaryProceed = () => {
+    navigate("/genZEventSummary", { state: { event: cocoFest } });
+  };
 
   return (
     <div className="p-7 grid gap-5 items-start">
@@ -33,14 +38,11 @@ const GenZ = () => {
         <img
           key={cocoFest.establishmentId}
           src={cocoFest.imageUrls}
-          onClick={() => navigate("/events", { state: { event: cocoFest } })}
+          onClick={summaryProceed}
           alt="event-banner"
         />
       </Carousel>
-      <PrimaryButton
-        onClick={() => navigate("/events", { state: { event: cocoFest } })}
-        text="Book Event"
-      />
+      <PrimaryButton onClick={summaryProceed} text="Book Event" />
     </div>
   );
 };

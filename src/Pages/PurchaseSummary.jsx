@@ -15,26 +15,59 @@ const PurchaseSummary = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const prevData = sessionStorage.getItem("prevSummary");
+  const newPrevData = JSON.parse(prevData);
+  // console.log(newPrevData);
+
   //   const { amount, data, event, url, image } = location?.state;
   const {
-    amount = null,
-    data = null,
-    event = null,
-    url = null,
-    image = null,
+    amount = null || newPrevData.amount,
+    data = null || newPrevData.data,
+    event = null || newPrevData.event,
+    url = null || newPrevData.url,
+    image = null || newPrevData.image,
   } = location?.state || {};
+
+  // useEffect(() => {
+  //   if (
+  //     amount === null ||
+  //     data === null ||
+  //     event === null ||
+  //     url === null ||
+  //     image === null
+  //   ) {
+  //     navigate("/");
+  //   }
+  // }, [amount]);
 
   useEffect(() => {
     if (
+      prevData === null &&
+      (amount === null ||
+        data === null ||
+        event === null ||
+        url === null ||
+        image === null)
+    ) {
+      // Handle the case where there is no previous data and some required fields are null
+      navigate("/");
+    } else if (prevData === null) {
+      // Handle the case where there is no previous data
+      // console.log("No previous data available.");
+    } else if (
       amount === null ||
       data === null ||
       event === null ||
       url === null ||
       image === null
     ) {
-      navigate("/");
+      // Handle the case where some required fields are null
+      // console.log("Some required fields are null.");
+    } else {
+      // Handle the case where both prevData and required fields are present
+      // console.log("Previous data available:", JSON.parse(prevData));
     }
-  }, [amount]);
+  }, [amount, data, event, url, image, prevData]);
 
   //   const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
   const email = sessionStorage.getItem("usermail");
@@ -47,6 +80,7 @@ const PurchaseSummary = () => {
   const [payment, setPayment] = useState("");
 
   const handlePayment = () => {
+    console.log(data);
     if (payment === "") {
       setAlert(!alert);
       setResponse("Please, select payment method");
@@ -104,11 +138,15 @@ const PurchaseSummary = () => {
           setAlert(!alert);
           setBgColor("red");
           setIcon(<CiWarning />);
-          //   if (err?.data?.message === "Request failed with status code 401") {
-          //     sessionStorage.setItem("previousPage", window.location.href);
-          //     sessionStorage.setItem("prevSummary", JSON.stringify(summary));
-          //     navigate("/join");
-          //   }
+          if (err && err.response && err.response.status === 401) {
+            console.log(err);
+            sessionStorage.setItem("previousPage", window.location.href);
+            sessionStorage.setItem(
+              "prevSummary",
+              JSON.stringify(location?.state)
+            );
+            navigate("/join");
+          }
           setResponse(err?.data?.message || err?.message);
           setLoading(false);
         });
@@ -147,14 +185,14 @@ const PurchaseSummary = () => {
           />
           <div className="basis-1/2 space-y-3">
             <h3 className="font-semibold text-primary">{event}</h3>
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <MdOutlineTableBar className="text-primary h-5 w-5" />
               <h6 className="font-semibold">VIP Table</h6>
-            </div>
+            </div> */}
             <div className="flex gap-3 items-center">
               <BsTicketPerforated className="text-primary -rotate-45 h-5 w-5" />
               {/* <p>{`${tableType.price} Naira`}</p> */}
-              <p>{`${amount} Naira`}</p>
+              <p>{`${amount || newPrevData.amount} Naira`}</p>
             </div>
           </div>
         </div>

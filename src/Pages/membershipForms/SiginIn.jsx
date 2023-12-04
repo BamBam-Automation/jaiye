@@ -48,9 +48,8 @@ const SiginIn = ({ setSignUpForm }) => {
       password,
     };
 
-    const previousPage =
-      sessionStorage.getItem("previousPage") ||
-      localStorage.getItem("previousPage");
+    const previousPage = sessionStorage.getItem("previousPage");
+    console.log(previousPage);
 
     if (username && password !== "" && rememberMe) {
       setLoading(true);
@@ -59,7 +58,6 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post("/login", data)
         .then((res) => {
-          // console.log(res);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
@@ -68,7 +66,7 @@ const SiginIn = ({ setSignUpForm }) => {
           dispatch(login(res.data));
           setTimeout(() => {
             if (previousPage) {
-              window.location.href = previousPage;
+              window.location.assign(previousPage);
             } else {
               navigate("/cocoFest");
             }

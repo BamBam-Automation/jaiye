@@ -73,9 +73,7 @@ const Membership = () => {
     },
   });
 
-  const previousPage =
-    sessionStorage.getItem("previousPage") ||
-    localStorage.getItem("previousPage");
+  const previousPage = sessionStorage.getItem("previousPage");
 
   useEffect(() => {
     const handleGoogleLogin = async () => {
