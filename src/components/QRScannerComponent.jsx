@@ -36,7 +36,7 @@ const QRScannerComponent = () => {
           style={scannerStyle}
           constraints={{ video: { facingMode: "environment" } }}
         />
-        {qrCode && <p>Scanned QR Code: {qrCode.text}</p>}
+        {qrCode && <p>Scanned QR Code: {qrCode?.text?.ticketId}</p>}
       </div>
     </div>
   );
