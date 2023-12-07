@@ -4,13 +4,15 @@ import { FaCompass, FaUser } from "react-icons/fa";
 import { IoIosHome, IoMdLogIn } from "react-icons/io";
 import { GoHistory } from "react-icons/go";
 import { FiPower } from "react-icons/fi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineQrCodeScanner } from "react-icons/md";
 
 const Menu = (props) => {
   // Check if token exists
   const token = sessionStorage.getItem("token");
+  const userLevel = useSelector((state) => state?.user?.user?.userType);
 
   const navigate = useNavigate();
 
@@ -41,9 +43,17 @@ const Menu = (props) => {
         <GoHistory className="h-6 w-6 p-[2px] lg:hidden" />
         <p>History</p>
       </NavigationItem>
+      {userLevel === "Patron" ? (
+        <NavigationItem link={"/scan"}>
+          <MdOutlineQrCodeScanner className="h-6 w-6 p-[2px] lg:hidden" />
+          <p>Scan</p>
+        </NavigationItem>
+      ) : (
+        ""
+      )}
       {token ? (
         <div
-          className="p-4 flex gap-3 items-center text-[#848484]"
+          className="p-4 hidden lg:block flex gap-3 items-center text-[#848484]"
           onClick={userLogOut}
         >
           <p>Logout</p>

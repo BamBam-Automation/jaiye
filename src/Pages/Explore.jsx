@@ -14,13 +14,16 @@ import NavigationItem from "../components/NavigationItem";
 import { FaUser } from "react-icons/fa";
 import { FiPower } from "react-icons/fi";
 import { RxStarFilled } from "react-icons/rx";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../utils/app/userSlice";
 import Jaiye from "../images/Jaiye.svg";
 import NavBar from "../components/NavBar";
+import { MdOutlineQrCodeScanner } from "react-icons/md";
 
 const Explore = () => {
   const navigate = useNavigate();
+
+  const userLevel = useSelector((state) => state?.user?.user?.userType);
 
   const previousPage = (e) => {
     navigate(-1);
@@ -298,6 +301,14 @@ const Explore = () => {
                   <GoHistory className="h-6 w-6 p-[2px]" />
                   <p>History</p>
                 </NavigationItem>
+                {userLevel === "Patron" ? (
+                  <NavigationItem link={"/scan"}>
+                    <MdOutlineQrCodeScanner className="h-6 w-6 p-[2px] lg:hidden" />
+                    <p>Scan</p>
+                  </NavigationItem>
+                ) : (
+                  ""
+                )}
                 <NavigationItem link={"/profile"}>
                   <FaUser className="h-6 w-6 p-[2px]" />
                   <p>Profile</p>
