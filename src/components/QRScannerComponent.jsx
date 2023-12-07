@@ -6,17 +6,18 @@ const QRScannerComponent = () => {
   const [qrCode, setQrCode] = useState(null);
 
   const handleScan = (data) => {
-    if (data) {
-      try {
-        const qrCodeObject = JSON.parse(data);
-        setQrCode(qrCodeObject);
-      } catch (error) {
-        console.error("Error parsing QR code data:", error);
-      }
-    }
     // if (data) {
-    //   setQrCode(data);
+    //   try {
+    //     const qrCodeObject = JSON.parse(data);
+    //     setQrCode(qrCodeObject);
+    //   } catch (error) {
+    //     console.error("Error parsing QR code data:", error);
+    //   }
     // }
+    if (data) {
+      const qrCodeObject = JSON.parse(data);
+      setQrCode(qrCodeObject);
+    }
     // console.log(qrCode);
   };
 
