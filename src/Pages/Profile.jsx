@@ -75,7 +75,9 @@ const Profile = () => {
         setAlert(!alert);
         setBgColor("red");
         setIcon(<CiWarning />);
-        setResponse(err?.data?.message || "Request failed, try again");
+        setResponse(
+          err?.response?.data?.message || "Request failed, try again"
+        );
       });
   };
 

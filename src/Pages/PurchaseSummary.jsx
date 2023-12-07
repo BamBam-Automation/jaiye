@@ -147,7 +147,7 @@ const PurchaseSummary = () => {
             );
             navigate("/join");
           }
-          setResponse(err?.data?.message || err?.message);
+          setResponse(err?.response?.data?.message || err?.message);
           setLoading(false);
         });
     }
