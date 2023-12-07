@@ -392,7 +392,7 @@ const Clubpage = () => {
 
   PageTitle("Jaiye - Book Table");
   return (
-    <div className="p-7 grid gap-5 h-screen lg:min-h-screen items-start">
+    <div className="p-7 grid gap-5 min-h-screen items-start">
       <div className="grid gap-3 items-start pb-7">
         <NavBar title={"Book Table"} />
         <div className="grid gap-14">
