@@ -392,16 +392,18 @@ const Clubpage = () => {
 
   PageTitle("Jaiye - Book Table");
   return (
-    <div className="p-7 grid gap-5 h-screen items-start">
+    <div className="p-7 grid gap-5 h-screen lg:min-h-screen items-start">
       <div className="grid gap-3 items-start pb-7">
         <NavBar title={"Book Table"} />
-        <div className="grid gap-5">
-          <h4 className="text-2xl font-bold">{summary?.name}</h4>
-          <img
-            className="w-full object-cover rounded-lg h-full"
-            src={summary?.imageUrl}
-            alt="business banner"
-          />
+        <div className="grid gap-14">
+          <div>
+            <h4 className="text-2xl font-bold">{summary?.name}</h4>
+            <img
+              className="w-full object-cover rounded-lg h-full"
+              src={summary?.imageUrl}
+              alt="business banner"
+            />
+          </div>
           <div className="grid gap-2">
             <div className="flex justify-between">
               <span className="flex">
