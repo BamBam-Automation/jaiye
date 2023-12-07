@@ -131,8 +131,6 @@ const Membership = () => {
       return <SignIn setSignUpForm={setSignUpForm} />;
     } else if (signUpForm === 1) {
       return <SignUp />;
-    } else if (signUpForm === 2) {
-      return <AdminRegistration />;
     } else {
       return <ForgotPassword userToken={userToken} />;
     }
@@ -143,8 +141,6 @@ const Membership = () => {
       return <>Welcome Back!</>;
     } else if (signUpForm === 1) {
       return <>Create Account</>;
-    } else if (signUpForm === 2) {
-      return <>Admin Registrattion</>;
     } else {
       return <>Forgot Password</>;
     }
@@ -209,16 +205,16 @@ const Membership = () => {
             <FcGoogle className="text-2xl" />
             Sign-up with Google
           </Button>
-          {signUpForm ? (
+          {/* {!signUpForm ? (
             <p className="text-center text-lg">
-              To sign up as admin, click{" "}
+              To sign in as admin, click{" "}
               <button className="text-primary" onClick={() => setSignUpForm(2)}>
                 Here
               </button>
             </p>
           ) : (
             ""
-          )}
+          )} */}
           <p className="text-center text-lg">
             Don't have an account?{" "}
             <span

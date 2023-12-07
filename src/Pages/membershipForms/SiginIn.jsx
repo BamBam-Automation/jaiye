@@ -18,7 +18,8 @@ const SiginIn = ({ setSignUpForm }) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
-
+  const [admin, setAdmin] = useState(false);
+  const [email, setEmail] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -42,22 +43,51 @@ const SiginIn = ({ setSignUpForm }) => {
     }
   }, 3000);
 
+  const adminLogin = () => {
+    setPassword("");
+    setUsername("");
+    setEmail("");
+    setAdmin(!admin);
+  };
+
   const handleSubmit = () => {
-    const data = {
-      username,
-      password,
-    };
+    // Handle user data depending on role
+    let data = {};
+
+    if (admin === false) {
+      data = {
+        username,
+        password,
+      };
+    } else {
+      data = {
+        email,
+        password,
+      };
+    }
+
+    // Change URL depending on user role
+    let URL = "";
+
+    if (admin === false) {
+      URL = "/login";
+    } else {
+      URL = "/admin-login";
+    }
 
     const previousPage = sessionStorage.getItem("previousPage");
-    console.log(previousPage);
+    // console.log(previousPage);
+
+    // console.log(data);
 
     if (username && password !== "" && rememberMe) {
       setLoading(true);
       localStorage.setItem("user", username);
       localStorage.setItem("pass", password);
       axiosInstance
-        .post("/login", data)
+        .post(URL, data)
         .then((res) => {
+          console.log(res);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
@@ -79,27 +109,23 @@ const SiginIn = ({ setSignUpForm }) => {
           setIcon(<CiWarning />);
           setResponse(err.response.data.errors || err.message);
         });
-    } else if (password === "" && username !== "") {
+    } else if (password === "") {
       setAlert(!alert);
       setBgColor("red");
       setIcon(<CiWarning />);
       setResponse("The password field is required");
-    } else if (username === "" && password !== "") {
+    } else if ((username === "" || email === "") && password === "") {
+      console.log(data);
       setAlert(!alert);
       setBgColor("red");
       setIcon(<CiWarning />);
-      setResponse("The username field is required");
-    } else if (username === "" && password === "") {
-      setAlert(!alert);
-      setBgColor("red");
-      setIcon(<CiWarning />);
-      setResponse("Username and Password are required");
+      setResponse("Fields below are required");
     } else {
       setLoading(true);
       axiosInstance
-        .post("/login", data)
+        .post(URL, data)
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           // console.log(previousPage);
           setAlert(!alert);
           setBgColor("green");
@@ -137,78 +163,104 @@ const SiginIn = ({ setSignUpForm }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid gap-5 lg:gap-7 lg:w-2/3 lg:mx-auto"
-    >
-      {alert && (
-        <Alert
-          animate={{
-            mount: { y: 0 },
-            unmount: { y: 0 },
-          }}
-          color={bgColor}
-          icon={icon}
-          className="absolute h-auto top-8 w-11/12 right-5 z-50"
-        >
-          {response}
-        </Alert>
-      )}
-      <Input
-        label={"Username"}
-        type={"text"}
-        id={"username"}
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />
-      <div className="relative">
-        <Input
-          label={"Password"}
-          type={showPassword ? "text" : "password"}
-          id={"password"}
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
-        {!showPassword && (
-          <BiShowAlt
-            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
-            onClick={() => setShowPassword(!showPassword)}
-          />
-        )}
-        {showPassword && (
-          <BiHide
-            className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
-            onClick={() => setShowPassword(!showPassword)}
-          />
-        )}
-      </div>
-      <div className="flex items-center justify-between">
-        <label className="flex items-center gap-2" htmlFor="rememberMe">
-          <input
-            className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
-            type="checkbox"
-            name=""
-            value={rememberMe}
-            onChange={() => {
-              setRememberMe(!rememberMe);
+    <div className="space-y-5">
+      <form
+        onSubmit={handleSubmit}
+        className="grid gap-5 lg:gap-7 lg:w-2/3 lg:mx-auto"
+      >
+        {alert && (
+          <Alert
+            animate={{
+              mount: { y: 0 },
+              unmount: { y: 0 },
             }}
-            id=""
+            color={bgColor}
+            icon={icon}
+            className="absolute h-auto top-8 w-11/12 right-5 z-50"
+          >
+            {response}
+          </Alert>
+        )}
+        {!admin ? (
+          <Input
+            label={"Username"}
+            type={"text"}
+            id={"username"}
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
-          Remember Me
-        </label>
-        <button className="text-primary" onClick={() => setSignUpForm(2)}>
-          Forgot Password
+        ) : (
+          <Input
+            label={"Email"}
+            type={"email"}
+            id={"email"}
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+        )}
+        <div className="relative">
+          <Input
+            label={"Password"}
+            type={showPassword ? "text" : "password"}
+            id={"password"}
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
+          {!showPassword && (
+            <BiShowAlt
+              className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          )}
+          {showPassword && (
+            <BiHide
+              className="bg-[#F9F9F9] absolute text-primary/25 h-8 top-2 right-3 w-8"
+              onClick={() => setShowPassword(!showPassword)}
+            />
+          )}
+        </div>
+        <div className="flex items-center justify-between">
+          <label className="flex items-center gap-2" htmlFor="rememberMe">
+            <input
+              className="h-5 w-5 rounded-md border-primary text-primary focus:ring-primary"
+              type="checkbox"
+              name=""
+              value={rememberMe}
+              onChange={() => {
+                setRememberMe(!rememberMe);
+              }}
+              id=""
+            />
+            Remember Me
+          </label>
+          <button className="text-primary" onClick={() => setSignUpForm(2)}>
+            Forgot Password
+          </button>
+        </div>
+        <PrimaryButton
+          onClick={handleSubmit}
+          text={loading ? <Spinner color="pink" /> : "Login"}
+        />
+      </form>
+      <p className="text-center text-lg">
+        To sign in as {admin ? "user" : "admin"}, click{" "}
+        <button
+          className="text-primary"
+          onClick={() => {
+            // setAdmin(!admin);
+            adminLogin();
+          }}
+        >
+          Here
         </button>
-      </div>
-      <PrimaryButton
-        onClick={handleSubmit}
-        text={loading ? <Spinner color="pink" /> : "Login"}
-      />
-    </form>
+      </p>
+    </div>
   );
 };
 
