@@ -87,7 +87,7 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post(URL, data)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           setAlert(!alert);
           setBgColor("green");
           setIcon(<BsPatchCheck />);
@@ -125,7 +125,7 @@ const SiginIn = ({ setSignUpForm }) => {
       axiosInstance
         .post(URL, data)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           // console.log(previousPage);
           setAlert(!alert);
           setBgColor("green");

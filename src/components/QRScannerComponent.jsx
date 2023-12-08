@@ -15,6 +15,7 @@ const QRScannerComponent = () => {
   const [loading, setLoading] = useState(false);
 
   const handleScan = (data) => {
+    // console.log("first");
     if (data) {
       try {
         // Use the callback in setQrCode to ensure qrCode state is updated
