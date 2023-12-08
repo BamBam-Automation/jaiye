@@ -43,7 +43,7 @@ const Menu = (props) => {
         <GoHistory className="h-6 w-6 p-[2px] lg:hidden" />
         <p>History</p>
       </NavigationItem>
-      {token && userLevel === "Patron" ? (
+      {token && userLevel === "AdminUser" ? (
         <NavigationItem link={"/scan"}>
           <MdOutlineQrCodeScanner className="h-6 w-6 p-[2px] lg:hidden" />
           <p>Scan</p>

@@ -23,6 +23,12 @@ const QRScannerComponent = () => {
         console.error("Error setting QR code data:", error);
         return;
       }
+    } else {
+      setLoading(false);
+      setAlert(!alert);
+      setBgColor("red");
+      setIcon(<CiWarning />);
+      setResponse("Invalid QR Code");
     }
   };
 
