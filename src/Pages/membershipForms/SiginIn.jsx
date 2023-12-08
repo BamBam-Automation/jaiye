@@ -115,7 +115,7 @@ const SiginIn = ({ setSignUpForm }) => {
       setIcon(<CiWarning />);
       setResponse("The password field is required");
     } else if ((username === "" || email === "") && password === "") {
-      console.log(data);
+      // console.log(data);
       setAlert(!alert);
       setBgColor("red");
       setIcon(<CiWarning />);

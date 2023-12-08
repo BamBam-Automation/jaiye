@@ -20,9 +20,9 @@ const QRScannerComponent = () => {
       try {
         // Use the callback in setQrCode to ensure qrCode state is updated
         setQrCode(data);
+        console.log("first");
       } catch (error) {
         console.error("Error setting QR code data:", error);
-        return;
       }
     }
   };
