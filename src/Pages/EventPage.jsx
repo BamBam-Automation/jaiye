@@ -23,7 +23,7 @@ const EventPage = () => {
   }
   // const prevSummary = ""; //JSON.parse(sessionStorage.getItem("prevSummary"));
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const summary = location?.state?.event || prevSummary;
 
   useEffect(() => {
