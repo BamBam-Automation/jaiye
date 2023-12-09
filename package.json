@@ -2,6 +2,14 @@
   "name": "jaiye",
   "version": "0.1.0",
   "private": true,
+
+  "overrides": {
+  "react-qr-reader": {
+    "react": "$react",
+    "react-dom": "$react-dom"
+  }
+},
+
   "dependencies": {
     "@material-tailwind/react": "^2.0.6",
     "@paystack/inline-js": "^2.13.0",
